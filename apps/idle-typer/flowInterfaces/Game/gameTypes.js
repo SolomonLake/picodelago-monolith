@@ -1,10 +1,25 @@
 type UserState = {
-  points: number
+  userPointsBreakdown: PointsBreakdown,
+  userUniqueSentences: Array<string>,
+  userUniqueWords: Array<string>,
+  userSentencesCount: number,
+  userWordsCount: number
 };
 
 type DocState = {
-  currentWordCount: number,
-  currentSentences: Array<string>
+  documentPointsBreakdown: PointsBreakdown,
+  documentUniqueSentences: Array<string>,
+  documentUniqueWords: Array<string>
+  // documentSentencesCount: string,
+  // documentWordsCount: string
 };
 
 type GameState = UserState & DocState;
+
+type PointsBreakdown = {
+  total: number,
+  gameOpen: number,
+  documentChanged: number,
+  uniqueWords: number,
+  uniqueSentences: number
+};

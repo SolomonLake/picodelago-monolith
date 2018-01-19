@@ -17,7 +17,8 @@ interface $google {
         withFailureHandler(
           (error: string | Error) => void
         ): {
-          updateGameState(newGameState: GameState): void,
+          getCurrentDocumentStatus(): void,
+          saveGameState(newGameState: GameState): void,
           openSidebar(): void
         }
       }
@@ -25,15 +26,22 @@ interface $google {
   };
 }
 
-type UpdateGameStateResponse = {
-  type: "UPDATE_GAME_STATE_RESPONSE",
+type GetCurrentDocumentStatusResponse = {
+  type: "GET_CURRENT_DOCUMENT_STATUS_RESPONSE",
   currentDocumentString: string
+};
+
+type SaveGameStateResponse = {
+  type: "SAVE_GAME_STATE_RESPONSE"
 };
 
 type OpenSidebarResponse = {
   type: "OPEN_SIDEBAR_RESPONSE"
 };
 
-type ServerResponse = UpdateGameStateResponse | OpenSidebarResponse;
+type ServerResponse =
+  | GetCurrentDocumentStatusResponse
+  | SaveGameStateResponse
+  | OpenSidebarResponse;
 
 declare var google: $google;

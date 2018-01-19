@@ -6,16 +6,42 @@ import type {
   IdleTyperDocProperties
 } from "./serverTypes";
 
-const initialUserProps: IdleTyperUserProperties = {
-  points: "0"
-};
-
-const initialDocProps: IdleTyperDocProperties = {
-  currentWordCount: "0",
-  currentSentences: ""
-};
-
 declare function GET_ENV(a: string): any;
+
+const initialPointsBreakdown: PointsBreakdown = {
+  total: 0,
+  gameOpen: 0,
+  documentChanged: 0,
+  uniqueWords: 0,
+  uniqueSentences: 0
+};
+
+// APPLIED ON INSTALL
+const initialUserState: UserState = {
+  userPointsBreakdown: initialPointsBreakdown,
+  userUniqueSentences: [],
+  userUniqueWords: [],
+  userSentencesCount: 0,
+  userWordsCount: 0
+};
+
+// NEED TO FIGURE OUT WHEN TO APPLY
+const initialDocState: DocState = {
+  documentPointsBreakdown: initialPointsBreakdown,
+  documentUniqueSentences: [],
+  documentUniqueWords: []
+};
+
+const initialState: GameState = {
+  ...initialUserState,
+  ...initialDocState
+};
+
+const initialIdleTyperProperties = convertStateToProps(initialState);
+
+const initialIdleTyperUserProperties = userProps(initialIdleTyperProperties);
+
+const initialIdleTyperDocProperties = docProps(initialIdleTyperProperties);
 
 /* 
   GLOBAL APPS SCRIPT ONINSTALL AND ONOPEN
@@ -60,14 +86,20 @@ global.openSidebar = function(): OpenSidebarResponse {
   };
 };
 
-global.updateGameState = function(
+global.saveGameState = function(
   newGameState: GameState
-): UpdateGameStateResponse {
-  // saveStateToProps(newGameState);
-
+): SaveGameStateResponse {
+  saveStateToProps(newGameState);
   return {
-    type: "UPDATE_GAME_STATE_RESPONSE",
-    currentDocumentString: getCurrentDocumentAsString()
+    type: "SAVE_GAME_STATE_RESPONSE"
+  };
+};
+
+global.getCurrentDocumentStatus = function(): GetCurrentDocumentStatusResponse {
+  const currentDocumentString = getCurrentDocumentAsString();
+  return {
+    type: "GET_CURRENT_DOCUMENT_STATUS_RESPONSE",
+    currentDocumentString: currentDocumentString
   };
 };
 
@@ -137,8 +169,8 @@ function setDocProps(props: IdleTyperDocProperties): void {
 }
 
 function resetAllProps(): void {
-  setUserProps(initialUserProps);
-  setDocProps(initialDocProps);
+  setUserProps(initialIdleTyperUserProperties);
+  setDocProps(initialIdleTyperDocProperties);
 }
 
 /* 
@@ -147,17 +179,31 @@ function resetAllProps(): void {
 
 function convertStateToProps(state: GameState): IdleTyperProperties {
   return {
-    points: JSON.stringify(state.points),
-    currentWordCount: JSON.stringify(state.currentWordCount),
-    currentSentences: JSON.stringify(state.currentSentences)
+    userPointsBreakdown: JSON.stringify(state.userPointsBreakdown),
+    userUniqueSentences: JSON.stringify(state.userUniqueSentences),
+    userUniqueWords: JSON.stringify(state.userUniqueWords),
+    userSentencesCount: JSON.stringify(state.userSentencesCount),
+    userWordsCount: JSON.stringify(state.userWordsCount),
+    documentPointsBreakdown: JSON.stringify(state.documentPointsBreakdown),
+    documentUniqueSentences: JSON.stringify(state.documentUniqueSentences),
+    documentUniqueWords: JSON.stringify(state.documentUniqueWords)
   };
 }
 
 function convertPropsToState(props: IdleTyperProperties): GameState {
   return {
-    points: JSON.parse(props.points || "null"),
-    currentWordCount: JSON.parse(props.currentWordCount || "null"),
-    currentSentences: JSON.parse(props.currentSentences || "null")
+    userPointsBreakdown: JSON.parse(props.userPointsBreakdown || "null"),
+    userUniqueSentences: JSON.parse(props.userUniqueSentences || "null"),
+    userUniqueWords: JSON.parse(props.userUniqueWords || "null"),
+    userSentencesCount: JSON.parse(props.userSentencesCount || "null"),
+    userWordsCount: JSON.parse(props.userWordsCount || "null"),
+    documentPointsBreakdown: JSON.parse(
+      props.documentPointsBreakdown || "null"
+    ),
+    documentUniqueSentences: JSON.parse(
+      props.documentUniqueSentences || "null"
+    ),
+    documentUniqueWords: JSON.parse(props.documentUniqueWords || "null")
   };
 }
 
@@ -165,28 +211,38 @@ function convertPropsToState(props: IdleTyperProperties): GameState {
   DECONSTRUCTION METHODS
 */
 
-function userStats(state: GameState): UserState {
+function userState(state: GameState): UserState {
   return {
-    points: state.points
+    userPointsBreakdown: state.userPointsBreakdown,
+    userUniqueSentences: state.userUniqueSentences,
+    userUniqueWords: state.userUniqueWords,
+    userSentencesCount: state.userSentencesCount,
+    userWordsCount: state.userWordsCount
   };
 }
 
-function docStats(state: GameState): DocState {
+function docState(state: GameState): DocState {
   return {
-    currentWordCount: state.currentWordCount,
-    currentSentences: state.currentSentences
+    documentPointsBreakdown: state.documentPointsBreakdown,
+    documentUniqueSentences: state.documentUniqueSentences,
+    documentUniqueWords: state.documentUniqueWords
   };
 }
 
 function userProps(props: IdleTyperProperties): IdleTyperUserProperties {
   return {
-    points: props.points
+    userPointsBreakdown: props.userPointsBreakdown,
+    userUniqueSentences: props.userUniqueSentences,
+    userUniqueWords: props.userUniqueWords,
+    userSentencesCount: props.userSentencesCount,
+    userWordsCount: props.userWordsCount
   };
 }
 
 function docProps(props: IdleTyperProperties): IdleTyperDocProperties {
   return {
-    currentWordCount: props.currentWordCount,
-    currentSentences: props.currentSentences
+    documentPointsBreakdown: props.documentPointsBreakdown,
+    documentUniqueSentences: props.documentUniqueSentences,
+    documentUniqueWords: props.documentUniqueWords
   };
 }

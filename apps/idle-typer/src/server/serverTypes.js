@@ -1,12 +1,19 @@
 /* @flow */
 
 export type IdleTyperUserProperties = {
-  points: string
+  userPointsBreakdown: string,
+  userUniqueSentences: string,
+  userUniqueWords: string,
+  userSentencesCount: string,
+  userWordsCount: string
 };
 
 export type IdleTyperDocProperties = {
-  currentWordCount: string,
-  currentSentences: string
+  documentPointsBreakdown: string,
+  documentUniqueSentences: string,
+  documentUniqueWords: string
+  // documentSentencesCount: string,
+  // documentWordsCount: string
 };
 
 export type IdleTyperProperties = IdleTyperUserProperties &

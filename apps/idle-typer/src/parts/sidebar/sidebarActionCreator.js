@@ -45,10 +45,10 @@ class SidebarActionCreator {
       .withFailureHandler(e => {
         handleAppscriptError(e);
       })
-      .updateGameState({
-        points: 1,
-        currentWordCount: 1,
-        currentSentences: [""]
+      .saveGameState({
+        // points: 1,
+        // currentWordCount: 1,
+        // currentSentences: [""]
       });
   }
 }
