@@ -8,6 +8,8 @@
 
  */
 
+import type { GameState } from "../src/parts/gameState/gameStateTypes";
+
 interface $google {
   script: {
     run: {

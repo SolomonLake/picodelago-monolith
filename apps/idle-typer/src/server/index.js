@@ -6,6 +6,12 @@ import type {
   IdleTyperDocProperties
 } from "./serverTypes";
 
+import type {
+  PointsBreakdown,
+  UserState,
+  DocState
+} from "../parts/gameState/gameStateTypes";
+
 declare function GET_ENV(a: string): any;
 
 const initialPointsBreakdown: PointsBreakdown = {
@@ -29,7 +35,9 @@ const initialUserState: UserState = {
 const initialDocState: DocState = {
   documentPointsBreakdown: initialPointsBreakdown,
   documentUniqueSentences: [],
-  documentUniqueWords: []
+  documentUniqueWords: [],
+  documentSentencesCount: 0,
+  documentWordsCount: 0
 };
 
 const initialState: GameState = {
@@ -186,7 +194,9 @@ function convertStateToProps(state: GameState): IdleTyperProperties {
     userWordsCount: JSON.stringify(state.userWordsCount),
     documentPointsBreakdown: JSON.stringify(state.documentPointsBreakdown),
     documentUniqueSentences: JSON.stringify(state.documentUniqueSentences),
-    documentUniqueWords: JSON.stringify(state.documentUniqueWords)
+    documentUniqueWords: JSON.stringify(state.documentUniqueWords),
+    documentSentencesCount: JSON.stringify(state.documentSentencesCount),
+    documentWordsCount: JSON.stringify(state.documentWordsCount)
   };
 }
 
@@ -225,7 +235,9 @@ function docState(state: GameState): DocState {
   return {
     documentPointsBreakdown: state.documentPointsBreakdown,
     documentUniqueSentences: state.documentUniqueSentences,
-    documentUniqueWords: state.documentUniqueWords
+    documentUniqueWords: state.documentUniqueWords,
+    documentSentencesCount: state.documentSentencesCount,
+    documentWordsCount: state.documentWordsCount
   };
 }
 
@@ -243,6 +255,8 @@ function docProps(props: IdleTyperProperties): IdleTyperDocProperties {
   return {
     documentPointsBreakdown: props.documentPointsBreakdown,
     documentUniqueSentences: props.documentUniqueSentences,
-    documentUniqueWords: props.documentUniqueWords
+    documentUniqueWords: props.documentUniqueWords,
+    documentSentencesCount: props.documentSentencesCount,
+    documentWordsCount: props.documentWordsCount
   };
 }

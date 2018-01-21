@@ -12,20 +12,12 @@ type sidebarChangeViewAction = {
   view: SidebarView
 };
 
-type sidebarSetCurrentDocumentStringAction = {
-  type: "SIDEBAR__SET_CURRENT_DOCUMENT_STRING_REQUESTED",
-  currentDocumentString: string
-};
-
 type sidebarSetIsWorkingAction = {
   type: "SIDEBAR__SET_IS_WORKING_REQUESTED",
   isWorking: boolean
 };
 
-export type SidebarAction =
-  | sidebarChangeViewAction
-  | sidebarSetCurrentDocumentStringAction
-  | sidebarSetIsWorkingAction;
+export type SidebarAction = sidebarChangeViewAction | sidebarSetIsWorkingAction;
 
 export function dispatch(action: SidebarAction) {
   const prevState = sidebarStore.getState();

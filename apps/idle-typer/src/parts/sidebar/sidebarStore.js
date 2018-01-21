@@ -6,10 +6,6 @@ import {
   type PeardeckStore
 } from "../../shared/flux/PeardeckStore";
 
-import Tokenizer from "sentence-tokenizer";
-import uniqueArray from "array-unique";
-import uniqueWords from "unique-words";
-
 import type { SidebarAction } from "./sidebarActions";
 
 import type {
@@ -20,8 +16,7 @@ import type {
 
 const initialSidebarStoreState: SidebarStoreInternalState = {
   _sidebarView: "main",
-  _isWorking: false,
-  _currentDocumentString: window.data.currentDocumentString
+  _isWorking: false
 };
 
 export const sidebarStore: PeardeckStore<
@@ -38,11 +33,6 @@ export const sidebarStore: PeardeckStore<
           _sidebarView: action.view
         });
 
-      case "SIDEBAR__SET_CURRENT_DOCUMENT_STRING_REQUESTED":
-        return immutableUpdate(currentState, {
-          _currentDocumentString: action.currentDocumentString
-        });
-
       case "SIDEBAR__SET_IS_WORKING_REQUESTED":
         return immutableUpdate(currentState, {
           _isWorking: action.isWorking
@@ -54,30 +44,13 @@ export const sidebarStore: PeardeckStore<
   },
 
   computePublics: internalState => {
-    var currentSentences = [];
-    var currentWords = [];
-    if (internalState._currentDocumentString) {
-      var currentDocumentTokenizer = new Tokenizer("curDoc");
-      currentDocumentTokenizer.setEntry(internalState._currentDocumentString);
-      currentSentences = currentDocumentTokenizer.getSentences();
-      currentWords = currentDocumentTokenizer.getTokens();
-    }
-
     const externalState: SidebarStoreState = {
       ...internalState,
       sidebarView: internalState._sidebarView,
-      isWorking: internalState._isWorking,
-      currentSentences: currentSentences,
-      currentWordCount: currentWords.length,
-      points: 1
+      isWorking: internalState._isWorking
     };
 
-    console.log("computed state:", externalState);
+    console.log("computed sidebar state:", externalState);
     return externalState;
   }
 });
-
-function computeWordCount(currentDocumentTokenizer: Tokenizer): Array<string> {
-  const currentSentences = currentDocumentTokenizer.getSentences();
-  return currentSentences;
-}

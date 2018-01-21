@@ -7,4 +7,4 @@ html(ng-app="sidebarApp")
     script
       | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
     script(src="parts/sidebar/index.js", inline)
-  body {{ $root.statsStoreState.test }}
+  body {{ $root.gameStateStoreState.test }}

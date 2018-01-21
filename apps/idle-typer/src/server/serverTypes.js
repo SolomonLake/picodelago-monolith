@@ -11,9 +11,9 @@ export type IdleTyperUserProperties = {
 export type IdleTyperDocProperties = {
   documentPointsBreakdown: string,
   documentUniqueSentences: string,
-  documentUniqueWords: string
-  // documentSentencesCount: string,
-  // documentWordsCount: string
+  documentUniqueWords: string,
+  documentSentencesCount: string,
+  documentWordsCount: string
 };
 
 export type IdleTyperProperties = IdleTyperUserProperties &

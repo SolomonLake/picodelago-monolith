@@ -4,11 +4,10 @@ export type SidebarView = "main" | "bonus";
 
 export type SidebarStoreInternalState = {
   _sidebarView: SidebarView,
-  _isWorking: boolean,
-  _currentDocumentString: string
+  _isWorking: boolean
 };
 
-export type SidebarStoreExternalState = GameState & {
+export type SidebarStoreExternalState = {
   sidebarView: SidebarView,
   isWorking: boolean
 };

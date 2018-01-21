@@ -5,17 +5,13 @@ declare var data: any;
 import { registeredAngularModules } from "../../shared/angular/moduleHelper";
 
 import { sidebarModule } from "./sidebarModule";
-import { statsModule } from "../stats/statsModule";
+import { gameStateModule } from "../gameState/gameStateModule";
 
 import { sidebarActionCreator } from "./sidebarActionCreator";
 
 import { sidebarStore } from "./sidebarStore";
 
-const sidebarApp = angular.module(
-  "sidebarApp",
-  // [statsModule.name].concat(registeredAngularModules())
-  registeredAngularModules()
-);
+const sidebarApp = angular.module("sidebarApp", registeredAngularModules());
 
 console.log("version 0.01");
 
@@ -26,12 +22,3 @@ document.addEventListener("visibilitychange", () => {
     console.log("sidebar became visible");
   }
 });
-
-recursivelyGetDocumentStats();
-
-function recursivelyGetDocumentStats() {
-  setTimeout(() => {
-    sidebarActionCreator.updateGameState();
-    recursivelyGetDocumentStats();
-  }, 1000);
-}
