@@ -21,6 +21,8 @@ const initialGameStoreStoreState: GameStateStoreInternalState = {
   _currentDocumentString: window.data.currentDocumentString
 };
 
+console.log(initialGameStoreStoreState);
+
 export const gameStateStore: PeardeckStore<
   GameStateStoreInternalState,
   GameStateStoreExternalState,
@@ -52,17 +54,13 @@ export const gameStateStore: PeardeckStore<
 
     const externalState: GameStateStoreState = {
       ...internalState,
-      userPointsBreakdown: computeUserPointsBreakdown(
-        internalState._previousExternalGameState
-      ),
+      userPointsBreakdown: computeUserPointsBreakdown(internalState),
       userUniqueSentences: [],
       userUniqueWords: [],
       userSentencesCount: 1,
       userWordsCount: 1,
 
-      documentPointsBreakdown: computeDocPointsBreakdown(
-        internalState._previousExternalGameState
-      ),
+      documentPointsBreakdown: computeDocPointsBreakdown(internalState),
       documentUniqueSentences: [],
       documentUniqueWords: [],
       documentSentencesCount: 1,
@@ -79,9 +77,11 @@ function computeWordCount(currentDocumentTokenizer: Tokenizer): Array<string> {
   return currentSentences;
 }
 
-function computeUserPointsBreakdown(previousState): PointsBreakdown {
+function computeUserPointsBreakdown(internalState): PointsBreakdown {
+  const previousUserPoints =
+    internalState._previousExternalGameState.userPointsBreakdown;
   return {
-    total: 1,
+    total: previousUserPoints.total + 1,
     gameOpen: 1,
     documentChanged: 1,
     uniqueWords: 1,
@@ -89,9 +89,11 @@ function computeUserPointsBreakdown(previousState): PointsBreakdown {
   };
 }
 
-function computeDocPointsBreakdown(previousState): PointsBreakdown {
+function computeDocPointsBreakdown(internalState): PointsBreakdown {
+  const previousDocPoints =
+    internalState._previousExternalGameState.documentPointsBreakdown;
   return {
-    total: 1,
+    total: previousDocPoints.total + 1,
     gameOpen: 1,
     documentChanged: 1,
     uniqueWords: 1,

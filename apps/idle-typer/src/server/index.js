@@ -80,15 +80,7 @@ global.onOpen = function onOpen(e) {
 */
 
 global.openSidebar = function(): OpenSidebarResponse {
-  resetAllProps();
-  var t = HtmlService.createTemplateFromFile("sidebar.html");
-  t.data = {
-    previousExternalGameState: getStateFromProperties(),
-    currentDocumentString: getCurrentDocumentAsString()
-  };
-  const sidebar = t.evaluate();
-  sidebar.setTitle("Idle Typer");
-  DocumentApp.getUi().showSidebar(sidebar);
+  openSidebar();
   return {
     type: "OPEN_SIDEBAR_RESPONSE"
   };
@@ -111,9 +103,28 @@ global.getCurrentDocumentStatus = function(): GetCurrentDocumentStatusResponse {
   };
 };
 
+global.resetAllProperties = function(): ResetAllPropertiesResponse {
+  resetAllProps();
+  openSidebar();
+  return {
+    type: "RESET_ALL_PROPERTIES_RESPONSE"
+  };
+};
+
 /* 
   GENERAL METHODS
 */
+
+function openSidebar(): void {
+  var t = HtmlService.createTemplateFromFile("sidebar.html");
+  t.data = {
+    previousExternalGameState: getStateFromProperties(),
+    currentDocumentString: getCurrentDocumentAsString()
+  };
+  const sidebar = t.evaluate();
+  sidebar.setTitle("Idle Typer");
+  DocumentApp.getUi().showSidebar(sidebar);
+}
 
 function getStateFromProperties(): GameState {
   const allProps = getProps();

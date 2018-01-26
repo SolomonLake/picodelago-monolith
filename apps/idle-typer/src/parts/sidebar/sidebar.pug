@@ -9,3 +9,4 @@ html(ng-app="sidebarApp")
     script(src="parts/sidebar/index.js", inline)
   body 
     .store-state {{ $root.gameStateStoreState }}
+    button(ng-click="$root.gameStateActionCreator.resetAllProperties()") Reset All Props

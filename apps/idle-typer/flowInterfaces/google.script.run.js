@@ -21,7 +21,8 @@ interface $google {
         ): {
           getCurrentDocumentStatus(): void,
           saveGameState(newGameState: GameState): void,
-          openSidebar(): void
+          openSidebar(): void,
+          resetAllProperties(): void
         }
       }
     }
@@ -41,9 +42,14 @@ type OpenSidebarResponse = {
   type: "OPEN_SIDEBAR_RESPONSE"
 };
 
+type ResetAllPropertiesResponse = {
+  type: "RESET_ALL_PROPERTIES_RESPONSE"
+};
+
 type ServerResponse =
   | GetCurrentDocumentStatusResponse
   | SaveGameStateResponse
-  | OpenSidebarResponse;
+  | OpenSidebarResponse
+  | ResetAllPropertiesResponse;
 
 declare var google: $google;

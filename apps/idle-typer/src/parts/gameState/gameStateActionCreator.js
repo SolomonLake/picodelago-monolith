@@ -32,6 +32,10 @@ class GameStateActionCreator {
       nullifyInternalGameState(gameStateStore.getState())
     );
   }
+
+  resetAllProperties() {
+    googleServerApi.resetAllProperties();
+  }
 }
 
 export const gameStateActionCreator = new GameStateActionCreator();
@@ -41,7 +45,6 @@ function nullifyInternalGameState(
 ): GameStateStoreExternalState {
   return {
     ...gameState,
-    _previousExternalGameState: null,
-    _currentDocumentString: null
+    _previousExternalGameState: null
   };
 }
