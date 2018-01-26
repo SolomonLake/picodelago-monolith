@@ -82,7 +82,7 @@ function computeUserPointsBreakdown(internalState): PointsBreakdown {
     internalState._previousExternalGameState.userPointsBreakdown;
   return {
     total: previousUserPoints.total + 1,
-    gameOpen: 1,
+    gameOpen: previousUserPoints.gameOpen + 1,
     documentChanged: 1,
     uniqueWords: 1,
     uniqueSentences: 1
@@ -92,9 +92,10 @@ function computeUserPointsBreakdown(internalState): PointsBreakdown {
 function computeDocPointsBreakdown(internalState): PointsBreakdown {
   const previousDocPoints =
     internalState._previousExternalGameState.documentPointsBreakdown;
+
   return {
     total: previousDocPoints.total + 1,
-    gameOpen: 1,
+    gameOpen: previousDocPoints.gameOpen + 1,
     documentChanged: 1,
     uniqueWords: 1,
     uniqueSentences: 1

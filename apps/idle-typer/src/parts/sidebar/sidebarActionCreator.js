@@ -21,6 +21,12 @@ class SidebarActionCreator {
     });
   }
 
+  toggleShowGameState() {
+    dispatch({
+      type: "SIDEBAR__TOGGLE_SHOW_GAME_STATE_REQUESTED"
+    });
+  }
+
   openSidebar() {
     googleServerApi.openSidebar();
   }

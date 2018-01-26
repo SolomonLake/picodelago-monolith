@@ -7,6 +7,14 @@ html(ng-app="sidebarApp")
     script
       | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
     script(src="parts/sidebar/index.js", inline)
-  body 
-    .store-state {{ $root.gameStateStoreState }}
-    button(ng-click="$root.gameStateActionCreator.resetAllProperties()") Reset All Props
+  body.sidebar
+    div.dev-tools Dev Tools
+      label.basic-switch Store States:
+        input(type="checkbox" ng-click="$root.sidebarActionCreator.toggleShowGameState()")
+        span.blue-round-slider
+      div(ng-if="$root.sidebarStoreState.showGameState")
+        div Game Store State
+          pre.store-state {{ $root.gameStateStoreState }}
+        div Sidebar Store State
+          pre.store-state {{ $root.sidebarStoreState }}
+      button.basic-button(ng-click="$root.gameStateActionCreator.resetAllProperties()") Reset All Props

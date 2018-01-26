@@ -17,7 +17,14 @@ type sidebarSetIsWorkingAction = {
   isWorking: boolean
 };
 
-export type SidebarAction = sidebarChangeViewAction | sidebarSetIsWorkingAction;
+type sidebarToggleShowGameStateAction = {
+  type: "SIDEBAR__TOGGLE_SHOW_GAME_STATE_REQUESTED"
+};
+
+export type SidebarAction =
+  | sidebarChangeViewAction
+  | sidebarSetIsWorkingAction
+  | sidebarToggleShowGameStateAction;
 
 export function dispatch(action: SidebarAction) {
   const prevState = sidebarStore.getState();

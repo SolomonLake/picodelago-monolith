@@ -16,7 +16,8 @@ import type {
 
 const initialSidebarStoreState: SidebarStoreInternalState = {
   _sidebarView: "main",
-  _isWorking: false
+  _isWorking: false,
+  _showGameState: false
 };
 
 export const sidebarStore: PeardeckStore<
@@ -38,6 +39,11 @@ export const sidebarStore: PeardeckStore<
           _isWorking: action.isWorking
         });
 
+      case "SIDEBAR__TOGGLE_SHOW_GAME_STATE_REQUESTED":
+        return immutableUpdate(currentState, {
+          _showGameState: !currentState._showGameState
+        });
+
       default:
         return currentState;
     }
@@ -47,7 +53,8 @@ export const sidebarStore: PeardeckStore<
     const externalState: SidebarStoreState = {
       ...internalState,
       sidebarView: internalState._sidebarView,
-      isWorking: internalState._isWorking
+      isWorking: internalState._isWorking,
+      showGameState: internalState._showGameState
     };
 
     console.log("computed sidebar state:", externalState);
