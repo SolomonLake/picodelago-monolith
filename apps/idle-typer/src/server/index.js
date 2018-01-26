@@ -83,7 +83,7 @@ global.openSidebar = function(): OpenSidebarResponse {
   resetAllProps();
   var t = HtmlService.createTemplateFromFile("sidebar.html");
   t.data = {
-    initialState: getStateFromProperties(),
+    previousExternalGameState: getStateFromProperties(),
     currentDocumentString: getCurrentDocumentAsString()
   };
   const sidebar = t.evaluate();

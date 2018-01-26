@@ -4,7 +4,7 @@ import { dispatch } from "./sidebarActions";
 
 import { sidebarStore } from "./sidebarStore";
 
-import { handleAppscriptError } from "../../shared/actionCreatorServerHelper";
+import { googleServerApi } from "../../shared/googleServerApi";
 
 class SidebarActionCreator {
   switchToMainView() {
@@ -22,25 +22,8 @@ class SidebarActionCreator {
   }
 
   openSidebar() {
-    google.script.run
-      .withSuccessHandler(() => {
-        console.log("sidebar reopened");
-      })
-      .withFailureHandler(e => {
-        handleAppscriptError(e);
-      })
-      .openSidebar();
+    googleServerApi.openSidebar();
   }
 }
 
 export const sidebarActionCreator = new SidebarActionCreator();
-
-function sidebarHandleAppscriptResponse(response: ServerResponse): void {
-  switch (response.type) {
-    case "OPEN_SIDEBAR_RESPONSE":
-      console.log("sidebar reopened");
-      return;
-    default:
-      console.log("ERROR: encountered unsupported response");
-  }
-}

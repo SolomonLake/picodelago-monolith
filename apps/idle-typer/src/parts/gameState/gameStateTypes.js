@@ -27,6 +27,7 @@ export type PointsBreakdown = {
 };
 
 export type GameStateStoreInternalState = {
+  _previousExternalGameState: GameStateStoreExternalState,
   _currentDocumentString: string
 };
 

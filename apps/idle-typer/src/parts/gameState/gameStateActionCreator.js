@@ -4,49 +4,43 @@ import { dispatch } from "./gameStateActions";
 
 import { gameStateStore } from "./gameStateStore";
 
-import { handleAppscriptError } from "../../shared/actionCreatorServerHelper";
+import { googleServerApi } from "../../shared/googleServerApi";
+
+import type {
+  GameStateStoreState,
+  GameStateStoreExternalState
+} from "./gameStateTypes";
 
 class GameStateActionCreator {
   getDocumentState() {
-    google.script.run
-      .withSuccessHandler((response: ServerResponse) => {
-        gameStateHandleAppscriptResponse(response);
-      })
-      .withFailureHandler(e => {
-        handleAppscriptError(e);
-      })
-      .getCurrentDocumentStatus();
+    googleServerApi.getCurrentDocumentStatus(this.updateGameState);
   }
 
-  setCurrentDocumentString(_currentDocumentString: string) {
+  updateGameState(_currentDocumentString: string) {
     dispatch({
-      type: "GAME_STATE__SET_CURRENT_DOCUMENT_STRING_REQUESTED",
+      type: "GAME_STATE__UPDATE_STATE_REQUESTED",
+      previousExternalGameState: nullifyInternalGameState(
+        gameStateStore.getState()
+      ),
       currentDocumentString: _currentDocumentString
     });
   }
 
   saveGameStateInProperties() {
-    google.script.run
-      .withSuccessHandler((response: ServerResponse) => {
-        gameStateHandleAppscriptResponse(response);
-      })
-      .withFailureHandler(e => {
-        handleAppscriptError(e);
-      })
-      .saveGameState(gameStateStore.getState());
+    googleServerApi.saveGameState(
+      nullifyInternalGameState(gameStateStore.getState())
+    );
   }
 }
 
 export const gameStateActionCreator = new GameStateActionCreator();
 
-function gameStateHandleAppscriptResponse(response: ServerResponse): void {
-  switch (response.type) {
-    case "GET_CURRENT_DOCUMENT_STATUS_RESPONSE":
-      console.log(response.currentDocumentString);
-      return;
-    case "SAVE_GAME_STATE_RESPONSE":
-      return;
-    default:
-      console.log("ERROR: encountered unsupported response");
-  }
+function nullifyInternalGameState(
+  gameState: GameStateStoreExternalState
+): GameStateStoreExternalState {
+  return {
+    ...gameState,
+    _previousExternalGameState: null,
+    _currentDocumentString: null
+  };
 }

@@ -4,8 +4,11 @@ import appDispatcher from "../../shared/flux/AppDispatcher";
 
 import { gameStateStore } from "./gameStateStore";
 
+import type { GameStateStoreExternalState } from "./gameStateTypes";
+
 type gameStateSetCurrentDocumentStringAction = {
-  type: "GAME_STATE__SET_CURRENT_DOCUMENT_STRING_REQUESTED",
+  type: "GAME_STATE__UPDATE_STATE_REQUESTED",
+  previousExternalGameState: GameStateStoreExternalState,
   currentDocumentString: string
 };
 

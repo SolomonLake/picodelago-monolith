@@ -9,6 +9,8 @@ import { gameStateModule } from "../gameState/gameStateModule";
 
 import { sidebarActionCreator } from "./sidebarActionCreator";
 
+import { gameStateActionCreator } from "../gameState/gameStateActionCreator";
+
 import { sidebarStore } from "./sidebarStore";
 
 const sidebarApp = angular.module("sidebarApp", registeredAngularModules());
@@ -22,3 +24,20 @@ document.addEventListener("visibilitychange", () => {
     console.log("sidebar became visible");
   }
 });
+
+recursivelyGetDocumentState();
+recursivelySaveGameState();
+
+function recursivelyGetDocumentState() {
+  setTimeout(() => {
+    gameStateActionCreator.getDocumentState();
+    recursivelyGetDocumentState();
+  }, 1000);
+}
+
+function recursivelySaveGameState() {
+  setTimeout(() => {
+    gameStateActionCreator.saveGameStateInProperties();
+    recursivelySaveGameState();
+  }, 10000);
+}
