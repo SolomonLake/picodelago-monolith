@@ -29,15 +29,15 @@ recursivelyGetDocumentState();
 recursivelySaveGameState();
 
 function recursivelyGetDocumentState() {
+  gameStateActionCreator.getDocumentState();
   setTimeout(() => {
-    gameStateActionCreator.getDocumentState();
     recursivelyGetDocumentState();
   }, 1000);
 }
 
 function recursivelySaveGameState() {
+  gameStateActionCreator.saveGameStateInProperties();
   setTimeout(() => {
-    gameStateActionCreator.saveGameStateInProperties();
     recursivelySaveGameState();
   }, 10000);
 }

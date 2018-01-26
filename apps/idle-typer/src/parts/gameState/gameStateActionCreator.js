@@ -27,6 +27,7 @@ class GameStateActionCreator {
   }
 
   saveGameStateInProperties() {
+    console.log("SAVING GAME STATE");
     googleServerApi.saveGameState(
       nullifyInternalGameState(gameStateStore.getState())
     );

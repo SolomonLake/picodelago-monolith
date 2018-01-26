@@ -1,10 +1,11 @@
 doctype html
 html(ng-app="sidebarApp")
   head
-    //- link(rel='stylesheet', type='text/css', href='styles/styles.css', inline)
+    link(rel='stylesheet', type='text/css', href='styles/general.css', inline)
 
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" crossdomain="anonymous")
     script
       | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
     script(src="parts/sidebar/index.js", inline)
-  body {{ $root.gameStateStoreState }}
+  body 
+    .store-state {{ $root.gameStateStoreState }}
