@@ -8,10 +8,14 @@ html(ng-app="sidebarApp")
       | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
     script(src="parts/sidebar/index.js", inline)
   body.sidebar
-    div.dev-tools Dev Tools
-      label.basic-switch Store States:
-        input(type="checkbox" ng-click="$root.sidebarActionCreator.toggleShowGameState()")
-        span.blue-round-slider
+    .main-content
+      div Total Points: {{ $root.gameStateStoreState.userPointsBreakdown.total }}
+    |
+    .dev-tools Dev Tools
+      div Show Store States:
+        label.basic-switch        
+          input(type="checkbox" ng-click="$root.sidebarActionCreator.toggleShowGameState()")
+          span.blue-round-slider
       div(ng-if="$root.sidebarStoreState.showGameState")
         div Game Store State
           pre.store-state {{ $root.gameStateStoreState }}
