@@ -26,7 +26,8 @@ document.addEventListener("visibilitychange", () => {
 });
 
 recursivelyGetDocumentState();
-recursivelySaveGameState();
+// CHANGE ME BACK: SERVER
+// recursivelySaveGameState();
 
 function recursivelyGetDocumentState() {
   gameStateActionCreator.getDocumentState();

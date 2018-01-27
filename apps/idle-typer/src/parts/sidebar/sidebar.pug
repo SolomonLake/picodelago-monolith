@@ -5,7 +5,8 @@ html(ng-app="sidebarApp")
 
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" crossdomain="anonymous")
     script
-      | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
+      //- // CHANGE ME BACK: SERVER
+      //- | window.data = JSON.parse(<?= JSON.stringify(data) ?>);
     script(src="parts/sidebar/index.js", inline)
   body.sidebar
     .main-content

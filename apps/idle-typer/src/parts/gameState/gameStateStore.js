@@ -9,6 +9,8 @@ import uniqueWords from "unique-words";
 
 import type { GameStateAction } from "./gameStateActions";
 
+import { initialState } from "../../server/index";
+
 import type {
   GameStateStoreInternalState,
   GameStateStoreExternalState,
@@ -16,9 +18,12 @@ import type {
   PointsBreakdown
 } from "./gameStateTypes";
 
+// CHANGE ME BACK: SERVER
 const initialGameStoreStoreState: GameStateStoreInternalState = {
-  _previousExternalGameState: window.data.previousExternalGameState,
-  _currentDocumentString: window.data.currentDocumentString
+  // _previousExternalGameState: window.data.previousExternalGameState,
+  // _currentDocumentString: window.data.currentDocumentString
+  _previousExternalGameState: initialState,
+  _currentDocumentString: "Hello this is a test string. I am a second sentence"
 };
 
 console.log(initialGameStoreStoreState);

@@ -13,7 +13,9 @@ import type {
 
 class GameStateActionCreator {
   getDocumentState() {
-    googleServerApi.getCurrentDocumentStatus(this.updateGameState);
+    // CHANGE ME BACK: SERVER
+    // googleServerApi.getCurrentDocumentStatus(this.updateGameState);
+    this.updateGameState("Hello this is a test string. I am a second sentence");
   }
 
   updateGameState(_currentDocumentString: string) {

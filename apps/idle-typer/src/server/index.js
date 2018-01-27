@@ -40,7 +40,8 @@ const initialDocState: DocState = {
   documentWordsCount: 0
 };
 
-const initialState: GameState = {
+// CHANGE ME BACK: SERVER
+export const initialState: GameState = {
   ...initialUserState,
   ...initialDocState
 };
