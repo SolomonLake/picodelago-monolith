@@ -17,7 +17,7 @@ import type {
 const initialSidebarStoreState: SidebarStoreInternalState = {
   _sidebarView: "main",
   _isWorking: false,
-  _showGameState: false
+  _showGameState: true
 };
 
 export const sidebarStore: PeardeckStore<

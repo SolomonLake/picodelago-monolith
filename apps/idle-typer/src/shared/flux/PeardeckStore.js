@@ -32,7 +32,7 @@ export class PeardeckGenericStore<
   TInternalState,
   TPublicState,
   TAction
-> extends PeardeckReduceStore<TPublicState> {
+> extends PeardeckReduceStore<TInternalState & TPublicState> {
   constructor(props: ReduceGenericStoreProps<TInternalState>) {
     PeardeckGenericStore._initialProps = props;
     super();

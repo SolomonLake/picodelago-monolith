@@ -27,7 +27,7 @@ export type PointsBreakdown = {
 };
 
 export type GameStateStoreInternalState = {
-  _previousExternalGameState: GameStateStoreExternalState,
+  _previousExternalGameState: PreviousGameStateStoreState,
   _currentDocumentString: string
 };
 
@@ -35,3 +35,8 @@ export type GameStateStoreExternalState = UserState & DocState;
 
 export type GameStateStoreState = GameStateStoreInternalState &
   GameStateStoreExternalState;
+
+export type PreviousGameStateStoreState = GameStateStoreExternalState & {
+  _previousExternalGameState: ?{},
+  _currentDocumentString: string
+};

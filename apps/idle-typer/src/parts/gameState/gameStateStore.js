@@ -5,7 +5,7 @@ import { peardeckStore, PeardeckStore } from "../../shared/flux/PeardeckStore";
 
 import Tokenizer from "sentence-tokenizer";
 import uniqueArray from "array-unique";
-import uniqueWords from "unique-words";
+import uniqueWordsFromString from "unique-words";
 
 import type { GameStateAction } from "./gameStateActions";
 
@@ -18,12 +18,15 @@ import type {
   PointsBreakdown
 } from "./gameStateTypes";
 
+export const testString =
+  "Hello this is a test string. I am a second sentence. Hello this is a test string.";
+
 // CHANGE ME BACK: SERVER
 const initialGameStoreStoreState: GameStateStoreInternalState = {
   // _previousExternalGameState: window.data.previousExternalGameState,
   // _currentDocumentString: window.data.currentDocumentString
   _previousExternalGameState: initialState,
-  _currentDocumentString: "Hello this is a test string. I am a second sentence"
+  _currentDocumentString: testString
 };
 
 console.log(initialGameStoreStoreState);
@@ -48,60 +51,99 @@ export const gameStateStore: PeardeckStore<
   },
 
   computePublics: internalState => {
-    var currentSentences: Array<string> = [];
-    var currentWords: Array<string> = [];
+    var mutableDocumentSentences: Array<string> = [];
+    // var generatedWords: Array<string> = [];
     if (internalState._currentDocumentString) {
       var currentDocumentTokenizer = new Tokenizer("curDoc");
       currentDocumentTokenizer.setEntry(internalState._currentDocumentString);
-      currentSentences = currentDocumentTokenizer.getSentences();
-      currentWords = currentDocumentTokenizer.getTokens();
+      mutableDocumentSentences = currentDocumentTokenizer.getSentences();
+      // generatedWords = currentDocumentTokenizer.getTokens();
     }
+
+    const documentSentences = [...mutableDocumentSentences];
+    // const currentWords = generatedWords;
+    // modifies generatedSentences!!!
+    var documentUniqueSentences = mutableDocumentSentences;
+    uniqueArray(documentUniqueSentences);
+    // const uniqueWords = uniqueArray(generatedWords);
+
+    var userUniqueSentences = internalState._previousExternalGameState.userUniqueSentences.concat(
+      documentUniqueSentences
+    );
+    uniqueArray(userUniqueSentences);
+
+    const newPointsBreakdown = ((): PointsBreakdown => {
+      const gameOpenNew = 1;
+      const documentChangedNew = computeDocumentChangedPoints(internalState);
+      const totalNew = gameOpenNew + documentChangedNew;
+      return {
+        total: totalNew,
+        gameOpen: gameOpenNew,
+        documentChanged: documentChangedNew,
+        uniqueWords: 1,
+        uniqueSentences: 1
+      };
+    })();
 
     const externalState: GameStateStoreState = {
       ...internalState,
-      userPointsBreakdown: computeUserPointsBreakdown(internalState),
-      userUniqueSentences: [],
+      userPointsBreakdown: computeUserPointsBreakdown(
+        internalState._previousExternalGameState.userPointsBreakdown,
+        newPointsBreakdown
+      ),
+      userUniqueSentences: userUniqueSentences,
       userUniqueWords: [],
       userSentencesCount: 1,
       userWordsCount: 1,
 
-      documentPointsBreakdown: computeDocPointsBreakdown(internalState),
-      documentUniqueSentences: [],
+      documentPointsBreakdown: computeDocPointsBreakdown(
+        internalState._previousExternalGameState.documentPointsBreakdown,
+        newPointsBreakdown
+      ),
+      documentUniqueSentences: documentUniqueSentences,
       documentUniqueWords: [],
-      documentSentencesCount: 1,
+      documentSentencesCount: documentSentences.length,
       documentWordsCount: 1
     };
 
-    console.log("computed gameState state:", externalState);
+    // console.log("computed gameState state:", externalState);
     return externalState;
   }
 });
 
-function computeWordCount(currentDocumentTokenizer: Tokenizer): Array<string> {
-  const currentSentences = currentDocumentTokenizer.getSentences();
-  return currentSentences;
+function computeDocumentChangedPoints(internalState) {
+  const currentDocumentStringIsSame =
+    internalState._currentDocumentString ===
+    internalState._previousExternalGameState._currentDocumentString;
+  return currentDocumentStringIsSame ? 10 : 0;
 }
 
-function computeUserPointsBreakdown(internalState): PointsBreakdown {
-  const previousUserPoints =
-    internalState._previousExternalGameState.userPointsBreakdown;
+// function computeWordCount(currentDocumentTokenizer: Tokenizer): Array<string> {
+//   const currentSentences = currentDocumentTokenizer.getSentences();
+//   return currentSentences;
+// }
+
+function computeUserPointsBreakdown(
+  previousUserPoints: PointsBreakdown,
+  newPointsBreakdown: PointsBreakdown
+): PointsBreakdown {
   return {
-    total: previousUserPoints.total + 1,
-    gameOpen: previousUserPoints.gameOpen + 1,
-    documentChanged: 1,
+    total: previousUserPoints.total + newPointsBreakdown.total,
+    gameOpen: previousUserPoints.gameOpen + newPointsBreakdown.gameOpen,
+    documentChanged: newPointsBreakdown.documentChanged,
     uniqueWords: 1,
     uniqueSentences: 1
   };
 }
 
-function computeDocPointsBreakdown(internalState): PointsBreakdown {
-  const previousDocPoints =
-    internalState._previousExternalGameState.documentPointsBreakdown;
-
+function computeDocPointsBreakdown(
+  previousDocPoints: PointsBreakdown,
+  newPointsBreakdown: PointsBreakdown
+): PointsBreakdown {
   return {
-    total: previousDocPoints.total + 1,
-    gameOpen: previousDocPoints.gameOpen + 1,
-    documentChanged: 1,
+    total: previousDocPoints.total + newPointsBreakdown.total,
+    gameOpen: previousDocPoints.gameOpen + newPointsBreakdown.gameOpen,
+    documentChanged: previousDocPoints.documentChanged,
     uniqueWords: 1,
     uniqueSentences: 1
   };
