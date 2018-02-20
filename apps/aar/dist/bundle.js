@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,24 +71,6 @@ module.exports = React;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var react_dom_1 = __webpack_require__(5);
-var App_1 = __webpack_require__(6);
-var AppStore_1 = __webpack_require__(4);
-renderApp();
-function renderApp() {
-    react_dom_1.render(React.createElement(App_1.App, { appStoreState: AppStore_1.AppStore.state }), document.getElementById("root"));
-}
-exports.renderApp = renderApp;
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports) {
 
 /*
@@ -170,7 +152,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -552,6 +534,24 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var react_dom_1 = __webpack_require__(5);
+var App_1 = __webpack_require__(6);
+var AppStore_1 = __webpack_require__(4);
+renderApp();
+function renderApp() {
+    react_dom_1.render(React.createElement(App_1.App, { appStoreState: AppStore_1.AppStore.state }), document.getElementById("root"));
+}
+exports.renderApp = renderApp;
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -560,7 +560,7 @@ function updateLink (link, options, obj) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var StoreState_1 = __webpack_require__(11);
 var initialStoreState = {
-    screen: "temple"
+    screen: "world"
 };
 function appStoreCompute(newState) {
     return newState;
@@ -585,16 +585,19 @@ var React = __webpack_require__(0);
 __webpack_require__(7);
 var AppActionCreator_1 = __webpack_require__(10);
 var WorldMap_1 = __webpack_require__(12);
+var Temple_1 = __webpack_require__(15);
 exports.App = function (props) { return (React.createElement("div", { className: "app" },
-    React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToWorldScreen }, " World "),
-    React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToTempleScreen }, " Temple "),
-    React.createElement(MainScreen, { appStoreState: props.appStoreState }))); };
+    React.createElement("div", { className: "app-top-menu" },
+        React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToWorldScreen }, " World "),
+        React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToTempleScreen }, " Temple ")),
+    React.createElement("div", { className: "app-main-screen" },
+        React.createElement(MainScreen, { appStoreState: props.appStoreState })))); };
 var MainScreen = function (props) {
     switch (props.appStoreState.screen) {
         case "world":
-            return React.createElement(WorldMap_1.WorldMapPresentationalComponent, null);
+            return React.createElement(WorldMap_1.WorldMapViewComponent, null);
         case "temple":
-            return React.createElement("div", null, " Temple ");
+            return React.createElement(Temple_1.TempleViewComponent, null);
         default:
             throw new Error("case match exhaustive");
     }
@@ -620,7 +623,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(3)(content, options);
+var update = __webpack_require__(2)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -655,12 +658,12 @@ if(false) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".app {\n  display: flex;\n  background-color: black;\n  color: aliceblue;\n}\n", ""]);
+exports.push([module.i, ".app {\n  display: flex;\n  background-color: black;\n  color: aliceblue;\n  flex-direction: column;\n}\n\n.app-top-menu {\n  display: flex;\n  flex-direction: row;\n}\n\n.app-main-screen {\n  display: flex;\n}\n", ""]);
 
 // exports
 
@@ -793,7 +796,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var index_1 = __webpack_require__(1);
+var index_1 = __webpack_require__(3);
 function storeCreator(initialState, computeState) {
     return {
         state: initialState,
@@ -862,9 +865,9 @@ function createTile(tilePosition) {
         return tile;
     }
 }
-exports.WorldMapPresentationalComponent = function () { return (React.createElement("div", { className: "map" }, worldMap.map(function (row, index) { return (React.createElement(RowWorldMapPresentationalComponent, { key: index, mapRow: row })); }))); };
-var RowWorldMapPresentationalComponent = function (props) { return (React.createElement("div", { className: "map-row" }, props.mapRow.map(function (tile, index) { return (React.createElement(TileWorldMapPresentationalComponent, { key: index, mapTile: tile })); }))); };
-var TileWorldMapPresentationalComponent = function (props) { return (React.createElement("div", { className: "map-tile" },
+exports.WorldMapViewComponent = function () { return (React.createElement("div", { className: "map" }, worldMap.map(function (row, index) { return (React.createElement(RowWorldMapViewComponent, { key: index, mapRow: row })); }))); };
+var RowWorldMapViewComponent = function (props) { return (React.createElement("div", { className: "map-row" }, props.mapRow.map(function (tile, index) { return (React.createElement(TileWorldMapViewComponent, { key: index, mapTile: tile })); }))); };
+var TileWorldMapViewComponent = function (props) { return (React.createElement("div", { className: "map-tile" },
     " ",
     props.mapTile.char,
     " ")); };
@@ -889,7 +892,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(3)(content, options);
+var update = __webpack_require__(2)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -924,12 +927,88 @@ if(false) {
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
 exports.push([module.i, ".map {\n  display: flex;\n}\n\n.map-row {\n  display: flex;\n  flex-direction: column;\n}\n\n.map-tile {\n  display: flex;\n  padding: 0.3em;\n\n  border-style: solid;\n  border-color: indigo;\n  border-width: 0.001em;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+__webpack_require__(16);
+exports.TempleViewComponent = function () { return React.createElement("div", { className: "temple" }, "Temple"); };
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(17);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../node_modules/css-loader/index.js!./Temple.css", function() {
+		var newContent = require("!!../../../node_modules/css-loader/index.js!./Temple.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 

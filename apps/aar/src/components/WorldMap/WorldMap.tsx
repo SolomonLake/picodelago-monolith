@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 
 require("./WorldMap.css");
 
@@ -56,22 +55,22 @@ function createTile(tilePosition: TilePosition): Tile {
   }
 }
 
-export const WorldMapPresentationalComponent = () => (
+export const WorldMapViewComponent = () => (
   <div className="map">
     {worldMap.map((row: RowOfTiles, index) => (
-      <RowWorldMapPresentationalComponent key={index} mapRow={row} />
+      <RowWorldMapViewComponent key={index} mapRow={row} />
     ))}
   </div>
 );
 
-const RowWorldMapPresentationalComponent = (props: { mapRow: RowOfTiles }) => (
+const RowWorldMapViewComponent = (props: { mapRow: RowOfTiles }) => (
   <div className="map-row">
     {props.mapRow.map((tile: Tile, index: number) => (
-      <TileWorldMapPresentationalComponent key={index} mapTile={tile} />
+      <TileWorldMapViewComponent key={index} mapTile={tile} />
     ))}
   </div>
 );
 
-const TileWorldMapPresentationalComponent = (props: { mapTile: Tile }) => (
+const TileWorldMapViewComponent = (props: { mapTile: Tile }) => (
   <div className="map-tile"> {props.mapTile.char} </div>
 );

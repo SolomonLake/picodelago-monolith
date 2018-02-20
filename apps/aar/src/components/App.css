@@ -2,4 +2,14 @@
   display: flex;
   background-color: black;
   color: aliceblue;
+  flex-direction: column;
+}
+
+.app-top-menu {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-main-screen {
+  display: flex;
 }
