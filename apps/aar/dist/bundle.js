@@ -82,7 +82,6 @@ var App_1 = __webpack_require__(6);
 var AppStore_1 = __webpack_require__(4);
 renderApp();
 function renderApp() {
-    console.log("rendering app", AppStore_1.AppStore.state);
     react_dom_1.render(React.createElement(App_1.App, { appStoreState: AppStore_1.AppStore.state }), document.getElementById("root"));
 }
 exports.renderApp = renderApp;
@@ -587,14 +586,17 @@ __webpack_require__(7);
 var AppActionCreator_1 = __webpack_require__(10);
 var WorldMap_1 = __webpack_require__(12);
 exports.App = function (props) { return (React.createElement("div", { className: "app" },
-    React.createElement(AppScreen, { appStoreState: props.appStoreState }))); };
-var AppScreen = function (props) {
-    if (props.appStoreState.screen === "world") {
-        return React.createElement(WorldMap_1.WorldMapPresentationalComponent, null);
-    }
-    else {
-        return (React.createElement("div", null,
-            React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToWorldScreen }, " World ")));
+    React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToWorldScreen }, " World "),
+    React.createElement("button", { onClick: AppActionCreator_1.AppActionCreator.changeToTempleScreen }, " Temple "),
+    React.createElement(MainScreen, { appStoreState: props.appStoreState }))); };
+var MainScreen = function (props) {
+    switch (props.appStoreState.screen) {
+        case "world":
+            return React.createElement(WorldMap_1.WorldMapPresentationalComponent, null);
+        case "temple":
+            return React.createElement("div", null, " Temple ");
+        default:
+            throw new Error("case match exhaustive");
     }
 };
 
@@ -769,6 +771,9 @@ var AppStore_1 = __webpack_require__(4);
 exports.AppActionCreator = {
     changeToWorldScreen: function () {
         AppStore_1.AppStore.updateProperties(AppStore_1.AppStore, { screen: "world" });
+    },
+    changeToTempleScreen: function () {
+        AppStore_1.AppStore.updateProperties(AppStore_1.AppStore, { screen: "temple" });
     }
 };
 

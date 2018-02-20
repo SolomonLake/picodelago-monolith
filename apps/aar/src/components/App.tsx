@@ -10,18 +10,19 @@ import { WorldMapPresentationalComponent } from "./WorldMap/WorldMap";
 
 export const App = (props: { appStoreState: AppStoreState }) => (
   <div className="app">
-    <AppScreen appStoreState={props.appStoreState} />
+    <button onClick={AppActionCreator.changeToWorldScreen}> World </button>
+    <button onClick={AppActionCreator.changeToTempleScreen}> Temple </button>
+    <MainScreen appStoreState={props.appStoreState} />
   </div>
 );
 
-const AppScreen = (props: { appStoreState: AppStoreState }) => {
-  if (props.appStoreState.screen === "world") {
-    return <WorldMapPresentationalComponent />;
-  } else {
-    return (
-      <div>
-        <button onClick={AppActionCreator.changeToWorldScreen}> World </button>
-      </div>
-    );
+const MainScreen = (props: { appStoreState: AppStoreState }) => {
+  switch (props.appStoreState.screen) {
+    case "world":
+      return <WorldMapPresentationalComponent />;
+    case "temple":
+      return <div> Temple </div>;
+    default:
+      throw new Error("case match exhaustive");
   }
 };
