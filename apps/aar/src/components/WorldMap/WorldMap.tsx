@@ -7,11 +7,23 @@ export type Map = Array<RowOfTiles>;
 
 export type RowOfTiles = Array<Tile>;
 
-export type Tile = string;
+export type Tile = {
+  position: TilePosition;
+  char: string;
+};
+
+type TilePosition = {
+  row: number;
+  col: number;
+};
 
 const FONT_SIZE: number = 32;
-const ROWS_COUNT: number = 10;
-const COLS_COUNT: number = 10;
+const ROWS_COUNT: number = 20;
+const COLS_COUNT: number = 20;
+const BASE_LOCATION: TilePosition = {
+  row: Math.ceil(ROWS_COUNT / 2),
+  col: Math.ceil(COLS_COUNT / 2)
+};
 
 const worldMap: Map = createMap();
 
@@ -20,7 +32,8 @@ function createMap(): Map {
   for (var y = 0; y < ROWS_COUNT; y++) {
     var newRow = [];
     for (var x = 0; x < COLS_COUNT; x++) {
-      const newTile = createTile();
+      const tilePosition: TilePosition = { row: y, col: x };
+      const newTile = createTile(tilePosition);
       newRow.push(newTile);
     }
     newMap.push(newRow);
@@ -28,8 +41,19 @@ function createMap(): Map {
   return newMap;
 }
 
-function createTile(): Tile {
-  return "#";
+function createTile(tilePosition: TilePosition): Tile {
+  const tile = {
+    position: tilePosition,
+    char: "#"
+  };
+  if (
+    tilePosition.row === BASE_LOCATION.row &&
+    tilePosition.col === BASE_LOCATION.col
+  ) {
+    return { ...tile, char: "T" };
+  } else {
+    return tile;
+  }
 }
 
 export const WorldMapPresentationalComponent = () => (
@@ -49,5 +73,5 @@ const RowWorldMapPresentationalComponent = (props: { mapRow: RowOfTiles }) => (
 );
 
 const TileWorldMapPresentationalComponent = (props: { mapTile: Tile }) => (
-  <div className="map-tile"> {props.mapTile} </div>
+  <div className="map-tile"> {props.mapTile.char} </div>
 );
