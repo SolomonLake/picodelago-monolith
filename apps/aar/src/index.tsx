@@ -10,11 +10,15 @@ import { App } from "./components/App";
 import { AppStore } from "./components/AppStore";
 import { AppStoreState } from "./components/AppStore";
 
+require("./index.css");
+
 renderApp();
 
 export function renderApp() {
   render(
-    <App appStoreState={AppStore.state} />,
+    <div className="index-window">
+      <App appStoreState={AppStore.state} />
+    </div>,
     document.getElementById("root")
   );
 }

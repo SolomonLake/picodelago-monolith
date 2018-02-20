@@ -544,9 +544,11 @@ var React = __webpack_require__(0);
 var react_dom_1 = __webpack_require__(5);
 var App_1 = __webpack_require__(6);
 var AppStore_1 = __webpack_require__(4);
+__webpack_require__(18);
 renderApp();
 function renderApp() {
-    react_dom_1.render(React.createElement(App_1.App, { appStoreState: AppStore_1.AppStore.state }), document.getElementById("root"));
+    react_dom_1.render(React.createElement("div", { className: "index-window" },
+        React.createElement(App_1.App, { appStoreState: AppStore_1.AppStore.state })), document.getElementById("root"));
 }
 exports.renderApp = renderApp;
 
@@ -663,7 +665,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".app {\n  display: flex;\n  background-color: black;\n  color: aliceblue;\n  flex-direction: column;\n}\n\n.app-top-menu {\n  display: flex;\n  flex-direction: row;\n}\n\n.app-main-screen {\n  display: flex;\n}\n", ""]);
+exports.push([module.i, ".app {\n  display: flex;\n  flex-direction: column;\n}\n\n.app-top-menu {\n  display: flex;\n  flex-direction: row;\n}\n\n.app-main-screen {\n  display: flex;\n}\n", ""]);
 
 // exports
 
@@ -946,7 +948,8 @@ exports.push([module.i, ".map {\n  display: flex;\n}\n\n.map-row {\n  display: f
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 __webpack_require__(16);
-exports.TempleViewComponent = function () { return React.createElement("div", { className: "temple" }, "Temple"); };
+exports.TempleViewComponent = function () { return (React.createElement("div", { className: "temple" },
+    React.createElement("button", null, "Create Character"))); };
 
 
 /***/ }),
@@ -1009,6 +1012,70 @@ exports = module.exports = __webpack_require__(1)(false);
 
 // module
 exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(19);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../node_modules/css-loader/index.js!./index.css", function() {
+		var newContent = require("!!../node_modules/css-loader/index.js!./index.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  height: 100%;\n}\n\n.index-window {\n  background-color: black;\n  color: aliceblue;\n}\n", ""]);
 
 // exports
 
