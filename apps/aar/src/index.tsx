@@ -7,17 +7,34 @@ import { Store } from "./shared/StoreState";
 
 import { App } from "./components/App";
 
-import { AppStore } from "./components/AppStore";
-import { AppStoreState } from "./components/AppStore";
+import { AppStore, AppStoreState } from "./components/AppStore";
+import { TempleStore, TempleStoreState } from "./components/Temple/TempleStore";
+import {
+  CharacterCreationStore,
+  CharacterCreationStoreState
+} from "./components/CharacterCreation/CharacterCreationStore";
+
+export interface Stores {
+  appStoreState: AppStoreState;
+  templeStoreState: TempleStoreState;
+  characterStoreState: CharacterCreationStoreState;
+}
+
+var stores = {
+  appStoreState: AppStore.state,
+  templeStoreState: TempleStore.state,
+  characterStoreState: CharacterCreationStore.state
+};
 
 require("./index.css");
 
 renderApp();
 
 export function renderApp() {
+  console.log("stores", stores);
   render(
     <div className="index-window">
-      <App appStoreState={AppStore.state} />
+      <App stores={stores} />
     </div>,
     document.getElementById("root")
   );

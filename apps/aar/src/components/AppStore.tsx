@@ -5,7 +5,7 @@ export interface AppStoreState {
 }
 
 const initialStoreState: AppStoreState = {
-  screen: "world"
+  screen: "temple"
 };
 
 function appStoreCompute(newState: AppStoreState): AppStoreState {
