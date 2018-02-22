@@ -1,3 +1,4 @@
 .character-creation {
   display: flex;
+  flex-direction: column;
 }

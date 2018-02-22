@@ -1,11 +1,11 @@
-import { TempleStore } from "./TempleStore";
+import { templeStore } from "./TempleStore";
 
 export const TempleActionCreator = {
   changeToBaseScreen: () => {
-    TempleStore.updateProperties(TempleStore, { screen: "base" });
+    templeStore.updateProperties({ screen: "base" });
   },
 
   changeToCharacterCreationScreen: () => {
-    TempleStore.updateProperties(TempleStore, { screen: "characterCreation" });
+    templeStore.updateProperties({ screen: "characterCreation" });
   }
 };

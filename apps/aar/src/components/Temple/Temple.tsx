@@ -2,7 +2,7 @@ import * as React from "react";
 
 require("./Temple.css");
 
-import { TempleStore, TempleStoreState } from "./TempleStore";
+import { templeStore, TempleStoreState } from "./TempleStore";
 import { TempleActionCreator } from "./TempleActionCreator";
 
 import { CharacterCreationViewComponent } from "../CharacterCreation/CharacterCreation";
@@ -14,7 +14,7 @@ export const TempleViewComponent = () => (
 );
 
 const TempleMainScreen = () => {
-  switch (TempleStore.state.screen) {
+  switch (templeStore.state.screen) {
     case "base":
       return (
         <button onClick={TempleActionCreator.changeToCharacterCreationScreen}>

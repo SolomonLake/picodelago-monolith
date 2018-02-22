@@ -4,20 +4,24 @@ import {
   InputEventTarget
 } from "../../shared/typescriptInterfaces/types";
 
-import { CharacterCreationStore } from "./CharacterCreationStore";
+import { characterCreationStore } from "./CharacterCreationStore";
 
 import { generateCharacterName } from "./CharacterCreationApi";
 
 export const CharacterCreationActionCreator = {
   generateNewName: () => {
-    CharacterCreationStore.updateProperties(CharacterCreationStore, {
+    characterCreationStore.updateProperties({
       name: generateCharacterName()
     });
   },
 
   setName: (event: InputFormEvent<HTMLInputElement>) => {
-    CharacterCreationStore.updateProperties(CharacterCreationStore, {
+    characterCreationStore.updateProperties({
       name: event.target.value
     });
+  },
+
+  resetCharacterCreation: () => {
+    characterCreationStore.resetToInitialState();
   }
 };

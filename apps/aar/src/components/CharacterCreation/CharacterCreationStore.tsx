@@ -1,4 +1,4 @@
-import { storeCreator, Store } from "../../shared/StoreState";
+import { Store, IStore } from "../../shared/StoreState";
 
 import { generateCharacterName } from "./CharacterCreationApi";
 
@@ -10,12 +10,8 @@ const initialStoreState: CharacterCreationStoreState = {
   name: generateCharacterName()
 };
 
-function appStoreCompute(
-  newState: CharacterCreationStoreState
-): CharacterCreationStoreState {
-  return newState;
-}
+class CharacterCreationStore extends Store<CharacterCreationStoreState> {}
 
-export var CharacterCreationStore: Store<
-  CharacterCreationStoreState
-> = storeCreator(initialStoreState, appStoreCompute);
+export var characterCreationStore = new CharacterCreationStore(
+  initialStoreState
+);

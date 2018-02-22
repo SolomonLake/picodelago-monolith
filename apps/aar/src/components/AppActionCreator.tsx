@@ -1,11 +1,11 @@
-import { AppStore } from "./AppStore";
+import { appStore } from "./AppStore";
 
 export const AppActionCreator = {
   changeToWorldScreen: () => {
-    AppStore.updateProperties(AppStore, { screen: "world" });
+    appStore.updateProperties({ screen: "world" });
   },
 
   changeToTempleScreen: () => {
-    AppStore.updateProperties(AppStore, { screen: "temple" });
+    appStore.updateProperties({ screen: "temple" });
   }
 };

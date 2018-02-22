@@ -2,10 +2,8 @@ import * as React from "react";
 
 require("./App.css");
 
-import { AppStore, AppStoreState } from "./AppStore";
+import { appStore, AppStoreState } from "./AppStore";
 import { AppActionCreator } from "./AppActionCreator";
-
-import { TempleStoreState } from "./Temple/TempleStore";
 
 import { WorldMapViewComponent } from "./WorldMap/WorldMap";
 import { TempleViewComponent } from "./Temple/Temple";
@@ -23,7 +21,8 @@ export const App = () => (
 );
 
 const MainScreen = () => {
-  switch (AppStore.state.screen) {
+  console.log("store", appStore);
+  switch (appStore.state.screen) {
     case "world":
       return <WorldMapViewComponent />;
     case "temple":

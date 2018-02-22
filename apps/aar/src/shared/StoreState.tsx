@@ -1,45 +1,47 @@
 import { renderApp } from "../index";
 
-import { AppStore } from "../components/AppStore";
-
-export interface Store<T> {
+export interface IStore<T> {
   state: T;
   computeDerivedState: (newState: T) => T;
   updateProperties: (store: Store<T>, updatedProperties: T) => void;
 }
 
-export function storeCreator<T>(
-  initialState: T,
-  computeDerivedState?: (newState: T) => T
-): Store<T> {
-  return {
-    state: initialState,
+export class Store<T> {
+  initialState: T;
+  state: T;
 
-    computeDerivedState: computeDerivedState
-      ? computeDerivedState
-      : (newState: T) => {
-          return newState;
-        },
+  constructor(initialState: T) {
+    this.initialState = initialState;
+    this.state = initialState;
+  }
 
-    updateProperties: (store: Store<T>, updatedProperties: T): void => {
-      const oldState = store.state;
-      console.log(
-        "Updating Properties:",
-        updatedProperties,
-        "in store",
-        oldState
-      );
-      const updatedState = {
-        // @ts-ignore: spread operator on object error
-        ...oldState,
-        // @ts-ignore: spread operator on object error
-        ...updatedProperties
-      };
-      const newState = store.computeDerivedState(updatedState);
-      store.state = newState;
-      console.log("new state:", newState);
+  updateProperties(updatedProperties: T): void {
+    const oldState = this.state;
+    console.log(
+      "Updating Properties:",
+      updatedProperties,
+      "in store",
+      oldState
+    );
+    const updatedState = {
+      // @ts-ignore: spread operator on object error
+      ...oldState,
+      // @ts-ignore: spread operator on object error
+      ...updatedProperties
+    };
+    const newState = this.computeDerivedState(updatedState);
+    this.state = newState;
+    console.log("new state:", newState);
 
-      renderApp();
-    }
-  };
+    renderApp();
+  }
+
+  resetToInitialState(): void {
+    this.state = this.initialState;
+    renderApp();
+  }
+
+  computeDerivedState(newState: T) {
+    return newState;
+  }
 }

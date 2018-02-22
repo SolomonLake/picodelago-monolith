@@ -1,4 +1,4 @@
-import { storeCreator, Store } from "../../shared/StoreState";
+import { Store, IStore } from "../../shared/StoreState";
 
 export interface TempleStoreState {
   screen: "base" | "characterCreation";
@@ -8,6 +8,6 @@ const initialStoreState: TempleStoreState = {
   screen: "base"
 };
 
-export var TempleStore: Store<TempleStoreState> = storeCreator(
-  initialStoreState
-);
+class TempleStore extends Store<TempleStoreState> {}
+
+export var templeStore = new TempleStore(initialStoreState);
