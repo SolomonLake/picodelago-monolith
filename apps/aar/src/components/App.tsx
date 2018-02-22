@@ -10,26 +10,24 @@ import { TempleStoreState } from "./Temple/TempleStore";
 import { WorldMapViewComponent } from "./WorldMap/WorldMap";
 import { TempleViewComponent } from "./Temple/Temple";
 
-import { Stores } from "../index";
-
-export const App = (props: { stores: Stores }) => (
+export const App = () => (
   <div className="app">
     <div className="app-top-menu">
       <button onClick={AppActionCreator.changeToWorldScreen}> World </button>
       <button onClick={AppActionCreator.changeToTempleScreen}> Temple </button>
     </div>
     <div className="app-main-screen">
-      <MainScreen stores={props.stores} />
+      <MainScreen />
     </div>
   </div>
 );
 
-const MainScreen = (props: { stores: Stores }) => {
-  switch (props.stores.appStoreState.screen) {
+const MainScreen = () => {
+  switch (AppStore.state.screen) {
     case "world":
       return <WorldMapViewComponent />;
     case "temple":
-      return <TempleViewComponent stores={props.stores} />;
+      return <TempleViewComponent />;
     default:
       throw new Error("case match exhaustive");
   }

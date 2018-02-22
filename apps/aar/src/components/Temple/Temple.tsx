@@ -2,21 +2,19 @@ import * as React from "react";
 
 require("./Temple.css");
 
-import { Stores } from "../../index";
-
 import { TempleStore, TempleStoreState } from "./TempleStore";
 import { TempleActionCreator } from "./TempleActionCreator";
 
 import { CharacterCreationViewComponent } from "../CharacterCreation/CharacterCreation";
 
-export const TempleViewComponent = (props: { stores: Stores }) => (
+export const TempleViewComponent = () => (
   <div className="temple">
-    <TempleMainScreen stores={props.stores} />
+    <TempleMainScreen />
   </div>
 );
 
-const TempleMainScreen = (props: { stores: Stores }) => {
-  switch (props.stores.templeStoreState.screen) {
+const TempleMainScreen = () => {
+  switch (TempleStore.state.screen) {
     case "base":
       return (
         <button onClick={TempleActionCreator.changeToCharacterCreationScreen}>
@@ -24,7 +22,7 @@ const TempleMainScreen = (props: { stores: Stores }) => {
         </button>
       );
     case "characterCreation":
-      return <CharacterCreationViewComponent stores={props.stores} />;
+      return <CharacterCreationViewComponent />;
     default:
       throw new Error("case match exhaustive");
   }
