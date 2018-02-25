@@ -5,7 +5,7 @@ export interface TempleStoreState {
 }
 
 const initialStoreState: TempleStoreState = {
-  screen: "base"
+  screen: "characterCreation"
 };
 
 class TempleStore extends Store<TempleStoreState> {}

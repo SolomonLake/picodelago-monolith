@@ -15,7 +15,7 @@ export class Store<T> {
     this.state = initialState;
   }
 
-  updateProperties(updatedProperties: T): void {
+  updateProperties(updatedProperties: Partial<T>): void {
     const oldState = this.state;
     console.log(
       "Updating Properties:",
@@ -23,7 +23,7 @@ export class Store<T> {
       "in store",
       oldState
     );
-    const updatedState = {
+    const updatedState: T = {
       // @ts-ignore: spread operator on object error
       ...oldState,
       // @ts-ignore: spread operator on object error

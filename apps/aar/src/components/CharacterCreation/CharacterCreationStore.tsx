@@ -1,13 +1,15 @@
 import { Store, IStore } from "../../shared/StoreState";
 
-import { generateCharacterName } from "./CharacterCreationApi";
+import { characterCreationUtils } from "./CharacterCreationUtils";
 
 export interface CharacterCreationStoreState {
   name: string;
+  title: string;
 }
 
 const initialStoreState: CharacterCreationStoreState = {
-  name: generateCharacterName()
+  name: characterCreationUtils.generateCharacterName(),
+  title: characterCreationUtils.generateCharacterTitle()
 };
 
 class CharacterCreationStore extends Store<CharacterCreationStoreState> {}

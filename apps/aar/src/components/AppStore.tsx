@@ -8,10 +8,10 @@ const initialStoreState: AppStoreState = {
   screen: "temple"
 };
 
-function appStoreCompute(newState: AppStoreState): AppStoreState {
-  return newState;
+class AppStore extends Store<AppStoreState> {
+  computeDerivedState(newState: AppStoreState) {
+    return newState;
+  }
 }
-
-class AppStore extends Store<AppStoreState> {}
 
 export var appStore = new AppStore(initialStoreState);
