@@ -1,16 +1,10 @@
-# Veronica Videntonto - Hunter Seer Police Officer
+# Ronda Weever - [Sanctuary Pub][sanctuarypub] Waitress
 
 ## **Overview**
 
 ### Location
 
-Iowa City
-
 ### Factions
-
-* police
-* hunters
-* morpheus
 
 ### Motivations
 
@@ -22,7 +16,11 @@ Iowa City
 
 ### Ethnicity
 
+Half-mexican
+
 ### Gender
+
+Woman
 
 ## **Personality**
 

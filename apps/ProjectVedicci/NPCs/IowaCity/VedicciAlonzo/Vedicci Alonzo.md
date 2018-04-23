@@ -6,6 +6,8 @@
 
 Iowa City
 
+### Factions
+
 ### Motivations
 
 ### Occupation
@@ -14,7 +16,7 @@ Iowa City
 
 ### Appearance
 
-### Race
+### Ethnicity
 
 ### Gender
 
@@ -27,3 +29,10 @@ Iowa City
 ### Quirks
 
 > end npc file
+
+> end file
+
+> global links
+
+[sanctuarypub]: /NPCs/IowaCity/RondaWeever/RondaWeever.md
+[rondaweever]: /NPCs/IowaCity/RondaWeever/RondaWeever.md

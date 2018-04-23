@@ -1,7 +1,3 @@
-# World Timeline
-
-> end file
-
 > global links
 
 [sanctuarypub]: /NPCs/IowaCity/RondaWeever/RondaWeever.md

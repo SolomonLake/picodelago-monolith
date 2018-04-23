@@ -5,3 +5,10 @@
 2.  She has vision of {{gang member}} brandishing a gun and threatening to kill
     the {{chief of police}}
 3.  Veronica Videntonto poisons gang member
+
+> end file
+
+> global links
+
+[sanctuarypub]: /NPCs/IowaCity/RondaWeever/RondaWeever.md
+[rondaweever]: /NPCs/IowaCity/RondaWeever/RondaWeever.md

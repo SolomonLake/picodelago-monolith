@@ -10,3 +10,10 @@ This dark energy has attracted people of the occult across the world, bringing
 with them a host of shady characters
 
 Creatures: Morpheus - eater of dreams
+
+> end file
+
+> global links
+
+[sanctuarypub]: /NPCs/IowaCity/RondaWeever/RondaWeever.md
+[rondaweever]: /NPCs/IowaCity/RondaWeever/RondaWeever.md

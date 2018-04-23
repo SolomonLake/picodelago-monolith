@@ -4,6 +4,8 @@
 
 ### Location
 
+### Factions
+
 ### Motivations
 
 ### Occupation
@@ -12,7 +14,7 @@
 
 ### Appearance
 
-### Race
+### Ethnicity
 
 ### Gender
 
@@ -25,3 +27,10 @@
 ### Quirks
 
 > end npc file
+
+> end file
+
+> global links
+
+[sanctuarypub]: /NPCs/IowaCity/RondaWeever/RondaWeever.md
+[rondaweever]: /NPCs/IowaCity/RondaWeever/RondaWeever.md
