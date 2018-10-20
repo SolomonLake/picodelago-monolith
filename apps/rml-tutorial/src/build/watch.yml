@@ -1,0 +1,11 @@
+windows:
+  - name: chrome-extension
+    layout: even-vertical
+    root: ~/projects/peardeck-monolith/apps/chrome-extension
+    panes:
+      - name: yarn start
+        commands: 
+          - yarn start
+      - name: yarn webpack
+        commands: 
+          -  yarn webpack
