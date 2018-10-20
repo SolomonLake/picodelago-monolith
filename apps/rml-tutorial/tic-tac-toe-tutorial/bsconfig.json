@@ -1,6 +1,11 @@
 {
   "name": "reason-scripts",
-  "sources": ["src", "src/components"],
+  "sources": [
+    "src",
+    "src/components",
+    "src/components/Game",
+    "src/components/Board"
+  ],
   "bs-dependencies": ["reason-react", "@glennsl/bs-jest", "bs-fetch"],
   "reason": {
     "react-jsx": 2
