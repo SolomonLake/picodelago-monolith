@@ -15,8 +15,7 @@ let make =
         row
         |> List.mapi((ind: int, value: GameTypes.field) => {
              let id = string_of_int(index) ++ string_of_int(ind);
-             <div />;
-             /* <Square key=id value onMark={() => onMark(id)} gameState />; */
+             <Square key=id value onMark={() => onMark(id)} gameState />;
            })
         |> Array.of_list
         |> ReasonReact.array
