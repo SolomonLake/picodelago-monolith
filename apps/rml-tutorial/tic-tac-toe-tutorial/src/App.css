@@ -1,32 +1,68 @@
-.App {
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+.title {
   text-align: center;
+  font-weight: bold;
+  font-size: 60px;
+  margin-bottom: 20px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.status {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 80px;
+  line-height: 34px;
+  height: 200px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 200px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.square:focus {
+  background: #ddd;
+}
+
+.winner {
+  background: lightgreen;
+}
+
+.game {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
 }
 
-.App-link {
-  color: #61dafb;
+.game-board {
+  margin: 0 auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.restart {
+  display: block;
+  margin: 0 auto;
+  width: 180px;
+  height: 70px;
+  font-size: 50px;
+  margin-top: 30px;
 }

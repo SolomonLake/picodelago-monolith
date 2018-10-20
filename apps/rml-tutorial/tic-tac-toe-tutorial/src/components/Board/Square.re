@@ -2,10 +2,10 @@ open GameTypes;
 
 let component = ReasonReact.statelessComponent("Square");
 
-let isFinished = (value: gameState) =>
+let isFinished = (value: gameState): bool =>
   switch (value) {
-  | Winner(_) => true
-  | _ => false
+  | Playing(_) => false
+  | _ => true
   };
 
 let toValue = (field: field) =>
