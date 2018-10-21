@@ -100,6 +100,33 @@ let updateBoard = (board: board, gameState: gameState, id) =>
           )
      );
 
+let rec firstEmptySquare = (flattenedBoard: list(field), index: int) => {
+  let value = List.hd(flattenedBoard);
+  let flattenedBoardRest = List.tl(flattenedBoard);
+  switch (value) {
+  | Empty => index
+  | _ => firstEmptySquare(flattenedBoardRest, index + 1)
+  };
+};
+
+let boardAfterAIPlaysTurn = (oldBoard: board, gameState): board => {
+  let firstEmpty = firstEmptySquare(List.flatten(oldBoard), 0);
+  Js.log(firstEmpty);
+  oldBoard
+  |> List.mapi((ind: int, row: row) =>
+       row
+       |> List.mapi((index: int, value: field) =>
+            ind * 3 + index === firstEmpty ?
+              switch (gameState, value) {
+              | (_, Marked(_)) => value
+              | (Playing(player), Empty) => Marked(player)
+              | (_, Empty) => Empty
+              } :
+              value
+          )
+     );
+};
+
 let component = ReasonReact.reducerComponent("Game");
 let make = _children => {
   ...component,
@@ -109,11 +136,20 @@ let make = _children => {
     | Restart => ReasonReact.Update(initialState)
     | ClickSquare((id: string)) =>
       let updatedBoard = updateBoard(state.board, state.gameState, id);
-      ReasonReact.Update({
-        board: updatedBoard,
-        gameState:
-          checkGameState3x3(updatedBoard, state.board, state.gameState),
-      });
+      let newGameState =
+        checkGameState3x3(updatedBoard, state.board, state.gameState);
+
+      switch (newGameState) {
+      | Playing(_) =>
+        let aiPlayedBoard = boardAfterAIPlaysTurn(updatedBoard, newGameState);
+        ReasonReact.Update({
+          board: aiPlayedBoard,
+          gameState:
+            checkGameState3x3(aiPlayedBoard, updatedBoard, newGameState),
+        });
+      | _ =>
+        ReasonReact.Update({board: updatedBoard, gameState: newGameState})
+      };
     },
   render: ({state, send}) =>
     <div className="game">
