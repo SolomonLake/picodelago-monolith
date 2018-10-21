@@ -11,18 +11,13 @@ type room = {
 let min = room_size_range.min;
 let max = room_size_range.max;
 
-let randomRange = (min, max) => 
-
 let firstRoom = {
-  x: Random.int(grid_width - max - 15),
-  y: Random.int(grid_height - max - 15),
-  height: Random.int(room_size_max),
-  width: Random.int(room_size_max),
-  /* we give an id that we will use for visualization purposes later */
+  x: Utils.randomRange(0, grid_width - max - 15),
+  y: Utils.randomRange(0, grid_height - max - 15),
+  height: Utils.randomRange(min, max),
+  width: Utils.randomRange(min, max),
   id: "O",
 };
-/* delete the console log after testing it */
-Js.log(firstRoom);
 
 type roomType =
   | Floor
@@ -38,7 +33,7 @@ type gridRow = list(gridField);
 let initialGrid: list(gridRow) =
   Belt.List.make(
     grid_height,
-    Belt.List.make(grid_width, {roomType: Wall, id: ""}),
+    Belt.List.make(grid_width, {roomType: Wall, id: " "}),
   );
 
 let placeCells = (grid, {x, y, width, height, id}, roomType) =>
@@ -51,20 +46,34 @@ let placeCells = (grid, {x, y, width, height, id}, roomType) =>
             yInsideRange && xInsideRange ? {roomType, id} : field;
           })
      );
-/* for (let i = y; i < y + height; i++) {
-       for (let j = x; j < x + width; j++) {
-         /* the {} means that we are passing an object with 2 props, type and id
-         since we use ES6 we  dont need to say {type: type, id: id} */
-         grid[i][j] = {type, id};
-       }
-     }
-     return grid;
-   }; */
 
 let grid = placeCells(initialGrid, firstRoom, Floor);
 
 let component = ReasonReact.statelessComponent("Map");
 let make = _children => {
   ...component,
-  render: _self => <div> {ReasonReact.string("X")} </div>,
+  render: _self =>
+    <div>
+      {
+        grid
+        |> List.mapi((index, row) =>
+             <div className="row" key={"row" ++ (index |> string_of_int)}>
+               {
+                 row
+                 |> List.mapi((ind, field) =>
+                      <div
+                        className={field.roomType === Floor ? "floor" : "wall"}
+                        key={ind |> string_of_int}>
+                        {field.id |> ReasonReact.string}
+                      </div>
+                    )
+                 |> Array.of_list
+                 |> ReasonReact.array
+               }
+             </div>
+           )
+        |> Array.of_list
+        |> ReasonReact.array
+      }
+    </div>,
 };

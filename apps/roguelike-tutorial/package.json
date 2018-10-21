@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "node-sass": "^4.9.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "reason-scripts": "1.0.0"
+    "reason-scripts": "1.0.0",
+    "sass": "^1.14.3"
   },
   "scripts": {
     "start": "react-scripts start",
