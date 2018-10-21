@@ -1,0 +1,15 @@
+{
+  "name": "reason-scripts",
+  "sources": ["src", "src/Game", "src/Map"],
+  "bs-dependencies": ["reason-react", "@glennsl/bs-jest", "bs-fetch"],
+  "reason": {
+    "react-jsx": 2
+  },
+  "refmt": 3,
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js"
+  // "do": robot.sex
+}
