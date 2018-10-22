@@ -55,13 +55,15 @@ let rec generateRooms = (grid, numRoomTries) =>
   numRoomTries === numRoomTriesCount ?
     grid :
     {
-      let roomX = Utils.randomRange(0, grid_width - max);
-      let roomY = Utils.randomRange(0, grid_height - max);
+      let roomX = Utils.randomRange(0, grid_width - min);
+      let roomY = Utils.randomRange(0, grid_height - min);
+      let xMax = grid_width - roomX > max ? max : grid_width - roomX;
+      let yMax = grid_height - roomY > max ? max : grid_height - roomY;
       let room = {
         xStart: roomX,
         yStart: roomY,
-        xEnd: roomX + Utils.randomRange(min, max),
-        yEnd: roomY + Utils.randomRange(min, max),
+        xEnd: roomX + Utils.randomRange(min, xMax),
+        yEnd: roomY + Utils.randomRange(min, yMax),
         id: numRoomTries |> string_of_int,
       };
 
