@@ -11,25 +11,25 @@ type room = {
 let min = room_size_range.min;
 let max = room_size_range.max;
 
-type roomType =
+type fieldType =
   | Floor
   | Wall;
 
 type gridField = {
-  roomType,
+  fieldType,
   id: string,
 };
 
 type gridRow = list(gridField);
 
-let placeCells = (grid, {xStart, yStart, xEnd, yEnd, id}, roomType) =>
+let placeCells = (grid, {xStart, yStart, xEnd, yEnd, id}, fieldType) =>
   grid
   |> List.mapi((yIndex: int, row: gridRow) =>
        row
        |> List.mapi((xIndex: int, field: gridField) => {
             let yInsideRange = yIndex > yStart && yIndex < yEnd;
             let xInsideRange = xIndex > xStart && xIndex < xEnd;
-            yInsideRange && xInsideRange ? {roomType, id} : field;
+            yInsideRange && xInsideRange ? {fieldType, id} : field;
           })
      );
 
@@ -40,7 +40,7 @@ let rec roomOverlaps = (grid: list(gridRow), room, curX, curY) =>
       let curRow = List.nth(grid, curY);
       let curField = List.nth(curRow, curX);
 
-      switch (curField.roomType) {
+      switch (curField.fieldType) {
       | Wall =>
         let endOfRow = curX + 1 > room.xEnd;
         let nextX = endOfRow ? room.xStart : curX + 1;
@@ -76,7 +76,7 @@ let generateInitialGrid = () => {
   let emptyGrid: list(gridRow) =
     Belt.List.make(
       grid_height,
-      Belt.List.make(grid_width, {roomType: Wall, id: " "}),
+      Belt.List.make(grid_width, {fieldType: Wall, id: " "}),
     );
   generateRooms(emptyGrid, 0);
 };
@@ -101,7 +101,9 @@ let make = _children => {
                  row
                  |> List.mapi((ind, field) =>
                       <div
-                        className={field.roomType === Floor ? "floor" : "wall"}
+                        className={
+                          field.fieldType === Floor ? "floor" : "wall"
+                        }
                         key={ind |> string_of_int}>
                         {field.id |> ReasonReact.string}
                       </div>
