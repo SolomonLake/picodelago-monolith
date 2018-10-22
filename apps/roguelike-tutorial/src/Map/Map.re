@@ -12,8 +12,8 @@ let min = room_size_range.min;
 let max = room_size_range.max;
 
 let firstRoom = {
-  x: Utils.randomRange(0, grid_width - max - 15),
-  y: Utils.randomRange(0, grid_height - max - 15),
+  x: Utils.randomRange(0, grid_width - max - 20),
+  y: Utils.randomRange(0, grid_height - max - 20),
   height: Utils.randomRange(min, max),
   width: Utils.randomRange(min, max),
   id: "O",
@@ -30,12 +30,6 @@ type gridField = {
 
 type gridRow = list(gridField);
 
-let initialGrid: list(gridRow) =
-  Belt.List.make(
-    grid_height,
-    Belt.List.make(grid_width, {roomType: Wall, id: " "}),
-  );
-
 let placeCells = (grid, {x, y, width, height, id}, roomType) =>
   grid
   |> List.mapi((yIndex: int, row: gridRow) =>
@@ -47,7 +41,41 @@ let placeCells = (grid, {x, y, width, height, id}, roomType) =>
           })
      );
 
-let grid = placeCells(initialGrid, firstRoom, Floor);
+let generateRooms = () => {
+  let numRoomTries = 20;
+  for (x in 0 to numRoomTries) {
+    let room = {
+      x: Utils.randomRange(0, grid_width - max),
+      y: Utils.randomRange(0, grid_height - max),
+      height: Utils.randomRange(min, max),
+      width: Utils.randomRange(min, max),
+      id: "O",
+    };
+
+      /* var room = new Rect(x, y, width, height); */
+
+      /* var overlaps = false;
+      for (var other in _rooms) {
+        if (room.distanceTo(other) <= 0) {
+          overlaps = true;
+          break;
+        }
+      }
+
+      if (overlaps) continue; */
+  };
+};
+
+let generateInitialGrid = () => {
+  let emptyGrid: list(gridRow) =
+    Belt.List.make(
+      grid_height,
+      Belt.List.make(grid_width, {roomType: Wall, id: " "}),
+    );
+  generateRooms();
+};
+
+let initialGrid = generateInitialGrid();
 
 let component = ReasonReact.statelessComponent("Map");
 let make = _children => {
@@ -55,7 +83,7 @@ let make = _children => {
   render: _self =>
     <div>
       {
-        grid
+        initialGrid
         |> List.mapi((index, row) =>
              <div className="row" key={"row" ++ (index |> string_of_int)}>
                {
