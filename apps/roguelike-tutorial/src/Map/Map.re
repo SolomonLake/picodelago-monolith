@@ -50,7 +50,7 @@ let rec roomOverlaps = (grid: list(gridRow), room, curX, curY) =>
       };
     };
 
-let numRoomTriesCount = 30;
+let numRoomTriesCount = 50;
 let rec generateRooms = (grid, numRoomTries) =>
   numRoomTries === numRoomTriesCount ?
     grid :
@@ -60,8 +60,8 @@ let rec generateRooms = (grid, numRoomTries) =>
       let room = {
         xStart: roomX,
         yStart: roomY,
-        yEnd: roomY + Utils.randomRange(min, max),
         xEnd: roomX + Utils.randomRange(min, max),
+        yEnd: roomY + Utils.randomRange(min, max),
         id: numRoomTries |> string_of_int,
       };
 
