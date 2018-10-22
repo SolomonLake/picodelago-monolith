@@ -81,7 +81,12 @@ let generateInitialGrid = () => {
   generateRooms(emptyGrid, 0);
 };
 
+let start = Js.Date.now();
 let initialGrid = generateInitialGrid();
+Js.log2(
+  "generated map in x millaseconds=",
+  (Js.Date.now() |> int_of_float) - (start |> int_of_float),
+);
 
 let component = ReasonReact.statelessComponent("Map");
 let make = _children => {
