@@ -33,9 +33,24 @@ let placeCells = (grid, {xStart, yStart, xEnd, yEnd, id}, roomType) =>
           })
      );
 
-/* let roomOverlaps = (grid: list(gridRow), room) => grid |> List.i; */
+let rec roomOverlaps = (grid: list(gridRow), room, curX, curY) =>
+  curX === room.xEnd && curY === room.yEnd ?
+    false :
+    {
+      let curRow = List.nth(grid, curY);
+      let curField = List.nth(curRow, curX);
 
-let numRoomTriesCount = 100;
+      switch (curField.roomType) {
+      | Wall =>
+        let endOfRow = curX + 1 > room.xEnd;
+        let nextX = endOfRow ? room.xStart : curX + 1;
+        let nextY = endOfRow ? curY + 1 : curY;
+        roomOverlaps(grid, room, nextX, nextY);
+      | _ => true
+      };
+    };
+
+let numRoomTriesCount = 30;
 let rec generateRooms = (grid, numRoomTries) =>
   numRoomTries === numRoomTriesCount ?
     grid :
@@ -50,7 +65,8 @@ let rec generateRooms = (grid, numRoomTries) =>
         id: numRoomTries |> string_of_int,
       };
 
-      let newGrid = placeCells(grid, room, Floor);
+      let overlaps = roomOverlaps(grid, room, room.xStart, room.yStart);
+      let newGrid = overlaps ? grid : placeCells(grid, room, Floor);
       generateRooms(newGrid, numRoomTries + 1);
     };
 
