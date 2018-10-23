@@ -44,10 +44,7 @@ let make = _children => {
       {
         switch (state.view) {
         | Map => <MapComponent state />
-        | HeroCreation =>
-          <HeroCreationComponent
-            back=(_evt => send(GameAction.ChangeView(Map)))
-          />
+        | HeroCreation => <HeroCreationComponent />
         }
       }
     </div>,
