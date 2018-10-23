@@ -2,11 +2,6 @@ open GameTypes;
 
 let initialState = {map: Map.initialGrid, view: HeroCreation};
 
-let currentViewButton = viewString =>
-  <button disabled=true>
-    {"*" ++ viewString ++ "*" |> ReasonReact.string}
-  </button>;
-
 let component = ReasonReact.reducerComponent("Game");
 let make = _children => {
   ...component,
@@ -18,29 +13,11 @@ let make = _children => {
     },
   render: ({state, send}) =>
     <div>
-      <div>
-        {
-          let viewButtonText = "Create Hero";
-          switch (state.view) {
-          | HeroCreation => currentViewButton(viewButtonText)
-          | _ =>
-            <button
-              onClick=(_evt => send(GameAction.ChangeView(HeroCreation)))>
-              {viewButtonText |> ReasonReact.string}
-            </button>
-          };
-        }
-        {
-          let viewButtonText = "Open Map";
-          switch (state.view) {
-          | Map => currentViewButton(viewButtonText)
-          | _ =>
-            <button onClick=(_evt => send(GameAction.ChangeView(Map)))>
-              {viewButtonText |> ReasonReact.string}
-            </button>
-          };
-        }
-      </div>
+      {
+        GameMenu.menu(state, (_evt, view) =>
+          send(GameAction.ChangeView(view))
+        )
+      }
       {
         switch (state.view) {
         | Map => <MapComponent state />

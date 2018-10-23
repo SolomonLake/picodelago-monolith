@@ -1,6 +1,13 @@
 {
   "name": "reason-scripts",
-  "sources": ["src", "src/Game", "src/Map", "src/Utils", "src/Hero"],
+  "sources": [
+    "src",
+    "src/Game",
+    "src/Game/ui",
+    "src/Map",
+    "src/Utils",
+    "src/Hero"
+  ],
   "bs-dependencies": ["reason-react", "@glennsl/bs-jest", "bs-fetch"],
   "reason": {
     "react-jsx": 2
