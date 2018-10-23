@@ -1,21 +1,19 @@
-open Map;
-
 let component = ReasonReact.statelessComponent("MapComponent");
-let make = _children => {
+let make = (~state: GameTypes.state, _children) => {
   ...component,
   render: _self =>
     <div>
       {
-        Map.initialGrid
+        state.map
         |> List.mapi((index, row) =>
              <div className="row" key={"row" ++ (index |> string_of_int)}>
                {
                  row
-                 |> List.mapi((ind, field) =>
+                 |> List.mapi((ind, tile: Map.mapTile) =>
                       <div
-                        className={field.tileType === Floor ? "floor" : "wall"}
+                        className={tile.tileType === Floor ? "floor" : "wall"}
                         key={ind |> string_of_int}>
-                        {field.id |> ReasonReact.string}
+                        {tile.id |> ReasonReact.string}
                       </div>
                     )
                  |> Array.of_list
