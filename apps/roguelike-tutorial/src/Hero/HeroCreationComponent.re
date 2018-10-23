@@ -11,7 +11,7 @@ type state = hero;
 let initialState = {name: "Rooni", race: Human, gender: Fluid};
 
 let component = ReasonReact.reducerComponent("HeroCreationComponent");
-let make = _children => {
+let make = (~back, _children) => {
   ...component,
   initialState: () => initialState,
   reducer: (action: action, state) =>
