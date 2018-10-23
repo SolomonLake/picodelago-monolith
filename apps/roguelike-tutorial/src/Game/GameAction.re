@@ -1,2 +1,2 @@
 type action =
-  | Unit;
+  | ChangeView(GameTypes.view);

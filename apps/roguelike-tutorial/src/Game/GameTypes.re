@@ -1,10 +1,8 @@
-type gameView =
+type view =
   | Map
-  | CharacterCreation;
-
-type viewState = {view: gameView};
+  | HeroCreation;
 
 type state = {
   map: Map.mapGrid,
-  viewState,
+  view,
 };

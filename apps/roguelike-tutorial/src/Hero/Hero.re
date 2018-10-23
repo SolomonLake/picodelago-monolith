@@ -13,5 +13,3 @@ type hero = {
   race,
   gender,
 };
-
-let generateHero = () => {name: "Rooni", race: Dwarf, gender: Fluid};
