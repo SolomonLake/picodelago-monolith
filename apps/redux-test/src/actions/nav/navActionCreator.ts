@@ -1,20 +1,22 @@
-import { Page } from "../../store/IStoreState";
-import { NavGoToPageAction } from "./NavAction";
+import {
+  NavGoToPlansOverviewPageAction,
+  NavGoToPlanPageAction
+} from "./NavAction";
+import { Page } from "../../store/UIState";
+import { Plan } from "../../store/IStoreState";
 
 class NavActionCreator {
-  goToPage(page: Page): NavGoToPageAction {
+  goToPlanPage(plan: Plan): NavGoToPlanPageAction {
     return {
-      type: "NAV__GO_TO_PAGE_ACTION",
-      page
+      type: "NAV__GO_TO_PLAN_PAGE_ACTION",
+      plan
     };
   }
 
-  goToPlanPage(): NavGoToPageAction {
-    return this.goToPage("Plan");
-  }
-
-  goToPlansOverviewPage(): NavGoToPageAction {
-    return this.goToPage("PlansOverview");
+  goToPlansOverviewPage(): NavGoToPlansOverviewPageAction {
+    return {
+      type: "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION"
+    };
   }
 }
 

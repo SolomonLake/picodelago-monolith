@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-native-uuid": "^1.4.9"
+  }
+}

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import { IStoreState } from "../store/IStoreState";
-import { pageReducer } from "./pageReducer";
 import { plansReducer } from "./plansReducer";
+import { uiReducer } from "./uiReducer";
 
 export const rootReducer = combineReducers<IStoreState>({
-  page: pageReducer,
+  ui: uiReducer,
   plans: plansReducer
 });

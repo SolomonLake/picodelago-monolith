@@ -7,7 +7,7 @@ import { MainUI } from "./MainUI";
 
 const mapStateToProps = (state: IStoreState) => {
   return {
-    page: state.page
+    page: state.ui.page
   };
 };
 

@@ -1,10 +1,18 @@
-import { Page } from "../../store/IStoreState";
+import { Plan } from "../../store/IStoreState";
 import { PlansAddPlanAction } from "./PlansAction";
+import { uuid } from "../../utils/uuid";
 
+const defaultPlan = (): Plan => ({
+  id: uuid(),
+  name: "",
+  category: "Work",
+  times: []
+});
 class PlansActionCreator {
-  addPlan(page: Page): PlansAddPlanAction {
+  addPlan(): PlansAddPlanAction {
     return {
-      type: "PLANS__ADD_PLAN_ACTION"
+      type: "PLANS__ADD_PLAN_ACTION",
+      newPlan: defaultPlan()
     };
   }
 }
