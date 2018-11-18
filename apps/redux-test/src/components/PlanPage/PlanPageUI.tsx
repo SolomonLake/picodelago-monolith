@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, Button, Text } from "react-native";
-import { Plan } from "../../store/IStoreState";
-import { planName } from "./PlanUiUtils";
+import { View, Button, Text, TextInput } from "react-native";
+import { Plan, PlanMap } from "../../store/IStoreState";
+import { planName } from "./planUiUtils";
 
 interface IPlanPageProps {
-  plan: Plan;
+  plans: PlanMap;
+  openPlanId: string;
   goToPlansOverviewPage: () => void;
   changePlanName: (planId: string, name: string) => void;
 }
@@ -12,9 +13,13 @@ interface IPlanPageProps {
 export class PlanPageUI extends Component<IPlanPageProps> {
   constructor(props: IPlanPageProps) {
     super(props);
+
+    this.changeName = this.changeName.bind(this);
   }
+
   render() {
-    console.log("plan page!", this.props.plan);
+    const plan = this.props.plans[this.props.openPlanId];
+    console.log("PlanPage props", this.props);
     return (
       <View
         style={{
@@ -27,8 +32,18 @@ export class PlanPageUI extends Component<IPlanPageProps> {
           color="#DE5448"
           title="Back"
         />
-        <Text>{planName(this.props.plan)}</Text>
+        <Text>{planName(plan)}</Text>
+        <TextInput
+          value={planName(plan)}
+          onChangeText={this.changeName(plan)}
+        />
       </View>
     );
+  }
+
+  changeName(plan: Plan) {
+    return (name: string) => {
+      this.props.changePlanName(name, plan.id);
+    };
   }
 }

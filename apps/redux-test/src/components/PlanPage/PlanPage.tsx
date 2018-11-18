@@ -10,7 +10,8 @@ import { plansActionCreator } from "../../actions/plans/plansActionCreator";
 const mapStateToProps = (state: IStoreState) => {
   if (state.ui.page === "Plan") {
     return {
-      plan: state.plans[state.ui.openPlanId]
+      plans: state.plans,
+      openPlanId: state.ui.openPlanId
     };
   } else {
     throw new Error("PlanPage rendering without being on Plan Page");
@@ -21,8 +22,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   goToPlansOverviewPage: () => {
     dispatch(navActionCreator.goToPlansOverviewPage());
   },
-  changePlanName: (planId: string, name: string) => {
-    dispatch(plansActionCreator.changePlanName(planId, name));
+  changePlanName: (name: string, planId: string) => {
+    dispatch(plansActionCreator.changePlanName(name, planId));
   }
 });
 
