@@ -1,12 +1,13 @@
 import React, { Dispatch } from "react";
 import { PlansOverviewPage } from "./PlansOverviewPage/PlansOverviewPage";
-import { Switch, Button, View } from "react-native";
+import { Switch, Button, View, StyleSheet } from "react-native";
 import { rootReducer } from "../reducers/rootReducer";
 import { IStoreState, Page } from "../store/IStoreState";
 import { connect } from "react-redux";
 import PlanPage from "./PlanPage/PlanPage";
-import { goToPage } from "../actions/navigation/NavActions";
-import { Actions } from "../actions/Actions";
+import { mainStyles } from "./main_styles";
+import { Action } from "../actions/Action";
+import { navActionCreator } from "../actions/nav/navActionCreator";
 
 interface IMainProps {
   readonly page: Page;
@@ -21,6 +22,7 @@ class MainView extends React.Component<IMainProps> {
   public render() {
     return (
       <View>
+        <View style={mainStyles.status_bar_buffer} />
         {/* {pageComponent(this.props.page)} */}
         <Button
           onPress={() => {
@@ -51,9 +53,9 @@ const mapStateToProps = (state: IStoreState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   goToPage: (page: Page) => {
-    dispatch(goToPage(page));
+    dispatch(navActionCreator.goToPage(page));
   }
 });
 
