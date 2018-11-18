@@ -5,7 +5,6 @@ import { Action } from "../../actions/Action";
 import { navActionCreator } from "../../actions/nav/navActionCreator";
 import { IStoreState } from "../../store/IStoreState";
 import { PlansOverviewPageUI } from "./PlansOverviewPageUI";
-import { PlanPageUI } from "../PlanPage/PlanPageUI";
 
 const mapStateToProps = (state: IStoreState) => {
   return state;

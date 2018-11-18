@@ -11,7 +11,7 @@ const mapStateToProps = (state: IStoreState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
+const mapDispatchToProps = (_: Dispatch<Action>) => ({});
 
 export const Main = connect(
   mapStateToProps,

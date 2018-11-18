@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from "react";
+import React, { Component } from "react";
 import { View, Button } from "react-native";
 
 interface IPlanPageProps {
@@ -9,7 +9,6 @@ export class PlanPageUI extends Component<IPlanPageProps> {
   constructor(props: IPlanPageProps) {
     super(props);
   }
-
   render() {
     return (
       <View

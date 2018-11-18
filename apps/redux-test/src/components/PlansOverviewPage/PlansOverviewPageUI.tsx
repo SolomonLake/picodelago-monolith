@@ -1,5 +1,5 @@
-import React, { Component, Dispatch } from "react";
-import { Button, View, Text } from "react-native";
+import React, { Component } from "react";
+import { Button, View } from "react-native";
 
 interface IPlansOverviewPageProps {
   goToPlanPage: () => Promise<void>;
@@ -9,7 +9,6 @@ export class PlansOverviewPageUI extends Component<IPlansOverviewPageProps> {
   constructor(props: IPlansOverviewPageProps) {
     super(props);
   }
-
   render() {
     return (
       <View
