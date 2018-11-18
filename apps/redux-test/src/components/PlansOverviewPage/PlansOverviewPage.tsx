@@ -1,26 +1,23 @@
-import React, { Component } from "react";
-import { View, Text, Button } from "react-native";
+import { Dispatch } from "react";
 import { connect } from "react-redux";
 
-export class PlansOverviewPage extends Component {
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "stretch",
-          backgroundColor: "#DE5448",
-          paddingTop: 20
-        }}
-      >
-        <Button
-          onPress={() => {
-            console.log("pressed");
-          }}
-          color="#DE5448"
-          title="Plans Overview"
-        />
-      </View>
-    );
+import { Action } from "../../actions/Action";
+import { navActionCreator } from "../../actions/nav/navActionCreator";
+import { IStoreState } from "../../store/IStoreState";
+import { PlansOverviewPageUI } from "./PlansOverviewPageUI";
+import { PlanPageUI } from "../PlanPage/PlanPageUI";
+
+const mapStateToProps = (state: IStoreState) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  goToPlanPage: () => {
+    dispatch(navActionCreator.goToPlanPage());
   }
-}
+});
+
+export const PlansOverviewPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlansOverviewPageUI);

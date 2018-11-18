@@ -8,6 +8,14 @@ class NavActionCreator {
       page
     };
   }
+
+  goToPlanPage(): NavGoToPageAction {
+    return this.goToPage("Plan");
+  }
+
+  goToPlansOverviewPage(): NavGoToPageAction {
+    return this.goToPage("PlansOverview");
+  }
 }
 
 export const navActionCreator = new NavActionCreator();

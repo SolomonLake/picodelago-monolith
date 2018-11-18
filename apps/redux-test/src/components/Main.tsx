@@ -2,9 +2,8 @@ import { Dispatch } from "react";
 import { connect } from "react-redux";
 
 import { Action } from "../actions/Action";
-import { navActionCreator } from "../actions/nav/navActionCreator";
-import { IStoreState, Page } from "../store/IStoreState";
-import { MainView } from "./MainView";
+import { IStoreState } from "../store/IStoreState";
+import { MainUI } from "./MainUI";
 
 const mapStateToProps = (state: IStoreState) => {
   return {
@@ -12,13 +11,9 @@ const mapStateToProps = (state: IStoreState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  goToPage: (page: Page) => {
-    dispatch(navActionCreator.goToPage(page));
-  }
-});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
 
 export const Main = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainView);
+)(MainUI);
