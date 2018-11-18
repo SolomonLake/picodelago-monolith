@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Button, Text, TextInput } from "react-native";
 import { Plan, PlanMap } from "../../store/IStoreState";
-import { planName } from "./planUiUtils";
+import { planName, placeholderName } from "./planUiUtils";
 
 interface IPlanPageProps {
   plans: PlanMap;
@@ -19,7 +19,6 @@ export class PlanPageUI extends Component<IPlanPageProps> {
 
   render() {
     const plan = this.props.plans[this.props.openPlanId];
-    console.log("PlanPage props", this.props);
     return (
       <View
         style={{
@@ -34,7 +33,8 @@ export class PlanPageUI extends Component<IPlanPageProps> {
         />
         <Text>{planName(plan)}</Text>
         <TextInput
-          value={planName(plan)}
+          placeholder={placeholderName}
+          value={plan.name}
           onChangeText={this.changeName(plan)}
         />
       </View>

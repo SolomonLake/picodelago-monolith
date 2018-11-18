@@ -15,14 +15,14 @@ export function mapObject<T, R>(
     }, {});
 }
 
-export function updateObject<T>(
+export function updateSortedObject<T>(
   obj: { [id: string]: T },
-  key: string,
+  id: string,
   newValue: T
 ) {
-  const newObj = obj;
-  newObj[key] = newValue;
-  return newObj;
+  return mapObject(obj, (val, key) => {
+    return key === id ? newValue : val;
+  });
 }
 
 export function toArray<T>(obj: { [id: string]: T }): T[] {
