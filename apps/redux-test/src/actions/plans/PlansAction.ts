@@ -5,4 +5,10 @@ export type PlansAddPlanAction = {
   readonly newPlan: Plan;
 };
 
-export type PlansAction = PlansAddPlanAction;
+export type PlansChangePlanNameAction = {
+  type: "PLANS__CHANGE_PLAN_NAME_ACTION";
+  name: string;
+  planId: string;
+};
+
+export type PlansAction = PlansAddPlanAction | PlansChangePlanNameAction;

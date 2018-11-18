@@ -9,10 +9,10 @@ export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
       return { page: "PlansOverview" };
 
     case "NAV__GO_TO_PLAN_PAGE_ACTION":
-      return { page: "Plan", openPlan: action.plan };
+      return { page: "Plan", openPlanId: action.plan.id };
 
     case "PLANS__ADD_PLAN_ACTION":
-      return { page: "Plan", openPlan: action.newPlan };
+      return { page: "Plan", openPlanId: action.newPlan.id };
 
     default:
       return _ui;

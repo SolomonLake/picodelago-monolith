@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import { View, Button } from "react-native";
+import { View, Button, Text } from "react-native";
+import { Plan } from "../../store/IStoreState";
+import { planName } from "./PlanUiUtils";
 
 interface IPlanPageProps {
-  goToPlansOverviewPage: () => Promise<void>;
+  plan: Plan;
+  goToPlansOverviewPage: () => void;
+  changePlanName: (planId: string, name: string) => void;
 }
 
 export class PlanPageUI extends Component<IPlanPageProps> {
@@ -10,6 +14,7 @@ export class PlanPageUI extends Component<IPlanPageProps> {
     super(props);
   }
   render() {
+    console.log("plan page!", this.props.plan);
     return (
       <View
         style={{
@@ -22,6 +27,7 @@ export class PlanPageUI extends Component<IPlanPageProps> {
           color="#DE5448"
           title="Back"
         />
+        <Text>{planName(this.props.plan)}</Text>
       </View>
     );
   }

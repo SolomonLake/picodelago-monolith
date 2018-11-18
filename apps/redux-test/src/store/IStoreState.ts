@@ -15,7 +15,9 @@ export type Plan = {
   times: Array<Time>;
 };
 
+export type PlanMap = { [id: string]: Plan };
+
 export interface IStoreState {
-  readonly plans: Array<Plan>;
+  readonly plans: PlanMap;
   readonly ui: UIState;
 }

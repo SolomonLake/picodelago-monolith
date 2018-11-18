@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Button, View, Text } from "react-native";
-import { Plan } from "../../store/IStoreState";
+import { Plan, PlanMap } from "../../store/IStoreState";
+import { mapObject, toArray } from "../../utils/utils";
+import { planName } from "../PlanPage/PlanUiUtils";
 
 interface IPlansOverviewPageProps {
-  plans: Array<Plan>;
-  goToPlanPage: () => Promise<void>;
-  addPlan: () => Promise<void>;
+  plans: PlanMap;
+  goToPlanPage: (plan: Plan) => void;
+  addPlan: () => void;
 }
 
 export class PlansOverviewPageUI extends Component<IPlansOverviewPageProps> {
@@ -27,12 +29,20 @@ export class PlansOverviewPageUI extends Component<IPlansOverviewPageProps> {
   }
 }
 
-const PlansList = (plans: Array<Plan>, goToPlanPage: () => void) =>
-  plans.map(function(plan) {
-    const name = plan.name || "Untitled Plan";
-    return (
-      <View key={plan.id}>
-        <Button onPress={goToPlanPage} color="#DE5448" title={name} />
-      </View>
-    );
-  });
+const PlansList = (plans: PlanMap, goToPlanPage: (plan: Plan) => void) =>
+  toArray(
+    mapObject(plans, (plan, planId) => {
+      const goToThisPlanPage = () => {
+        goToPlanPage(plan);
+      };
+      return (
+        <View key={plan.id}>
+          <Button
+            onPress={goToThisPlanPage}
+            color="#DE5448"
+            title={planName(plan)}
+          />
+        </View>
+      );
+    })
+  );

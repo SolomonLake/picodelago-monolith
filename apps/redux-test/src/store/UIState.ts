@@ -8,7 +8,7 @@ export type OverviewPageState = {
 
 export type PlanPageState = {
   page: "Plan";
-  openPlan: Plan;
+  openPlanId: string;
 };
 
 export type UIState = OverviewPageState | PlanPageState;

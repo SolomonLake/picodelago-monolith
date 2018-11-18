@@ -1,5 +1,5 @@
 import { Plan } from "../../store/IStoreState";
-import { PlansAddPlanAction } from "./PlansAction";
+import { PlansAddPlanAction, PlansChangePlanNameAction } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
 
 const defaultPlan = (): Plan => ({
@@ -13,6 +13,13 @@ class PlansActionCreator {
     return {
       type: "PLANS__ADD_PLAN_ACTION",
       newPlan: defaultPlan()
+    };
+  }
+  changePlanName(name: string, planId: string): PlansChangePlanNameAction {
+    return {
+      type: "PLANS__CHANGE_PLAN_NAME_ACTION",
+      name,
+      planId
     };
   }
 }
