@@ -7,11 +7,8 @@ export function pageReducer(
   action: ActionTypes
 ): Page {
   switch (action.type) {
-    case "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION":
-      return "PlansOverview";
-
-    case "NAV__GO_TO_PLAN__PAGE_ACTION":
-      return "Plan";
+    case "NAV__GO_TO_PAGE_ACTION":
+      return action.page;
 
     default:
       return state;

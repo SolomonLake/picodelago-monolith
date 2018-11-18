@@ -1,8 +1,3 @@
-import {
-  INavGoToPlansOverviewPageAction,
-  INavGoToPlanPageAction
-} from "./navigation/NavActionTypes";
+import { INavGoToPageAction } from "./navigation/NavActionTypes";
 
-export type ActionTypes =
-  | INavGoToPlansOverviewPageAction
-  | INavGoToPlanPageAction;
+export type ActionTypes = INavGoToPageAction;

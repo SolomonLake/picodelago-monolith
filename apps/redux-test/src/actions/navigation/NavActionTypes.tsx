@@ -1,14 +1,11 @@
-export interface INavGoToPlansOverviewPageAction {
-  readonly type: "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION";
+import { Page } from "../../store/IStoreState";
+
+export interface INavGoToPageAction {
+  readonly type: "NAV__GO_TO_PAGE_ACTION";
+  readonly page: Page;
 }
 
-export interface INavGoToPlanPageAction {
-  readonly type: "NAV__GO_TO_PLAN__PAGE_ACTION";
-}
-
-export type NavActionTypes =
-  | INavGoToPlanPageAction
-  | INavGoToPlansOverviewPageAction;
+export type NavActionTypes = INavGoToPageAction;
 
 // export interface ISignInFailAction {
 //   readonly type: keys.SIGNIN_FAIL;

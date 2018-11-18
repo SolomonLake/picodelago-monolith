@@ -1,2 +1,2 @@
-import App from "./build/index";
+import App from "./build/App";
 export default App;
