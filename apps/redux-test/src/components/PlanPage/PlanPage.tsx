@@ -24,7 +24,7 @@ const mapStateToProps = (state: IStoreState): PlanPageState => {
 export type PlanPageActions = {
   goToPlansOverviewPage: () => void;
   changePlanName: (planId: string, name: string) => void;
-  addTimer: () => void;
+  addTimerFn: (plan: Plan) => (() => void);
 };
 const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
   goToPlansOverviewPage: () => {
@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
   changePlanName: (name: string, planId: string) => {
     dispatch(plansActionCreator.changePlanName(name, planId));
   },
-  addTimer: () => {
-    dispatch(plansActionCreator.addTimer());
+  addTimerFn: (plan: Plan) => () => {
+    dispatch(plansActionCreator.addTimer(plan.id));
   }
 });
 

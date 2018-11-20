@@ -1,7 +1,10 @@
 import { initialStoreState } from "../store/initialStoreState";
 import { Action } from "../actions/Action";
 import { UIState } from "../store/UIState";
-import { UnreachableCaseError } from "../utils/UnreachableCaseError";
+import {
+  UnreachableCaseError,
+  assertUnreachableCase
+} from "../utils/unreachableCase";
 
 export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
   switch (action.type) {
@@ -18,6 +21,7 @@ export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
     case "PLANS__ADD_TIMER_ACTION":
       return _ui;
     default:
-      throw new UnreachableCaseError(action);
+      assertUnreachableCase(action);
+      return _ui;
   }
 }

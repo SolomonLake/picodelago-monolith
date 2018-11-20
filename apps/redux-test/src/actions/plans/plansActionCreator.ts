@@ -36,10 +36,11 @@ class PlansActionCreator {
       planId
     };
   }
-  addTimer(): PlansAddTimerAction {
+  addTimer(planId: string): PlansAddTimerAction {
     return {
       type: "PLANS__ADD_TIMER_ACTION",
-      newTimer: defaultTimer()
+      newTimer: defaultTimer(),
+      planId
     };
   }
 }

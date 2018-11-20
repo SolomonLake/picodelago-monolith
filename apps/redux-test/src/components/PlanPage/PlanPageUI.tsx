@@ -32,7 +32,11 @@ export class PlanPageUI extends Component<PlanPageProps> {
           value={this.props.plan.name}
           onChangeText={this.changeName}
         />
-        <Button onPress={this.props.addTimer} color="#DE5448" title="+ Timer" />
+        <Button
+          onPress={this.props.addTimerFn(this.props.plan)}
+          color="#DE5448"
+          title="+ Timer"
+        />
         {TimersList(this.props.plan.timers)}
       </View>
     );
@@ -46,6 +50,10 @@ export class PlanPageUI extends Component<PlanPageProps> {
 const TimersList = (timers: TimerMap) =>
   toArray(
     mapObject(timers, (timer, _) => {
-      return <TimerComponent timer={timer} />;
+      return (
+        <View key={timer.id}>
+          <TimerComponent timer={timer} />
+        </View>
+      );
     })
   );

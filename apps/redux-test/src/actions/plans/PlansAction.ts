@@ -14,6 +14,7 @@ export type PlansChangePlanNameAction = {
 export type PlansAddTimerAction = {
   type: "PLANS__ADD_TIMER_ACTION";
   newTimer: Timer;
+  planId: string;
 };
 
 export type PlansAction =
