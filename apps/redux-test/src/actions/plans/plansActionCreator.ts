@@ -1,8 +1,8 @@
 import { Plan, Timer } from "../../store/IStoreState";
 import {
   PlansAddPlanAction,
-  PlansChangePlanNameAction,
-  PlansAddTimerAction
+  PlansAddTimerAction,
+  PlansUpdatePlanAction
 } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
 import { THIRTY_MINUTES } from "../../utils/unitsOfTime";
@@ -29,12 +29,18 @@ class PlansActionCreator {
       newPlan: defaultPlan()
     };
   }
-  changePlanName(name: string, planId: string): PlansChangePlanNameAction {
+  private updatePlan(
+    planUpdate: Partial<Plan>,
+    planId: string
+  ): PlansUpdatePlanAction {
     return {
-      type: "PLANS__CHANGE_PLAN_NAME_ACTION",
-      name,
+      type: "PLANS__UPDATE_PLAN_ACTION",
+      planUpdate,
       planId
     };
+  }
+  changePlanName(name: string, planId: string): PlansUpdatePlanAction {
+    return this.updatePlan({ name }, planId);
   }
   addTimer(planId: string): PlansAddTimerAction {
     return {

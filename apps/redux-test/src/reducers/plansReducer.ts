@@ -12,12 +12,12 @@ export function plansReducer(
     case "PLANS__ADD_PLAN_ACTION":
       return { [action.newPlan.id]: action.newPlan, ..._plans };
 
-    case "PLANS__CHANGE_PLAN_NAME_ACTION":
-      const newPlan = {
+    case "PLANS__UPDATE_PLAN_ACTION":
+      const _newPlan = {
         ..._plans[action.planId],
-        name: action.name
+        ...action.planUpdate
       };
-      return updateSortedObject(_plans, action.planId, newPlan);
+      return updateSortedObject(_plans, action.planId, _newPlan);
 
     case "PLANS__ADD_TIMER_ACTION":
       const timerPlan = _plans[action.planId];
@@ -29,7 +29,6 @@ export function plansReducer(
         ...timerPlan,
         timers: newTimers
       };
-      console.log("add timer", newTimerPlan);
       return updateSortedObject(_plans, action.planId, newTimerPlan);
 
     case "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION":

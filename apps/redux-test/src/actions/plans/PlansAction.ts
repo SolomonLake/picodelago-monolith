@@ -5,14 +5,9 @@ export type PlansAddPlanAction = {
   readonly newPlan: Plan;
 };
 
-// export type PlansUpdatePlanAction = {
-//   type: "PLANS__CHANGE_PLAN_NAME_ACTION";
-//   // planShape:
-//   planId: string;
-// };
-export type PlansChangePlanNameAction = {
-  type: "PLANS__CHANGE_PLAN_NAME_ACTION";
-  name: string;
+export type PlansUpdatePlanAction = {
+  type: "PLANS__UPDATE_PLAN_ACTION";
+  planUpdate: Partial<Plan>;
   planId: string;
 };
 
@@ -24,5 +19,5 @@ export type PlansAddTimerAction = {
 
 export type PlansAction =
   | PlansAddPlanAction
-  | PlansChangePlanNameAction
+  | PlansUpdatePlanAction
   | PlansAddTimerAction;
