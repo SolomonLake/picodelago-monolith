@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { View, Button, Text, TextInput } from "react-native";
-import { Plan, PlanMap } from "../../store/IStoreState";
+import { Plan } from "../../store/IStoreState";
 import { planName, placeholderName } from "./planUiUtils";
+import { PlanPageProps } from "./PlanPage";
 
-interface IPlanPageProps {
-  plans: PlanMap;
-  openPlanId: string;
-  goToPlansOverviewPage: () => void;
-  changePlanName: (planId: string, name: string) => void;
-}
-
-export class PlanPageUI extends Component<IPlanPageProps> {
-  constructor(props: IPlanPageProps) {
+export class PlanPageUI extends Component<PlanPageProps> {
+  constructor(props: PlanPageProps) {
     super(props);
 
     this.changeName = this.changeName.bind(this);

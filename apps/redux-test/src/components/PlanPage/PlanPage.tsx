@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 
 import { Action } from "../../actions/Action";
 import { navActionCreator } from "../../actions/nav/navActionCreator";
-import { IStoreState } from "../../store/IStoreState";
+import { IStoreState, PlanMap } from "../../store/IStoreState";
 import { PlanPageUI } from "./PlanPageUI";
 import { plansActionCreator } from "../../actions/plans/plansActionCreator";
 
+export type PlanPageState = {
+  plans: PlanMap;
+  openPlanId: string;
+};
 const mapStateToProps = (state: IStoreState) => {
   if (state.ui.page === "Plan") {
     return {
@@ -18,6 +22,10 @@ const mapStateToProps = (state: IStoreState) => {
   }
 };
 
+export type PlanPageActions = {
+  goToPlansOverviewPage: () => void;
+  changePlanName: (planId: string, name: string) => void;
+};
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   goToPlansOverviewPage: () => {
     dispatch(navActionCreator.goToPlansOverviewPage());
@@ -26,6 +34,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
     dispatch(plansActionCreator.changePlanName(name, planId));
   }
 });
+
+export type PlanPageProps = PlanPageState & PlanPageActions;
 
 export const PlanPage = connect(
   mapStateToProps,
