@@ -13,11 +13,11 @@ export function plansReducer(
       return { [action.newPlan.id]: action.newPlan, ..._plans };
 
     case "PLANS__UPDATE_PLAN_ACTION":
-      const _newPlan = {
+      const newPlan = {
         ..._plans[action.planId],
         ...action.planUpdate
       };
-      return updateSortedObject(_plans, action.planId, _newPlan);
+      return updateSortedObject(_plans, action.planId, newPlan);
 
     case "PLANS__ADD_TIMER_ACTION":
       const timerPlan = _plans[action.planId];
