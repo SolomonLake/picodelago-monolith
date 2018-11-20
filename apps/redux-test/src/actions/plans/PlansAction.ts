@@ -1,4 +1,4 @@
-import { Plan } from "../../store/IStoreState";
+import { Plan, Timer } from "../../store/IStoreState";
 
 export type PlansAddPlanAction = {
   readonly type: "PLANS__ADD_PLAN_ACTION";
@@ -11,4 +11,12 @@ export type PlansChangePlanNameAction = {
   planId: string;
 };
 
-export type PlansAction = PlansAddPlanAction | PlansChangePlanNameAction;
+export type PlansAddTimerAction = {
+  type: "PLANS__ADD_TIMER_ACTION";
+  newTimer: Timer;
+};
+
+export type PlansAction =
+  | PlansAddPlanAction
+  | PlansChangePlanNameAction
+  | PlansAddTimerAction;

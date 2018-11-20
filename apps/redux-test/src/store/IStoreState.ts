@@ -2,6 +2,7 @@ import { UIState } from "./UIState";
 
 export type TimerCategory = "Work" | "Rest";
 
+// times are in milliseconds
 export type Timer = {
   id: string;
   name: string;

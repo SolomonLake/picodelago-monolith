@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { View, Button, Text, TextInput } from "react-native";
-import { Plan } from "../../store/IStoreState";
-import { planName, placeholderName } from "./planUiUtils";
+import { Button, TextInput, View } from "react-native";
+
+import { Plan, TimerMap } from "../../store/IStoreState";
+import { mapObject, toArray } from "../../utils/utils";
 import { PlanPageProps } from "./PlanPage";
+import { placeholderName } from "./planUiUtils";
 
 export class PlanPageUI extends Component<PlanPageProps> {
   constructor(props: PlanPageProps) {
@@ -25,12 +27,13 @@ export class PlanPageUI extends Component<PlanPageProps> {
           color="#DE5448"
           title="Back"
         />
-        <Text>{planName(plan)}</Text>
         <TextInput
           placeholder={placeholderName}
           value={plan.name}
           onChangeText={this.changeName(plan)}
         />
+        <Button onPress={this.props.addTimer} color="#DE5448" title="+ Timer" />
+        {TimersList(plan.timers)}
       </View>
     );
   }
@@ -41,3 +44,11 @@ export class PlanPageUI extends Component<PlanPageProps> {
     };
   }
 }
+
+const TimersList = (timers: TimerMap) =>
+  toArray(
+    mapObject(timers, (timer, _) => {
+      // return <Timer />;
+      return <View />;
+    })
+  );

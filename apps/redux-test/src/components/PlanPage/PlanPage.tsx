@@ -13,6 +13,7 @@ export type PlanPageState = {
 };
 const mapStateToProps = (state: IStoreState): PlanPageState => {
   if (state.ui.page === "Plan") {
+    const plan = state.plans[state.ui.openPlanId];
     return {
       plans: state.plans,
       openPlanId: state.ui.openPlanId
@@ -25,6 +26,7 @@ const mapStateToProps = (state: IStoreState): PlanPageState => {
 export type PlanPageActions = {
   goToPlansOverviewPage: () => void;
   changePlanName: (planId: string, name: string) => void;
+  addTimer: () => void;
 };
 const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
   goToPlansOverviewPage: () => {
@@ -32,6 +34,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
   },
   changePlanName: (name: string, planId: string) => {
     dispatch(plansActionCreator.changePlanName(name, planId));
+  },
+  addTimer: () => {
+    dispatch(plansActionCreator.addTimer());
   }
 });
 
