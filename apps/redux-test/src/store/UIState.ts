@@ -1,5 +1,3 @@
-import { Plan } from "./IStoreState";
-
 export type Page = "PlansOverview" | "Plan";
 
 export type OverviewPageState = {

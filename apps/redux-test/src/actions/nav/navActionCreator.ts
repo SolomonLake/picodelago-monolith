@@ -1,9 +1,8 @@
-import {
-  NavGoToPlansOverviewPageAction,
-  NavGoToPlanPageAction
-} from "./NavAction";
-import { Page } from "../../store/UIState";
 import { Plan } from "../../store/IStoreState";
+import {
+  NavGoToPlanPageAction,
+  NavGoToPlansOverviewPageAction
+} from "./NavAction";
 
 class NavActionCreator {
   goToPlanPage(plan: Plan): NavGoToPlanPageAction {

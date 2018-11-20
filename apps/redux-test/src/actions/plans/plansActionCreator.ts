@@ -3,10 +3,12 @@ import { PlansAddPlanAction, PlansChangePlanNameAction } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
 
 const defaultPlan = (): Plan => ({
+  state: {
+    status: "overview"
+  },
   id: uuid(),
   name: "",
-  category: "Work",
-  times: []
+  timers: {}
 });
 class PlansActionCreator {
   addPlan(): PlansAddPlanAction {

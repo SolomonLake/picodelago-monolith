@@ -1,6 +1,5 @@
-import { initialStoreState } from "../store/initialStoreState";
 import { Action } from "../actions/Action";
-import { Plan } from "../store/IStoreState";
+import { initialStoreState } from "../store/initialStoreState";
 import { updateSortedObject } from "../utils/utils";
 
 export function plansReducer(_plans = initialStoreState.plans, action: Action) {

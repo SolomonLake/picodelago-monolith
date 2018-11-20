@@ -1,6 +1,5 @@
 import { initialStoreState } from "../store/initialStoreState";
 import { Action } from "../actions/Action";
-import { combineReducers } from "redux";
 import { UIState } from "../store/UIState";
 
 export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {

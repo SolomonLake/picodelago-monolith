@@ -1,6 +1,4 @@
 import * as React from "react";
-
-import Logo from "../../assets/logo.svg";
 import { Button, NativeSyntheticEvent, NativeTouchEvent } from "react-native";
 
 interface INavBarProps {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, Text } from "react-native";
+import { Button, View } from "react-native";
+
 import { Plan, PlanMap } from "../../store/IStoreState";
 import { mapObject, toArray } from "../../utils/utils";
 import { planName } from "../PlanPage/planUiUtils";
@@ -31,7 +32,7 @@ export class PlansOverviewPageUI extends Component<IPlansOverviewPageProps> {
 
 const PlansList = (plans: PlanMap, goToPlanPage: (plan: Plan) => void) =>
   toArray(
-    mapObject(plans, (plan, planId) => {
+    mapObject(plans, (plan, _) => {
       const goToThisPlanPage = () => {
         goToPlanPage(plan);
       };
