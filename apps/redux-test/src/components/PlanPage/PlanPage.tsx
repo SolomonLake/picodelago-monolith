@@ -23,7 +23,7 @@ const mapStateToProps = (state: IStoreState): PlanPageState => {
 
 export type PlanPageActions = {
   goToPlansOverviewPage: () => void;
-  changePlanName: (planId: string, name: string) => void;
+  changePlanName: (name: string, planId: string) => void;
   addTimerFn: (plan: Plan) => (() => void);
 };
 const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({

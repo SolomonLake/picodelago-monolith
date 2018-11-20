@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, TextInput, View } from "react-native";
 
-import { TimerMap } from "../../store/IStoreState";
+import { TimerMap, Plan } from "../../store/IStoreState";
 import { mapObject, toArray } from "../../utils/utils";
 import { PlanPageProps } from "./PlanPage";
 import { placeholderPlanName } from "./planUiUtils";
@@ -37,7 +37,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
           color="#DE5448"
           title="+ Timer"
         />
-        {TimersList(this.props.plan.timers)}
+        {TimersList(this.props.plan)}
       </View>
     );
   }
@@ -47,12 +47,12 @@ export class PlanPageUI extends Component<PlanPageProps> {
   }
 }
 
-const TimersList = (timers: TimerMap) =>
+const TimersList = (plan: Plan) =>
   toArray(
-    mapObject(timers, (timer, _) => {
+    mapObject(plan.timers, (timer, _) => {
       return (
         <View key={timer.id}>
-          <TimerComponent timer={timer} />
+          <TimerComponent timer={timer} plan={plan} />
         </View>
       );
     })
