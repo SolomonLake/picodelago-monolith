@@ -3,20 +3,18 @@ import { connect } from "react-redux";
 
 import { Action } from "../../actions/Action";
 import { navActionCreator } from "../../actions/nav/navActionCreator";
-import { IStoreState, PlanMap } from "../../store/IStoreState";
-import { PlanPageUI } from "./PlanPageUI";
 import { plansActionCreator } from "../../actions/plans/plansActionCreator";
+import { IStoreState, Plan } from "../../store/IStoreState";
+import { PlanPageUI } from "./PlanPageUI";
 
 export type PlanPageState = {
-  plans: PlanMap;
-  openPlanId: string;
+  plan: Plan;
 };
 const mapStateToProps = (state: IStoreState): PlanPageState => {
   if (state.ui.page === "Plan") {
     const plan = state.plans[state.ui.openPlanId];
     return {
-      plans: state.plans,
-      openPlanId: state.ui.openPlanId
+      plan
     };
   } else {
     throw new Error("PlanPage rendering without being on Plan Page");

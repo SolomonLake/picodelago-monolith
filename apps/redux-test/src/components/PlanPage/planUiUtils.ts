@@ -1,6 +1,6 @@
 import { Plan } from "../../store/IStoreState";
 
-export const placeholderName = "Untitled Plan";
+export const placeholderPlanName = "Untitled Plan";
 export function planName(plan: Plan) {
-  return plan.name || placeholderName;
+  return plan.name || placeholderPlanName;
 }

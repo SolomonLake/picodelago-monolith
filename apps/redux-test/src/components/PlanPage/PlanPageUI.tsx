@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Button, TextInput, View } from "react-native";
 
-import { Plan, TimerMap } from "../../store/IStoreState";
+import { TimerMap } from "../../store/IStoreState";
 import { mapObject, toArray } from "../../utils/utils";
 import { PlanPageProps } from "./PlanPage";
-import { placeholderName } from "./planUiUtils";
+import { placeholderPlanName } from "./planUiUtils";
+import { TimerComponent } from "../Timer/TimerComponent";
 
 export class PlanPageUI extends Component<PlanPageProps> {
   constructor(props: PlanPageProps) {
@@ -14,7 +15,6 @@ export class PlanPageUI extends Component<PlanPageProps> {
   }
 
   render() {
-    const plan = this.props.plans[this.props.openPlanId];
     return (
       <View
         style={{
@@ -28,27 +28,24 @@ export class PlanPageUI extends Component<PlanPageProps> {
           title="Back"
         />
         <TextInput
-          placeholder={placeholderName}
-          value={plan.name}
-          onChangeText={this.changeName(plan)}
+          placeholder={placeholderPlanName}
+          value={this.props.plan.name}
+          onChangeText={this.changeName}
         />
         <Button onPress={this.props.addTimer} color="#DE5448" title="+ Timer" />
-        {TimersList(plan.timers)}
+        {TimersList(this.props.plan.timers)}
       </View>
     );
   }
 
-  changeName(plan: Plan) {
-    return (name: string) => {
-      this.props.changePlanName(name, plan.id);
-    };
+  changeName(name: string) {
+    this.props.changePlanName(name, this.props.plan.id);
   }
 }
 
 const TimersList = (timers: TimerMap) =>
   toArray(
     mapObject(timers, (timer, _) => {
-      // return <Timer />;
-      return <View />;
+      return <TimerComponent timer={timer} />;
     })
   );

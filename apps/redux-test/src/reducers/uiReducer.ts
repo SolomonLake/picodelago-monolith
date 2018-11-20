@@ -1,6 +1,7 @@
 import { initialStoreState } from "../store/initialStoreState";
 import { Action } from "../actions/Action";
 import { UIState } from "../store/UIState";
+import { UnreachableCaseError } from "../utils/UnreachableCaseError";
 
 export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
   switch (action.type) {
@@ -13,7 +14,10 @@ export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
     case "PLANS__ADD_PLAN_ACTION":
       return { page: "Plan", openPlanId: action.newPlan.id };
 
-    default:
+    case "PLANS__CHANGE_PLAN_NAME_ACTION":
+    case "PLANS__ADD_TIMER_ACTION":
       return _ui;
+    default:
+      throw new UnreachableCaseError(action);
   }
 }
