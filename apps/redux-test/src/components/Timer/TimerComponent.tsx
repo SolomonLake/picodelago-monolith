@@ -24,12 +24,26 @@ const mapStateToProps = (
 
 export type TimerComponentActions = {
   changeTimerName: (name: string, timerId: string, planId: string) => void;
+  changeTimerTotalTime: (
+    totalTime: number,
+    timerId: string,
+    planId: string
+  ) => void;
 };
 const mapDispatchToProps = (
   dispatch: Dispatch<Action>
 ): TimerComponentActions => ({
   changeTimerName: (name: string, timerId: string, planId: string) => {
     dispatch(timersActionCreator.changeTimerName(name, timerId, planId));
+  },
+  changeTimerTotalTime: (
+    totalTime: number,
+    timerId: string,
+    planId: string
+  ) => {
+    dispatch(
+      timersActionCreator.changeTimerTotalTime(totalTime, timerId, planId)
+    );
   }
 });
 

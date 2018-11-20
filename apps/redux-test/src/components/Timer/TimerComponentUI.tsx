@@ -22,6 +22,17 @@ export class TimerComponentUI extends Component<TimerComponentProps> {
             );
           }}
         />
+        <TextInput
+          value={JSON.stringify(this.props.timer.totalTime)}
+          onChangeText={totalTimeStr => {
+            const totalTime = parseInt(totalTimeStr);
+            this.props.changeTimerTotalTime(
+              totalTime,
+              this.props.timer.id,
+              this.props.plan.id
+            );
+          }}
+        />
       </View>
     );
   }

@@ -5,4 +5,4 @@ export const THIRTY_MINUTES = ONE_MINUTE * 30;
 
 export const ONE_HOUR = ONE_MINUTE * 60;
 
-export const ONE_Day = ONE_HOUR * 24;
+export const ONE_DAY = ONE_HOUR * 24;

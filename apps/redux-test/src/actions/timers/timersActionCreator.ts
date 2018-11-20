@@ -21,6 +21,13 @@ class TimersActionCreator {
   ): TimersUpdateTimerAction {
     return this.updateTimer({ name }, timerId, planId);
   }
+  changeTimerTotalTime(
+    totalTime: number,
+    timerId: string,
+    planId: string
+  ): TimersUpdateTimerAction {
+    return this.updateTimer({ totalTime }, timerId, planId);
+  }
 }
 
 export const timersActionCreator = new TimersActionCreator();
