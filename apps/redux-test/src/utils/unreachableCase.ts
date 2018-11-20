@@ -4,4 +4,4 @@ export class UnreachableCaseError extends Error {
   }
 }
 
-export function assertUnreachableCase(val: never) {}
+export function assertUnreachableCase(_: never) {}

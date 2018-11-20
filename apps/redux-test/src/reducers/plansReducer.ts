@@ -1,12 +1,13 @@
 import { Action } from "../actions/Action";
 import { initialStoreState } from "../store/initialStoreState";
 import { updateSortedObject } from "../utils/utils";
-import {
-  UnreachableCaseError,
-  assertUnreachableCase
-} from "../utils/unreachableCase";
+import { assertUnreachableCase } from "../utils/unreachableCase";
+import { PlanMap } from "../store/IStoreState";
 
-export function plansReducer(_plans = initialStoreState.plans, action: Action) {
+export function plansReducer(
+  _plans = initialStoreState.plans,
+  action: Action
+): PlanMap {
   switch (action.type) {
     case "PLANS__ADD_PLAN_ACTION":
       return { [action.newPlan.id]: action.newPlan, ..._plans };

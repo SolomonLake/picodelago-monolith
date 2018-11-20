@@ -1,10 +1,7 @@
 import { initialStoreState } from "../store/initialStoreState";
 import { Action } from "../actions/Action";
 import { UIState } from "../store/UIState";
-import {
-  UnreachableCaseError,
-  assertUnreachableCase
-} from "../utils/unreachableCase";
+import { assertUnreachableCase } from "../utils/unreachableCase";
 
 export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
   switch (action.type) {
