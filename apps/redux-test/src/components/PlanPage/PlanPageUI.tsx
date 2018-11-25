@@ -57,10 +57,12 @@ export class PlanPageUI extends Component<PlanPageProps> {
   StartPlanButton() {
     switch (this.props.plan.state.status) {
       case "overview":
+        const firstTimer = this.props.plan.timers[0];
         return (
           <PButton_Text
             text="Start"
             onPress={this.props.goToPlansOverviewPage}
+            disabled={!firstTimer}
             styles={{
               text: { color: "#FFFFFF", fontSize: 15 }
             }}

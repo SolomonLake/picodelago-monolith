@@ -4,7 +4,7 @@ import { createStore } from "redux";
 import { rootReducer } from "./reducers/rootReducer";
 import { Main } from "./components/Main";
 
-const store = createStore(rootReducer);
+export const store = createStore(rootReducer);
 
 export default class App extends React.Component {
   render() {

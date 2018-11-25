@@ -43,6 +43,12 @@ class PlansActionCreator {
   changePlanName(name: string, planId: string): PlansUpdatePlanAction {
     return this.updatePlan({ name }, planId);
   }
+  startPlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
+    return this.updatePlan(
+      { state: { status: "active", activeTimer } },
+      planId
+    );
+  }
   addTimer(planId: string): PlansAddTimerAction {
     return {
       type: "PLANS__ADD_TIMER_ACTION",

@@ -12,6 +12,7 @@ import { RED } from "../Global.styles";
 export const PButton_Text = (props: {
   text: string;
   onPress: (e?: GestureResponderEvent) => void;
+  disabled?: boolean;
   styles?: {
     button?: ViewStyle;
     text?: TextStyle;
