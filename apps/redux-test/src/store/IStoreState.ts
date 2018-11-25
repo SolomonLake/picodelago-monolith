@@ -13,6 +13,7 @@ export type Timer = {
 };
 export type TimerMap = { [id: string]: Timer };
 
+export type PlanStatus = "active" | "paused" | "overview";
 export type PlanOverviewState = {
   status: "overview";
 };
