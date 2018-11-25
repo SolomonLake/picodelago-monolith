@@ -7,13 +7,14 @@ import { PlanPageProps } from "./PlanPage";
 import { placeholderPlanName } from "./planUiUtils";
 import { TimerComponent } from "../Timer/TimerComponent";
 import { PlanPageStyles } from "./PlanPage.styles";
-import { PTextButton } from "../GenericComponents/PTextButton";
+import { PButton_Text } from "../GenericComponents/PTextButton";
 
 export class PlanPageUI extends Component<PlanPageProps> {
   constructor(props: PlanPageProps) {
     super(props);
 
     this.PlanPageHeader = this.PlanPageHeader.bind(this);
+    this.StartPlanButton = this.StartPlanButton.bind(this);
     this.changeName = this.changeName.bind(this);
   }
 
@@ -35,7 +36,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
   PlanPageHeader() {
     return (
       <View style={PlanPageStyles.plan_page_header}>
-        <PTextButton
+        <PButton_Text
           text="<"
           onPress={this.props.goToPlansOverviewPage}
           styles={{
@@ -48,15 +49,35 @@ export class PlanPageUI extends Component<PlanPageProps> {
           value={this.props.plan.name}
           onChangeText={this.changeName}
         />
-        <PTextButton
-          text="Start"
-          onPress={this.props.goToPlansOverviewPage}
-          styles={{
-            text: { color: "#FFFFFF", fontSize: 15 }
-          }}
-        />
+        <this.StartPlanButton />
       </View>
     );
+  }
+
+  StartPlanButton() {
+    switch (this.props.plan.state.status) {
+      case "overview":
+        return (
+          <PButton_Text
+            text="Start"
+            onPress={this.props.goToPlansOverviewPage}
+            styles={{
+              text: { color: "#FFFFFF", fontSize: 15 }
+            }}
+          />
+        );
+      case "active":
+      case "paused":
+        return (
+          <PButton_Text
+            text="End"
+            onPress={this.props.goToPlansOverviewPage}
+            styles={{
+              text: { color: "#FFFFFF", fontSize: 15 }
+            }}
+          />
+        );
+    }
   }
 
   changeName(name: string) {

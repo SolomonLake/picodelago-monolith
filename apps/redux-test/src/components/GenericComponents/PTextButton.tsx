@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { RED } from "../Global.styles";
 
-export const PTextButton = (props: {
+export const PButton_Text = (props: {
   text: string;
   onPress: (e?: GestureResponderEvent) => void;
   styles?: {
@@ -28,7 +28,7 @@ export const PTextButton = (props: {
   );
 };
 
-AppRegistry.registerComponent("PTextButton", () => PTextButton);
+AppRegistry.registerComponent("PTextButton", () => PButton_Text);
 
 const defaultStyles = {
   button: {
