@@ -1,5 +1,6 @@
 import { Timer } from "../../store/IStoreState";
 import { TimersUpdateTimerAction } from "./TimersActions";
+import { TimerTimes } from "../../components/Timer/timerUtils";
 
 class TimersActionCreator {
   private updateTimer(
@@ -21,12 +22,12 @@ class TimersActionCreator {
   ): TimersUpdateTimerAction {
     return this.updateTimer({ name }, timerId, planId);
   }
-  changeTimerTotalTime(
-    totalTime: number,
+  changeTimerTimes(
+    times: TimerTimes,
     timerId: string,
     planId: string
   ): TimersUpdateTimerAction {
-    return this.updateTimer({ totalTime }, timerId, planId);
+    return this.updateTimer({ times }, timerId, planId);
   }
 }
 

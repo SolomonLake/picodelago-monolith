@@ -6,6 +6,7 @@ import {
 } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
 import { THIRTY_MINUTES } from "../../utils/unitsOfTime";
+import { msToTimerTimes } from "../../components/Timer/timerUtils";
 
 const defaultPlan = (): Plan => ({
   state: {
@@ -19,7 +20,7 @@ const defaultTimer = (): Timer => ({
   id: uuid(),
   name: "",
   currentTime: 0,
-  totalTime: THIRTY_MINUTES,
+  times: msToTimerTimes(THIRTY_MINUTES),
   category: "Work"
 });
 class PlansActionCreator {

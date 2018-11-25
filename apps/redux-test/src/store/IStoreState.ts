@@ -1,4 +1,5 @@
 import { UIState } from "./UIState";
+import { TimerTimes } from "../components/Timer/timerUtils";
 
 export type TimerCategory = "Work" | "Rest";
 
@@ -6,7 +7,7 @@ export type TimerCategory = "Work" | "Rest";
 export type Timer = {
   id: string;
   name: string;
-  totalTime: number;
+  times: TimerTimes;
   currentTime: number;
   category: TimerCategory;
 };
