@@ -74,6 +74,7 @@ const TimeInputUI = (props: {
       }}
       keyboardType="numeric"
       maxLength={2}
+      selectTextOnFocus={true}
     />
   );
 };
