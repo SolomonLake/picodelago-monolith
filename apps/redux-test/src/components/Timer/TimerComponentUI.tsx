@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { View, TextInput } from "react-native";
 import { TimerComponentProps } from "./TimerComponent";
 import { placeholderTimerName } from "./timerUiUtils";
+import { TimerTimes } from "./timerUtils";
 
 export class TimerComponentUI extends Component<TimerComponentProps> {
   constructor(props: TimerComponentProps) {
     super(props);
+
+    this.updateTimerTimes.bind(this);
   }
 
   render() {
@@ -23,57 +26,54 @@ export class TimerComponentUI extends Component<TimerComponentProps> {
           }}
         />
         {/* Hours */}
-        <TextInput
-          defaultValue={JSON.stringify(this.props.timer.times.hrs)}
-          onSubmitEditing={e => {
-            const hrs = parseInt(e.nativeEvent.text);
-            const newTT = {
-              ...this.props.timer.times,
-              hrs
-            };
-            this.props.changeTimerTimes(
-              newTT,
-              this.props.timer.id,
-              this.props.plan.id
-            );
+        <TimeInputUI
+          defaultValue={this.props.timer.times.hrs}
+          timeCallback={(time: number) => {
+            const hrs = { hrs: time };
+            this.updateTimerTimes(hrs);
           }}
-          keyboardType="numeric"
         />
         {/* Minutes */}
-        <TextInput
-          defaultValue={JSON.stringify(this.props.timer.times.mins)}
-          onSubmitEditing={e => {
-            const mins = parseInt(e.nativeEvent.text);
-            const newTT = {
-              ...this.props.timer.times,
-              mins
-            };
-            this.props.changeTimerTimes(
-              newTT,
-              this.props.timer.id,
-              this.props.plan.id
-            );
+        <TimeInputUI
+          defaultValue={this.props.timer.times.mins}
+          timeCallback={(time: number) => {
+            const mins = { mins: time };
+            this.updateTimerTimes(mins);
           }}
-          keyboardType="numeric"
         />
         {/* Seconds */}
-        <TextInput
-          defaultValue={JSON.stringify(this.props.timer.times.secs)}
-          onSubmitEditing={e => {
-            const secs = parseInt(e.nativeEvent.text);
-            const newTT = {
-              ...this.props.timer.times,
-              secs
-            };
-            this.props.changeTimerTimes(
-              newTT,
-              this.props.timer.id,
-              this.props.plan.id
-            );
+        <TimeInputUI
+          defaultValue={this.props.timer.times.secs}
+          timeCallback={(time: number) => {
+            const secs = { secs: time };
+            this.updateTimerTimes(secs);
           }}
-          keyboardType="numeric"
         />
       </View>
     );
   }
+
+  updateTimerTimes(newTime: Partial<TimerTimes>) {
+    const newTT = {
+      ...this.props.timer.times,
+      ...newTime
+    };
+    this.props.changeTimerTimes(newTT, this.props.timer.id, this.props.plan.id);
+  }
 }
+
+const TimeInputUI = (props: {
+  defaultValue: number;
+  timeCallback: (time: number) => void;
+}) => {
+  return (
+    <TextInput
+      defaultValue={JSON.stringify(props.defaultValue)}
+      onChange={e => {
+        props.timeCallback(parseInt(e.nativeEvent.text) || 0);
+      }}
+      keyboardType="numeric"
+      maxLength={2}
+    />
+  );
+};
