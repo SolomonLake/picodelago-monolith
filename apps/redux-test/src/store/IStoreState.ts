@@ -20,6 +20,7 @@ export type PlanOverviewState = {
 export type PlanActiveState = {
   status: "active";
   activeTimer: string;
+  timestamp: number;
 };
 export type PlanPausedState = {
   status: "paused";

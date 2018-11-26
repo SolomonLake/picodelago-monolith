@@ -45,7 +45,7 @@ class PlansActionCreator {
   }
   startPlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
     return this.updatePlan(
-      { state: { status: "active", activeTimer } },
+      { state: { status: "active", activeTimer, timestamp: Date.now() } },
       planId
     );
   }

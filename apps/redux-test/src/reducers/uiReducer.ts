@@ -17,6 +17,7 @@ export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
     case "PLANS__UPDATE_PLAN_ACTION":
     case "PLANS__ADD_TIMER_ACTION":
     case "TIMERS__UPDATE_TIMER_ACTION":
+    case "GLOBAL_TICK__TOCK_ACTION":
       return _ui;
     default:
       assertUnreachableCase(action);

@@ -1,8 +1,9 @@
 import { Action } from "../actions/Action";
 import { initialStoreState } from "../store/initialStoreState";
-import { updateSortedObject } from "../utils/utils";
+import { updateSortedObject, toArray, mapObject } from "../utils/utils";
 import { assertUnreachableCase } from "../utils/unreachableCase";
 import { PlanMap, Plan, Timer } from "../store/IStoreState";
+import { timerTimesToMs } from "../components/Timer/timerUtils";
 
 export function plansReducer(
   _plans = initialStoreState.plans,
@@ -30,6 +31,9 @@ export function plansReducer(
         action.timerId,
         action.timerUpdate
       );
+
+    case "GLOBAL_TICK__TOCK_ACTION":
+      return updateTimerTimesReducer(_plans);
 
     case "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION":
     case "NAV__GO_TO_PLAN_PAGE_ACTION":
@@ -65,4 +69,43 @@ function updateTimerReducer(
   };
   const newTimers = updateSortedObject(timerPlan.timers, timerId, newTimer);
   return updatePlanReducer(_plans, planId, { timers: newTimers });
+}
+
+function updateTimerTimesReducer(_plans: PlanMap) {
+  return mapObject(_plans, (plan, planId) => {
+    switch (plan.state.status) {
+      case "overview":
+      case "paused":
+        return plan;
+      case "active":
+        const activeTimerId = plan.state.activeTimer;
+        const activeTimer = plan.timers[activeTimerId];
+        const newTimestamp = Date.now();
+        const currentTime =
+          activeTimer.currentTime + (newTimestamp - plan.state.timestamp);
+        console.log("currentTime", currentTime);
+        const timeIsUp = currentTime >= timerTimesToMs(activeTimer.times);
+        const newCurrentTime = timeIsUp
+          ? timerTimesToMs(activeTimer.times)
+          : currentTime;
+        const newTimer = {
+          ...activeTimer,
+          currentTime
+        };
+        const newTimers = updateSortedObject(
+          plan.timers,
+          activeTimerId,
+          newTimer
+        );
+        // todo: transition to next timer when timeIsUp
+        // const newActiveTimerId = timeIsUp ?  : activeTimerId;
+        return {
+          ...plan,
+          timers: newTimers,
+          state: { ...plan.state, timestamp: newTimestamp }
+        };
+    }
+  });
+  // const newTimers = updateSortedObject(timerPlan.timers, timerId, newTimer);
+  // return updatePlanReducer(_plans, planId, { timers: newTimers });
 }

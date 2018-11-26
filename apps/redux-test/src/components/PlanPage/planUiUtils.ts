@@ -15,10 +15,9 @@ export function displayTimeMs(ms: number) {
 export function displayTime(times: TimerTimes) {
   const hrs = times.hrs ? times.hrs + "h:" : "";
   const mins = times.mins ? times.mins + "m:" : "";
-  const secs = times.secs ? times.secs + "s ." : "";
-  const ms = times.ms ? times.ms : "";
+  const secs = times.secs ? times.secs + "s" : "";
 
-  const total = `${hrs}${mins}${secs}${ms}` || "0s";
+  const total = `${hrs}${mins}${secs}` || "0s";
 
   return total;
 }
