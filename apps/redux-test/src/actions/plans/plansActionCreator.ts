@@ -49,6 +49,9 @@ class PlansActionCreator {
       planId
     );
   }
+  endPlan(planId: string): PlansUpdatePlanAction {
+    return this.updatePlan({ state: { status: "overview" } }, planId);
+  }
   addTimer(planId: string): PlansAddTimerAction {
     return {
       type: "PLANS__ADD_TIMER_ACTION",

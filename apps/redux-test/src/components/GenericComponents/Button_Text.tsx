@@ -4,12 +4,11 @@ import {
   GestureResponderEvent,
   Text,
   TextStyle,
-  ViewStyle,
-  AppRegistry
+  ViewStyle
 } from "react-native";
 import { RED } from "../Global.styles";
 
-export const PButton_Text = (props: {
+export const Button_Text = (props: {
   text: string;
   onPress: (e?: GestureResponderEvent) => void;
   disabled?: boolean;
@@ -23,13 +22,16 @@ export const PButton_Text = (props: {
     ...(props.styles || {})
   };
   return (
-    <TouchableHighlight onPress={props.onPress} style={buttonStyles.button}>
+    <TouchableHighlight
+      onPress={props.onPress}
+      style={buttonStyles.button}
+      disabled={this.props.disabled}
+    >
+      {/* todo: add disabled state */}
       <Text style={buttonStyles.text}>{props.text}</Text>
     </TouchableHighlight>
   );
 };
-
-AppRegistry.registerComponent("PTextButton", () => PButton_Text);
 
 const defaultStyles = {
   button: {

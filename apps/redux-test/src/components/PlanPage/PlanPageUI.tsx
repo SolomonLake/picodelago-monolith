@@ -7,7 +7,7 @@ import { PlanPageProps } from "./PlanPage";
 import { placeholderPlanName } from "./planUiUtils";
 import { TimerComponent } from "../Timer/TimerComponent";
 import { PlanPageStyles } from "./PlanPage.styles";
-import { PButton_Text } from "../GenericComponents/PTextButton";
+import { Button_Text } from "../GenericComponents/Button_Text";
 
 export class PlanPageUI extends Component<PlanPageProps> {
   constructor(props: PlanPageProps) {
@@ -36,7 +36,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
   PlanPageHeader() {
     return (
       <View style={PlanPageStyles.plan_page_header}>
-        <PButton_Text
+        <Button_Text
           text="<"
           onPress={this.props.goToPlansOverviewPage}
           styles={{
@@ -59,9 +59,9 @@ export class PlanPageUI extends Component<PlanPageProps> {
       case "overview":
         const firstTimer = this.props.plan.timers[0];
         return (
-          <PButton_Text
+          <Button_Text
             text="Start"
-            onPress={this.props.goToPlansOverviewPage}
+            onPress={this.props.startPlanFn(this.props.plan.id, firstTimer.id)}
             disabled={!firstTimer}
             styles={{
               text: { color: "#FFFFFF", fontSize: 15 }
@@ -71,7 +71,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
       case "active":
       case "paused":
         return (
-          <PButton_Text
+          <Button_Text
             text="End"
             onPress={this.props.goToPlansOverviewPage}
             styles={{
