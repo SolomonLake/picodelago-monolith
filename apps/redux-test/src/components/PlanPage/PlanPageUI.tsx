@@ -4,7 +4,7 @@ import { Button, TextInput, View, Text } from "react-native";
 import { Plan } from "../../store/IStoreState";
 import { mapObject, toArray } from "../../utils/utils";
 import { PlanPageProps } from "./PlanPage";
-import { placeholderPlanName } from "./planUiUtils";
+import { placeholderPlanName, displayTime, displayTimeMs } from "./planUiUtils";
 import { TimerComponent } from "../Timer/TimerComponent";
 import { PlanPageStyles } from "./PlanPage.styles";
 import { Button_Text } from "../GenericComponents/Button_Text";
@@ -13,6 +13,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
   constructor(props: PlanPageProps) {
     super(props);
 
+    this.PlanPageBody = this.PlanPageBody.bind(this);
     this.PlanPageHeader = this.PlanPageHeader.bind(this);
     this.StartPlanButton = this.StartPlanButton.bind(this);
     this.changeName = this.changeName.bind(this);
@@ -23,20 +24,40 @@ export class PlanPageUI extends Component<PlanPageProps> {
       <View>
         <this.PlanPageHeader />
 
-        <Button
-          onPress={this.props.addTimerFn(this.props.plan)}
-          color="#DE5448"
-          title="+ Timer"
-        />
-        {TimersList(this.props.plan)}
+        <this.PlanPageBody />
       </View>
     );
+  }
+
+  PlanPageBody() {
+    switch (this.props.plan.state.status) {
+      case "overview":
+        return (
+          <View>
+            <Button
+              onPress={this.props.addTimerFn(this.props.plan)}
+              color="#DE5448"
+              title="+ Timer"
+            />
+            {TimersList(this.props.plan)}
+          </View>
+        );
+      case "active":
+      case "paused":
+        return (
+          <View>
+            {ActiveTimersList(
+              this.props.plan,
+              this.props.plan.state.activeTimer
+            )}
+          </View>
+        );
+    }
   }
 
   PlanPageHeader() {
     return (
       <View style={PlanPageStyles.plan_page_header}>
-        <Text>{this.props.plan.state.status}</Text>
         <Button_Text
           text="<"
           onPress={this.props.goToPlansOverviewPage}
@@ -59,7 +80,6 @@ export class PlanPageUI extends Component<PlanPageProps> {
     switch (this.props.plan.state.status) {
       case "overview":
         const firstTimer = toArray(this.props.plan.timers)[0];
-        console.log("first timer", firstTimer);
         return !!firstTimer ? (
           <Button_Text
             text="Start"
@@ -101,7 +121,6 @@ export class PlanPageUI extends Component<PlanPageProps> {
 const TimersList = (plan: Plan) =>
   toArray(
     mapObject(plan.timers, (timer, _) => {
-      console.log("timer!");
       return (
         <View key={timer.id}>
           <TimerComponent timer={timer} plan={plan} />
@@ -109,3 +128,33 @@ const TimersList = (plan: Plan) =>
       );
     })
   );
+
+const ActiveTimersList = (plan: Plan, activeTimer: string) => {
+  return toArray(
+    mapObject(plan.timers, (timer, _) => {
+      switch (timer.id === activeTimer) {
+        case true:
+          return (
+            <View key={timer.id}>
+              <Text>Active</Text>
+              <Text>{timer.name}</Text>
+              <View style={PlanPageStyles.active.inactive_timer}>
+                <Text>{displayTimeMs(timer.currentTime) + " / "}</Text>
+                <Text>{displayTime(timer.times)}</Text>
+              </View>
+            </View>
+          );
+        case false:
+          return (
+            <View key={timer.id}>
+              <Text>{timer.name}</Text>
+              <View style={PlanPageStyles.active.inactive_timer}>
+                <Text>{displayTimeMs(timer.currentTime) + " / "}</Text>
+                <Text>{displayTime(timer.times)}</Text>
+              </View>
+            </View>
+          );
+      }
+    })
+  );
+};
