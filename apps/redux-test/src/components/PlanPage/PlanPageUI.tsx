@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TextInput, View } from "react-native";
+import { Button, TextInput, View, Text } from "react-native";
 
 import { Plan } from "../../store/IStoreState";
 import { mapObject, toArray } from "../../utils/utils";
@@ -36,6 +36,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
   PlanPageHeader() {
     return (
       <View style={PlanPageStyles.plan_page_header}>
+        <Text>{this.props.plan.state.status}</Text>
         <Button_Text
           text="<"
           onPress={this.props.goToPlansOverviewPage}
@@ -57,12 +58,22 @@ export class PlanPageUI extends Component<PlanPageProps> {
   StartPlanButton() {
     switch (this.props.plan.state.status) {
       case "overview":
-        const firstTimer = this.props.plan.timers[0];
-        return (
+        const firstTimer = toArray(this.props.plan.timers)[0];
+        console.log("first timer", firstTimer);
+        return !!firstTimer ? (
           <Button_Text
             text="Start"
             onPress={this.props.startPlanFn(this.props.plan.id, firstTimer.id)}
-            disabled={!firstTimer}
+            disabled={false}
+            styles={{
+              text: { color: "#FFFFFF", fontSize: 15 }
+            }}
+          />
+        ) : (
+          <Button_Text
+            text="_Start_"
+            onPress={() => {}}
+            disabled={true}
             styles={{
               text: { color: "#FFFFFF", fontSize: 15 }
             }}
@@ -73,7 +84,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
         return (
           <Button_Text
             text="End"
-            onPress={this.props.goToPlansOverviewPage}
+            onPress={this.props.endPlanFn(this.props.plan.id)}
             styles={{
               text: { color: "#FFFFFF", fontSize: 15 }
             }}
@@ -90,6 +101,7 @@ export class PlanPageUI extends Component<PlanPageProps> {
 const TimersList = (plan: Plan) =>
   toArray(
     mapObject(plan.timers, (timer, _) => {
+      console.log("timer!");
       return (
         <View key={timer.id}>
           <TimerComponent timer={timer} plan={plan} />

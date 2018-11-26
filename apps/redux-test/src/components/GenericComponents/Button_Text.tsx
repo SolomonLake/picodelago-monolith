@@ -25,7 +25,7 @@ export const Button_Text = (props: {
     <TouchableHighlight
       onPress={props.onPress}
       style={buttonStyles.button}
-      disabled={this.props.disabled}
+      disabled={props.disabled}
     >
       {/* todo: add disabled state */}
       <Text style={buttonStyles.text}>{props.text}</Text>

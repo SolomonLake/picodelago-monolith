@@ -25,6 +25,7 @@ export type PlanPageActions = {
   goToPlansOverviewPage: () => void;
   changePlanName: (name: string, planId: string) => void;
   startPlanFn: (planId: string, activeTimer: string) => () => void;
+  endPlanFn: (planId: string) => () => void;
   addTimerFn: (plan: Plan) => (() => void);
 };
 const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
@@ -36,6 +37,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): PlanPageActions => ({
   },
   startPlanFn: (planId: string, activeTimer: string) => () => {
     dispatch(plansActionCreator.startPlan(planId, activeTimer));
+  },
+  endPlanFn: (planId: string) => () => {
+    dispatch(plansActionCreator.endPlan(planId));
   },
   addTimerFn: (plan: Plan) => () => {
     dispatch(plansActionCreator.addTimer(plan.id));
