@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, TextInput, View, Text } from "react-native";
 
 import { Plan } from "../../store/IStoreState";
-import { mapObject, toArray } from "../../utils/utils";
+import { mapObject, toArray } from "../../utils/objectUtils";
 import { PlanPageProps } from "./PlanPage";
 import { placeholderPlanName, displayTime, displayTimeMs } from "./planUiUtils";
 import { TimerComponent } from "../Timer/TimerComponent";

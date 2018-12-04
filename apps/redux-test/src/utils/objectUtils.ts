@@ -30,3 +30,12 @@ export function toArray<T>(obj: { [id: string]: T }): T[] {
     return obj[key];
   });
 }
+
+export function indexOfObj<T>(
+  obj: { [id: string]: T },
+  searchId: string
+): number | null {
+  const arr = Object.keys(obj);
+  const indexOfEl = arr.indexOf(searchId);
+  return indexOfEl != -1 ? indexOfEl : null;
+}

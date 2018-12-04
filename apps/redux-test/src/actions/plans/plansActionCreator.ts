@@ -5,7 +5,7 @@ import {
   PlansUpdatePlanAction
 } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
-import { THIRTY_MINUTES } from "../../utils/unitsOfTime";
+import { THIRTY_MINUTES, ONE_SECOND } from "../../utils/unitsOfTime";
 import { msToTimerTimes } from "../../components/Timer/timerUtils";
 
 const defaultPlan = (): Plan => ({
@@ -20,7 +20,7 @@ const defaultTimer = (): Timer => ({
   id: uuid(),
   name: "",
   currentTime: 0,
-  times: msToTimerTimes(THIRTY_MINUTES),
+  times: msToTimerTimes(ONE_SECOND * 3),
   category: "Work"
 });
 class PlansActionCreator {
@@ -45,7 +45,13 @@ class PlansActionCreator {
   }
   startPlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
     return this.updatePlan(
-      { state: { status: "active", activeTimer, timestamp: Date.now() } },
+      {
+        state: {
+          status: "active",
+          activeTimer,
+          timestamp: Date.now()
+        }
+      },
       planId
     );
   }

@@ -1,9 +1,15 @@
 import { Action } from "../actions/Action";
 import { initialStoreState } from "../store/initialStoreState";
-import { updateSortedObject, toArray, mapObject } from "../utils/utils";
+import {
+  updateSortedObject,
+  toArray,
+  mapObject,
+  indexOfObj
+} from "../utils/objectUtils";
 import { assertUnreachableCase } from "../utils/unreachableCase";
 import { PlanMap, Plan, Timer } from "../store/IStoreState";
 import { timerTimesToMs } from "../components/Timer/timerUtils";
+import { resetTimers } from "../components/Timer/timerUiUtils";
 
 export function plansReducer(
   _plans = initialStoreState.plans,
@@ -71,7 +77,7 @@ function updateTimerReducer(
   return updatePlanReducer(_plans, planId, { timers: newTimers });
 }
 
-function updateTimerTimesReducer(_plans: PlanMap) {
+function updateTimerTimesReducer(_plans: PlanMap): PlanMap {
   return mapObject(_plans, (plan, planId) => {
     switch (plan.state.status) {
       case "overview":
@@ -83,29 +89,52 @@ function updateTimerTimesReducer(_plans: PlanMap) {
         const newTimestamp = Date.now();
         const currentTime =
           activeTimer.currentTime + (newTimestamp - plan.state.timestamp);
-        console.log("currentTime", currentTime);
         const timeIsUp = currentTime >= timerTimesToMs(activeTimer.times);
         const newCurrentTime = timeIsUp
           ? timerTimesToMs(activeTimer.times)
           : currentTime;
         const newTimer = {
           ...activeTimer,
-          currentTime
+          currentTime: newCurrentTime
         };
         const newTimers = updateSortedObject(
           plan.timers,
           activeTimerId,
           newTimer
         );
-        // todo: transition to next timer when timeIsUp
-        // const newActiveTimerId = timeIsUp ?  : activeTimerId;
-        return {
-          ...plan,
-          timers: newTimers,
-          state: { ...plan.state, timestamp: newTimestamp }
-        };
+
+        if (timeIsUp) {
+          const indexOfActiveTimer = indexOfObj(newTimers, activeTimerId);
+          const timerIdsArray = Object.keys(newTimers);
+          const nextTimerId =
+            indexOfActiveTimer != null
+              ? timerIdsArray[indexOfActiveTimer + 1]
+              : null;
+          if (nextTimerId) {
+            return {
+              ...plan,
+              timers: newTimers,
+              state: {
+                ...plan.state,
+                activeTimer: nextTimerId,
+                timestamp: newTimestamp
+              }
+            };
+          } else {
+            const overviewPlan: Plan = {
+              ...plan,
+              timers: resetTimers(plan.timers),
+              state: { status: "overview" }
+            };
+            return overviewPlan;
+          }
+        } else {
+          return {
+            ...plan,
+            timers: newTimers,
+            state: { ...plan.state, timestamp: newTimestamp }
+          };
+        }
     }
   });
-  // const newTimers = updateSortedObject(timerPlan.timers, timerId, newTimer);
-  // return updatePlanReducer(_plans, planId, { timers: newTimers });
 }

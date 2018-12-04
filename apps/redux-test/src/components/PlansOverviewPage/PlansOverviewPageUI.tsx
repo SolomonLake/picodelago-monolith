@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, View } from "react-native";
 
 import { Plan, PlanMap } from "../../store/IStoreState";
-import { mapObject, toArray } from "../../utils/utils";
+import { mapObject, toArray } from "../../utils/objectUtils";
 import { planName } from "../PlanPage/planUiUtils";
 
 interface IPlansOverviewPageProps {
