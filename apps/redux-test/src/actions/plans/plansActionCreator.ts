@@ -7,6 +7,8 @@ import {
 import { uuid } from "../../utils/uuid";
 import { THIRTY_MINUTES, ONE_SECOND } from "../../utils/unitsOfTime";
 import { msToTimerTimes } from "../../components/Timer/timerUtils";
+import { store } from "../../store";
+import { resetTimers } from "../../components/Timer/timerUiUtils";
 
 const defaultPlan = (): Plan => ({
   state: {
@@ -44,19 +46,28 @@ class PlansActionCreator {
     return this.updatePlan({ name }, planId);
   }
   startPlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
+    const timers = store.getState().plans[planId].timers;
     return this.updatePlan(
       {
         state: {
           status: "active",
           activeTimer,
           timestamp: Date.now()
-        }
+        },
+        timers: resetTimers(timers)
       },
       planId
     );
   }
   endPlan(planId: string): PlansUpdatePlanAction {
-    return this.updatePlan({ state: { status: "overview" } }, planId);
+    const timers = store.getState().plans[planId].timers;
+    return this.updatePlan(
+      {
+        state: { status: "overview" },
+        timers: resetTimers(timers)
+      },
+      planId
+    );
   }
   addTimer(planId: string): PlansAddTimerAction {
     return {

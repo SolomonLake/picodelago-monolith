@@ -123,7 +123,6 @@ function updateTimerTimesReducer(_plans: PlanMap): PlanMap {
           } else {
             const overviewPlan: Plan = {
               ...plan,
-              timers: resetTimers(plan.timers),
               state: { status: "overview" }
             };
             return overviewPlan;
