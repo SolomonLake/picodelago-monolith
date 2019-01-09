@@ -2,14 +2,12 @@ import { Action } from "../actions/Action";
 import { initialStoreState } from "../store/initialStoreState";
 import {
   updateSortedObject,
-  toArray,
   mapObject,
   indexOfObj
 } from "../utils/objectUtils";
 import { assertUnreachableCase } from "../utils/unreachableCase";
 import { PlanMap, Plan, Timer } from "../store/IStoreState";
 import { timerTimesToMs } from "../components/Timer/timerUtils";
-import { resetTimers } from "../components/Timer/timerUiUtils";
 
 export function plansReducer(
   _plans = initialStoreState.plans,
@@ -40,6 +38,9 @@ export function plansReducer(
 
     case "GLOBAL_TICK__TOCK_ACTION":
       return updateTimerTimesReducer(_plans);
+
+    case "LOAD_STATE__GOT_LOADED_STATE":
+      return action.state.plans;
 
     case "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION":
     case "NAV__GO_TO_PLAN_PAGE_ACTION":
@@ -78,7 +79,7 @@ function updateTimerReducer(
 }
 
 function updateTimerTimesReducer(_plans: PlanMap): PlanMap {
-  return mapObject(_plans, (plan, planId) => {
+  return mapObject(_plans, (plan, _planId) => {
     switch (plan.state.status) {
       case "overview":
       case "paused":

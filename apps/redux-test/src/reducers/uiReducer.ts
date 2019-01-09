@@ -14,6 +14,9 @@ export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
     case "PLANS__ADD_PLAN_ACTION":
       return { page: "Plan", openPlanId: action.newPlan.id };
 
+    case "LOAD_STATE__GOT_LOADED_STATE":
+      return action.state.ui;
+
     case "PLANS__UPDATE_PLAN_ACTION":
     case "PLANS__ADD_TIMER_ACTION":
     case "TIMERS__UPDATE_TIMER_ACTION":

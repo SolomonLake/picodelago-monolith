@@ -5,7 +5,7 @@ import {
   PlansUpdatePlanAction
 } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
-import { THIRTY_MINUTES, ONE_SECOND } from "../../utils/unitsOfTime";
+import { ONE_SECOND } from "../../utils/unitsOfTime";
 import { msToTimerTimes } from "../../components/Timer/timerUtils";
 import { store } from "../../store";
 import { resetTimers } from "../../components/Timer/timerUiUtils";
