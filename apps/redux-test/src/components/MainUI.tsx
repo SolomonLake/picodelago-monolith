@@ -5,6 +5,8 @@ import { Page } from "../store/UIState";
 import { MainStyles } from "./Main.styles";
 import { PlanPage } from "./PlanPage/PlanPage";
 import { PlansOverviewPage } from "./PlansOverviewPage/PlansOverviewPage";
+import { Button_Text } from "./GenericComponents/Button_Text";
+import { store } from "../store";
 
 interface IMainProps {
   readonly page: Page;
@@ -20,6 +22,17 @@ export class MainUI extends Component<IMainProps> {
       <View>
         <View style={MainStyles.status_bar_buffer} />
         {PageUI(this.props.page)}
+        <View>
+          <Button_Text
+            text="Log State"
+            onPress={() => {
+              console.log("CURRENT STATE!", store.getState());
+            }}
+            styles={{
+              text: { color: "#FFFFFF", fontSize: 15 }
+            }}
+          />
+        </View>
       </View>
     );
   }

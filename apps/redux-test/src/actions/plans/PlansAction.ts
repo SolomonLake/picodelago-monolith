@@ -5,6 +5,11 @@ export type PlansAddPlanAction = {
   readonly newPlan: Plan;
 };
 
+export type PlansDeletePlanAction = {
+  readonly type: "PLANS__DELETE_PLAN_ACTION";
+  readonly planId: string;
+};
+
 export type PlansUpdatePlanAction = {
   type: "PLANS__UPDATE_PLAN_ACTION";
   planUpdate: Partial<Plan>;
@@ -19,5 +24,6 @@ export type PlansAddTimerAction = {
 
 export type PlansAction =
   | PlansAddPlanAction
+  | PlansDeletePlanAction
   | PlansUpdatePlanAction
   | PlansAddTimerAction;

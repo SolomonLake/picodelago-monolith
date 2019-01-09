@@ -1,10 +1,10 @@
-import { store } from "../../store";
+import { dispatch, store } from "../../store";
 import { AsyncStorage } from "react-native";
 
 export async function loadState(): Promise<void> {
   const stateString = await AsyncStorage.getItem("appState");
   if (stateString) {
-    store.dispatch({
+    dispatch({
       type: "LOAD_STATE__GOT_LOADED_STATE",
       state: JSON.parse(stateString)
     });

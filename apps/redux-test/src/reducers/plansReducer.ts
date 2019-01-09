@@ -3,11 +3,13 @@ import { initialStoreState } from "../store/initialStoreState";
 import {
   updateSortedObject,
   mapObject,
-  indexOfObj
+  indexOfObj,
+  removeKey
 } from "../utils/objectUtils";
 import { assertUnreachableCase } from "../utils/unreachableCase";
 import { PlanMap, Plan, Timer } from "../store/IStoreState";
 import { timerTimesToMs } from "../components/Timer/timerUtils";
+import { resetTimers } from "../components/Timer/timerUiUtils";
 
 export function plansReducer(
   _plans = initialStoreState.plans,
@@ -16,6 +18,9 @@ export function plansReducer(
   switch (action.type) {
     case "PLANS__ADD_PLAN_ACTION":
       return { [action.newPlan.id]: action.newPlan, ..._plans };
+
+    case "PLANS__DELETE_PLAN_ACTION":
+      return removeKey(_plans, action.planId);
 
     case "PLANS__UPDATE_PLAN_ACTION":
       return updatePlanReducer(_plans, action.planId, action.planUpdate);
@@ -60,7 +65,8 @@ function updatePlanReducer(
     ..._plans[planId],
     ...planUpdate
   };
-  return updateSortedObject(_plans, planId, newPlan);
+  const newState = updateSortedObject(_plans, planId, newPlan);
+  return newState;
 }
 
 function updateTimerReducer(
@@ -122,9 +128,11 @@ function updateTimerTimesReducer(_plans: PlanMap): PlanMap {
               }
             };
           } else {
+            // plan is done
             const overviewPlan: Plan = {
               ...plan,
-              state: { status: "overview" }
+              state: { status: "overview" },
+              timers: resetTimers(plan.timers)
             };
             return overviewPlan;
           }

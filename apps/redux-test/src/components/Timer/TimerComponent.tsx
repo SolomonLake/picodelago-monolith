@@ -6,6 +6,7 @@ import { IStoreState, Plan, Timer } from "../../store/IStoreState";
 import { TimerComponentUI } from "./TimerComponentUI";
 import { timersActionCreator } from "../../actions/timers/timersActionCreator";
 import { TimerTimes } from "./timerUtils";
+import { dispatch } from "../../store";
 
 export type TimerComponentState = {
   timer: Timer;
@@ -29,9 +30,7 @@ export type TimerComponentActions = {
     planId: string
   ) => void;
 };
-const mapDispatchToProps = (
-  dispatch: Dispatch<Action>
-): TimerComponentActions => ({
+const mapDispatchToProps = (_: Dispatch<Action>): TimerComponentActions => ({
   changeTimerName: (name: string, timerId: string, planId: string) => {
     dispatch(timersActionCreator.changeTimerName(name, timerId, planId));
   },

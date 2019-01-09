@@ -6,6 +6,7 @@ import { navActionCreator } from "../../actions/nav/navActionCreator";
 import { IStoreState, Plan } from "../../store/IStoreState";
 import { PlansOverviewPageUI } from "./PlansOverviewPageUI";
 import { plansActionCreator } from "../../actions/plans/plansActionCreator";
+import { dispatch } from "../../store";
 
 const mapStateToProps = (state: IStoreState) => {
   return {
@@ -13,7 +14,7 @@ const mapStateToProps = (state: IStoreState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+const mapDispatchToProps = (_: Dispatch<Action>) => ({
   goToPlanPage: (plan: Plan) => {
     dispatch(navActionCreator.goToPlanPage(plan));
   },

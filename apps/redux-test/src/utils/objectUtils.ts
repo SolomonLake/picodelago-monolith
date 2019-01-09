@@ -39,3 +39,11 @@ export function indexOfObj<T>(
   const indexOfEl = arr.indexOf(searchId);
   return indexOfEl != -1 ? indexOfEl : null;
 }
+
+export function removeKey<T>(
+  obj: { [_key: string]: T },
+  keyToRemove: string
+): { [_key: string]: T } {
+  const { [keyToRemove]: value, ...updatedObject } = obj;
+  return updatedObject;
+}

@@ -40,12 +40,43 @@ export class PlanPageUI extends Component<PlanPageProps> {
               title="+ Timer"
             />
             {TimersList(this.props.plan)}
+            <Button_Text
+              text="Delete Plan"
+              onPress={this.props.deletePlanFn(this.props.plan.id)}
+              styles={{
+                text: { color: "#FFFFFF", fontSize: 20 }
+              }}
+            />
           </View>
         );
       case "active":
+        return (
+          <View>
+            <Button
+              onPress={this.props.pausePlanFn(
+                this.props.plan.id,
+                this.props.plan.state.activeTimer
+              )}
+              color="#DE5448"
+              title="Pause"
+            />
+            {ActiveTimersList(
+              this.props.plan,
+              this.props.plan.state.activeTimer
+            )}
+          </View>
+        );
       case "paused":
         return (
           <View>
+            <Button
+              onPress={this.props.startPlanFn(
+                this.props.plan.id,
+                this.props.plan.state.activeTimer
+              )}
+              color="#DE5448"
+              title="Resume"
+            />
             {ActiveTimersList(
               this.props.plan,
               this.props.plan.state.activeTimer
@@ -136,7 +167,6 @@ const ActiveTimersList = (plan: Plan, activeTimer: string) => {
         case true:
           return (
             <View key={timer.id}>
-              <Text>Active</Text>
               <Text>{timer.name}</Text>
               <View style={PlanPageStyles.active.inactive_timer}>
                 <Text>{displayTimeMs(timer.currentTime) + " / "}</Text>

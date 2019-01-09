@@ -2,7 +2,8 @@ import { Plan, Timer } from "../../store/IStoreState";
 import {
   PlansAddPlanAction,
   PlansAddTimerAction,
-  PlansUpdatePlanAction
+  PlansUpdatePlanAction,
+  PlansDeletePlanAction
 } from "./PlansAction";
 import { uuid } from "../../utils/uuid";
 import { ONE_SECOND } from "../../utils/unitsOfTime";
@@ -32,6 +33,12 @@ class PlansActionCreator {
       newPlan: defaultPlan()
     };
   }
+  deletePlan(planId: string): PlansDeletePlanAction {
+    return {
+      type: "PLANS__DELETE_PLAN_ACTION",
+      planId
+    };
+  }
   private updatePlan(
     planUpdate: Partial<Plan>,
     planId: string
@@ -46,15 +53,15 @@ class PlansActionCreator {
     return this.updatePlan({ name }, planId);
   }
   startPlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
-    const timers = store.getState().plans[planId].timers;
+    const activePlan = store.getState().plans[planId];
     return this.updatePlan(
       {
+        ...activePlan,
         state: {
           status: "active",
           activeTimer,
           timestamp: Date.now()
-        },
-        timers: resetTimers(timers)
+        }
       },
       planId
     );
@@ -65,6 +72,16 @@ class PlansActionCreator {
       {
         state: { status: "overview" },
         timers: resetTimers(timers)
+      },
+      planId
+    );
+  }
+  pausePlan(planId: string, activeTimer: string): PlansUpdatePlanAction {
+    const activePlan = store.getState().plans[planId];
+    return this.updatePlan(
+      {
+        ...activePlan,
+        state: { status: "paused", activeTimer: activeTimer }
       },
       planId
     );

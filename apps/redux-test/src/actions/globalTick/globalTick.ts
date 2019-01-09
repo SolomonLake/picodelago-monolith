@@ -1,9 +1,12 @@
-import { store } from "../../store";
+import { dispatch } from "../../store";
 
 export function globalTick() {
   setInterval(() => {
-    store.dispatch({
-      type: "GLOBAL_TICK__TOCK_ACTION"
-    });
+    dispatch(
+      {
+        type: "GLOBAL_TICK__TOCK_ACTION"
+      },
+      { shouldNotLog: true }
+    );
   }, 50);
 }

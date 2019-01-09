@@ -6,6 +6,7 @@ import { assertUnreachableCase } from "../utils/unreachableCase";
 export function uiReducer(_ui = initialStoreState.ui, action: Action): UIState {
   switch (action.type) {
     case "NAV__GO_TO_PLANS_OVERVIEW_PAGE_ACTION":
+    case "PLANS__DELETE_PLAN_ACTION":
       return { page: "PlansOverview" };
 
     case "NAV__GO_TO_PLAN_PAGE_ACTION":
