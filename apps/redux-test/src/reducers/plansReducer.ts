@@ -10,6 +10,7 @@ import { assertUnreachableCase } from "../utils/unreachableCase";
 import { PlanMap, Plan, Timer } from "../store/IStoreState";
 import { timerTimesToMs } from "../components/Timer/timerUtils";
 import { resetTimers } from "../components/Timer/timerUiUtils";
+import { notificationApi } from "../effects/notificationsApi";
 
 export function plansReducer(
   _plans = initialStoreState.plans,
@@ -134,6 +135,7 @@ function updateTimerTimesReducer(_plans: PlanMap): PlanMap {
               state: { status: "overview" },
               timers: resetTimers(plan.timers)
             };
+            notificationApi.notifyPlanIsDone(plan);
             return overviewPlan;
           }
         } else {
