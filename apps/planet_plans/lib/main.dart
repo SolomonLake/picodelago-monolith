@@ -3,6 +3,9 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import 'package:planet_plans/actions/actions.dart';
+import 'package:planet_plans/models/models.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -24,53 +27,6 @@ class MyApp extends StatelessWidget {
           home: MainPage(store),
         ));
   }
-}
-
-class ChangeAppPageAction {
-  final AppPage appPage;
-
-  ChangeAppPageAction(this.appPage);
-}
-
-class ToggleWordPairSavedAction {
-  final WordPair word;
-
-  ToggleWordPairSavedAction(this.word);
-}
-
-class AddSuggestionsAction {
-  AddSuggestionsAction();
-}
-
-@immutable
-class AppState {
-  final AppPage activePage;
-  final List<WordPair> suggestions;
-  final List<WordPair> saved;
-
-  AppState({
-    this.activePage = AppPage.mainPage,
-    this.suggestions = const [],
-    this.saved = const [],
-  });
-}
-
-enum AppPage { mainPage, favoritesPage }
-
-AppState appReducer(AppState state, action) {
-  return AppState(
-    activePage: activePageReducer(state.activePage, action),
-    suggestions: suggestionsReducer(state.suggestions, action),
-    saved: savedReducer(state.saved, action),
-  );
-}
-
-final activePageReducer = combineReducers<AppPage>([
-  TypedReducer<AppPage, ChangeAppPageAction>(_changeAppPageReducer),
-]);
-
-AppPage _changeAppPageReducer(AppPage activePage, ChangeAppPageAction action) {
-  return action.appPage;
 }
 
 final suggestionsReducer = combineReducers<List<WordPair>>([
