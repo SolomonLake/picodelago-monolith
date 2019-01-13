@@ -6,120 +6,152 @@ import 'package:redux/redux.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Startup Name Generator',
-      theme: new ThemeData(
-        primaryColor: Colors.white,
-      ),
-      home: RandomWords(),
-    );
-  }
-}
-
-class ChangePageStateAction {
-  final PageState pageState;
-
-  ChangePageStateAction(this.pageState);
-}
-
-class ToggleWordFavoriteStateAction {
-  final WordPair word;
-
-  ToggleWordFavoriteStateAction(this.word);
-}
-
-class AppState {
-  final PageState currentPage;
-  final List<WordPair> _suggestions;
-  final Set<WordPair> _saved;
-
-  AppState(this.currentPage,this._suggestions, this._saved,);
-
-  factory AppState.initial() =>
-      AppState(PageState.mainPage, List.unmodifiable([]), new Set<WordPair>());
-}
-
-enum PageState {
-  mainPage, favoritesPage
-}
-
-class RandomWords extends StatelessWidget {
-  final Store<RandomWordsState> store = Store<RandomWordsState>(
+  final store = Store<AppState>(
     appReducer,
-    /* Function defined in the reducers file */
-    initialState: RandomWordsState.initial(),
-    middleware: createStoreMiddleware(),
+    initialState: AppState(),
+    // middleware: createStoreTodosMiddleware(),
   );
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text('Startup Name Generator'),
-          actions: <Widget>[
-            new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
-          ],
-        ),
-        body: _buildSuggestions(),
-      );
+  Widget build(BuildContext context) {
+    return StoreProvider(
+        store: store,
+        child: MaterialApp(
+          title: 'Startup Name Generator',
+          theme: new ThemeData(
+            primaryColor: Colors.white,
+          ),
+          home: MainPage(store),
+        ));
+  }
 }
 
+class ChangeAppPageAction {
+  final AppPage appPage;
 
-RandomWordsState randomWordsStateReducer(RandomWordsState state, action) => RandomWordsState(toDoListReducer(state.toDos, action), listStateReducer(state.listState, action));
+  ChangeAppPageAction(this.appPage);
+}
 
-final Reducer<List<ToDoItem>> toDoListReducer = // Boilerplate ignored
-final Reducer<ListState> listStateReducer = combineReducers<ListState>([
-  TypedReducer<ListState, DisplayListOnlyAction>(_displayListOnly),
-  TypedReducer<ListState, DisplayListWithNewItemAction>(_displayListWithNewItem),
+class ToggleWordPairSavedAction {
+  final WordPair word;
+
+  ToggleWordPairSavedAction(this.word);
+}
+
+class AddSuggestionsAction {
+  AddSuggestionsAction();
+}
+
+@immutable
+class AppState {
+  final AppPage activePage;
+  final List<WordPair> suggestions;
+  final List<WordPair> saved;
+
+  AppState({
+    this.activePage = AppPage.mainPage,
+    this.suggestions = const [],
+    this.saved = const [],
+  });
+}
+
+enum AppPage { mainPage, favoritesPage }
+
+AppState appReducer(AppState state, action) {
+  return AppState(
+    activePage: activePageReducer(state.activePage, action),
+    suggestions: suggestionsReducer(state.suggestions, action),
+    saved: savedReducer(state.saved, action),
+  );
+}
+
+final activePageReducer = combineReducers<AppPage>([
+  TypedReducer<AppPage, ChangeAppPageAction>(_changeAppPageReducer),
 ]);
 
-///
+AppPage _changeAppPageReducer(AppPage activePage, ChangeAppPageAction action) {
+  return action.appPage;
+}
 
-class _RandomWordsState extends State<RandomWords> {
+final suggestionsReducer = combineReducers<List<WordPair>>([
+  TypedReducer<List<WordPair>, AddSuggestionsAction>(_addSuggestionsReducer),
+]);
+
+List<WordPair> _addSuggestionsReducer(
+    List<WordPair> suggestions, AddSuggestionsAction action) {
+  return List.from(suggestions)..addAll(generateWordPairs().take(10));
+}
+
+final savedReducer = combineReducers<List<WordPair>>([
+  TypedReducer<List<WordPair>, ToggleWordPairSavedAction>(
+      _toggleWordPairSavedReducer),
+]);
+
+List<WordPair> _toggleWordPairSavedReducer(
+    List<WordPair> saved, ToggleWordPairSavedAction action) {
+  final bool alreadySaved = saved.contains(action.word);
+  if (alreadySaved) {
+    return List.from(saved)..remove(action.word);
+  } else {
+    return List.from(saved)..add(action.word);
+  }
+}
+
+class MainPage extends StatelessWidget {
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  final Store<AppState> store;
+
+  MainPage(this.store);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Startup Name Generator'),
-        actions: <Widget>[
-          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
-        ],
-      ),
-      body: _buildSuggestions(),
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      new MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _saved.map(
-            (WordPair pair) {
-              return new ListTile(
-                title: new Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
+    return new StoreConnector<AppState, AppState>(
+        converter: (store) => store.state,
+        builder: (context, callback) {
+          switch (this.store.state.activePage) {
+            case AppPage.mainPage:
+              return new Scaffold(
+                appBar: AppBar(
+                  title: Text('Startup Name Generator'),
+                  actions: <Widget>[
+                    new IconButton(
+                        icon: const Icon(Icons.list),
+                        onPressed: () => this.store.dispatch(
+                            ChangeAppPageAction(AppPage.favoritesPage))),
+                  ],
                 ),
+                body: _buildSuggestions(),
               );
-            },
-          );
-          final List<Widget> divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return new Scaffold(
-            appBar: new AppBar(
-              title: const Text('Saved Suggestions'),
-            ),
-            body: new ListView(children: divided),
-          );
-        },
-      ),
-    );
+            case AppPage.favoritesPage:
+              final Iterable<ListTile> tiles = this.store.state.saved.map(
+                (WordPair pair) {
+                  return new ListTile(
+                    title: new Text(
+                      pair.asPascalCase,
+                      style: _biggerFont,
+                    ),
+                  );
+                },
+              );
+              final List<Widget> divided = ListTile.divideTiles(
+                context: context,
+                tiles: tiles,
+              ).toList();
+              return new Scaffold(
+                appBar: new AppBar(
+                  title: const Text('Saved Suggestions'),
+                  actions: <Widget>[
+                    new IconButton(
+                        icon: const Icon(Icons.keyboard_return),
+                        onPressed: () => this
+                            .store
+                            .dispatch(ChangeAppPageAction(AppPage.mainPage))),
+                  ],
+                ),
+                body: new ListView(children: divided),
+              );
+          }
+        });
   }
 
   Widget _buildSuggestions() {
@@ -129,15 +161,15 @@ class _RandomWordsState extends State<RandomWords> {
           if (i.isOdd) return Divider(); /*2*/
 
           final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          if (index >= this.store.state.suggestions.length) {
+            this.store.dispatch(AddSuggestionsAction());
           }
-          return _buildRow(_suggestions[index]);
+          return _buildRow(this.store.state.suggestions[index]);
         });
   }
 
   Widget _buildRow(WordPair pair) {
-    final bool alreadySaved = _saved.contains(pair);
+    final bool alreadySaved = this.store.state.saved.contains(pair);
     return ListTile(
       title: Text(
         pair.asPascalCase,
@@ -148,13 +180,7 @@ class _RandomWordsState extends State<RandomWords> {
         color: alreadySaved ? Colors.red : null,
       ),
       onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
+        this.store.dispatch(ToggleWordPairSavedAction(pair));
       },
     );
   }
