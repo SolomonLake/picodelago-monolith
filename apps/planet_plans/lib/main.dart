@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,9 +18,65 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final Set<WordPair> _saved = new Set<WordPair>();
+class ChangePageStateAction {
+  final PageState pageState;
+
+  ChangePageStateAction(this.pageState);
+}
+
+class ToggleWordFavoriteStateAction {
+  final WordPair word;
+
+  ToggleWordFavoriteStateAction(this.word);
+}
+
+class AppState {
+  final PageState currentPage;
+  final List<WordPair> _suggestions;
+  final Set<WordPair> _saved;
+
+  AppState(this.currentPage,this._suggestions, this._saved,);
+
+  factory AppState.initial() =>
+      AppState(PageState.mainPage, List.unmodifiable([]), new Set<WordPair>());
+}
+
+enum PageState {
+  mainPage, favoritesPage
+}
+
+class RandomWords extends StatelessWidget {
+  final Store<RandomWordsState> store = Store<RandomWordsState>(
+    appReducer,
+    /* Function defined in the reducers file */
+    initialState: RandomWordsState.initial(),
+    middleware: createStoreMiddleware(),
+  );
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('Startup Name Generator'),
+          actions: <Widget>[
+            new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+          ],
+        ),
+        body: _buildSuggestions(),
+      );
+}
+
+
+RandomWordsState randomWordsStateReducer(RandomWordsState state, action) => RandomWordsState(toDoListReducer(state.toDos, action), listStateReducer(state.listState, action));
+
+final Reducer<List<ToDoItem>> toDoListReducer = // Boilerplate ignored
+final Reducer<ListState> listStateReducer = combineReducers<ListState>([
+  TypedReducer<ListState, DisplayListOnlyAction>(_displayListOnly),
+  TypedReducer<ListState, DisplayListWithNewItemAction>(_displayListWithNewItem),
+]);
+
+///
+
+class _RandomWordsState extends State<RandomWords> {
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
@@ -100,9 +158,4 @@ class RandomWordsState extends State<RandomWords> {
       },
     );
   }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  RandomWordsState createState() => new RandomWordsState();
 }
