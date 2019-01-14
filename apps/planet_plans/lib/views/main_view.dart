@@ -1,7 +1,5 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
 import 'package:planet_plans/views/favorites_page.dart';
 import 'package:planet_plans/views/suggestions_page.dart';
@@ -21,7 +19,7 @@ class MainView extends StatelessWidget {
             case AppPage.suggestionsPage:
               return SuggestionsPage(this.store);
             case AppPage.favoritesPage:
-              return FavoritesPage(this.store, context);
+              return FavoritesPage(this.store);
           }
         });
   }
