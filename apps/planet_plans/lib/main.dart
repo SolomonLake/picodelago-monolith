@@ -8,9 +8,9 @@ import 'package:planet_plans/models/models.dart';
 import 'package:planet_plans/reducers/app_state_reducer.dart';
 import 'package:planet_plans/middleware/middleware.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MainApp());
 
-class MyApp extends StatelessWidget {
+class MainApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState(),
@@ -26,16 +26,16 @@ class MyApp extends StatelessWidget {
           theme: new ThemeData(
             primaryColor: Colors.white,
           ),
-          home: MainPage(store),
+          home: MainView(store),
         ));
   }
 }
 
-class MainPage extends StatelessWidget {
+class MainView extends StatelessWidget {
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final Store<AppState> store;
 
-  MainPage(this.store);
+  MainView(this.store);
 
   @override
   Widget build(BuildContext context) {
