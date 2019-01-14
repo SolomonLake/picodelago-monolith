@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 
 import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/reducers/app_state_reducer.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,30 +27,6 @@ class MyApp extends StatelessWidget {
           ),
           home: MainPage(store),
         ));
-  }
-}
-
-final suggestionsReducer = combineReducers<List<WordPair>>([
-  TypedReducer<List<WordPair>, AddSuggestionsAction>(_addSuggestionsReducer),
-]);
-
-List<WordPair> _addSuggestionsReducer(
-    List<WordPair> suggestions, AddSuggestionsAction action) {
-  return List.from(suggestions)..addAll(generateWordPairs().take(10));
-}
-
-final savedReducer = combineReducers<List<WordPair>>([
-  TypedReducer<List<WordPair>, ToggleWordPairSavedAction>(
-      _toggleWordPairSavedReducer),
-]);
-
-List<WordPair> _toggleWordPairSavedReducer(
-    List<WordPair> saved, ToggleWordPairSavedAction action) {
-  final bool alreadySaved = saved.contains(action.word);
-  if (alreadySaved) {
-    return List.from(saved)..remove(action.word);
-  } else {
-    return List.from(saved)..add(action.word);
   }
 }
 
