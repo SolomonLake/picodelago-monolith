@@ -8,10 +8,10 @@ class AppState {
   final List<WordPair> saved;
 
   AppState({
-    this.activePage = AppPage.mainPage,
+    this.activePage = AppPage.suggestionsPage,
     this.suggestions = const [],
     this.saved = const [],
   });
 }
 
-enum AppPage { mainPage, favoritesPage }
+enum AppPage { suggestionsPage, favoritesPage }
