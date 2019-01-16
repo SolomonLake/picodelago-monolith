@@ -9,6 +9,10 @@ class AppState {
   final UIState ui;
   final LinkedHashMap<String, Plan> plans;
 
+  static AppState initialState() {
+    return AppState(OverviewPageState(), new LinkedHashMap());
+  }
+
   AppState(this.ui, this.plans);
 }
 

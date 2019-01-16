@@ -12,7 +12,7 @@ void main() => runApp(MainApp());
 class MainApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
-    initialState: AppState(),
+    initialState: AppState.initialState(),
     middleware: appMiddleware(),
   );
 
