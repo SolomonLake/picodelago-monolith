@@ -1,14 +1,17 @@
 abstract class UIState {
-  static Page page;
+  final Page page;
+
+  UIState(this.page);
 }
 
-class OverviewPageState extends UIState {
-  static Page page = Page.plansOverview;
+class OverviewPageState implements UIState {
+  final Page page = Page.plansOverview;
+
+  OverviewPageState();
 }
 
-class PlanPageState extends UIState {
-  static Page page = Page.plan;
-
+class PlanPageState implements UIState {
+  final Page page = Page.plan;
   final String openPlanId;
 
   PlanPageState(this.openPlanId);
