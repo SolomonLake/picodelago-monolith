@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/models/ui_state.dart';
 
 // // I'M A SEXY LITTLE NOODLE
@@ -9,7 +10,8 @@ class AppState {
   final LinkedHashMap<String, Plan> plans;
 
   static AppState initialState() {
-    return AppState(OverviewPageState(), new LinkedHashMap());
+    final plan = defaultPlan();
+    return AppState(OverviewPageState(), LinkedHashMap.from({plan.id: plan}));
   }
 
   AppState(this.ui, this.plans);

@@ -11,7 +11,7 @@ Plan defaultPlan() {
   return new Plan(
     PlanOverviewState(),
     id,
-    "",
+    "Untitled Plan",
     new LinkedHashMap(),
   );
 }

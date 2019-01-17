@@ -15,6 +15,7 @@ class PlansOverviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Iterable<ListTile> planTiles = store.state.plans.values.map(
       (Plan plan) {
+        print(plan.name);
         return new ListTile(
           title: new Text(
             plan.name,
@@ -32,14 +33,18 @@ class PlansOverviewPage extends StatelessWidget {
         title: const Text('Your Plans'),
         actions: <Widget>[
           new IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () =>
-                  store.dispatch(NavGoToPlansOverviewPageAction())),
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              return store.dispatch(NavGoToPlansOverviewPageAction());
+            },
+          )
         ],
       ),
       body: ListView(children: divided),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => store.dispatch(addPlan()),
+        onPressed: () {
+          store.dispatch(addPlan());
+        },
         tooltip: 'Add Plan',
         child: Icon(Icons.add),
       ),
