@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
 import 'package:redux/redux.dart';
@@ -36,7 +37,12 @@ class PlansOverviewPage extends StatelessWidget {
                   store.dispatch(NavGoToPlansOverviewPageAction())),
         ],
       ),
-      body: new ListView(children: divided),
+      body: ListView(children: divided),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => store.dispatch(addPlan()),
+        tooltip: 'Add Plan',
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
