@@ -22,26 +22,39 @@ class PlanPage extends StatelessWidget {
       }
     });
 
-    final Iterable<ListTile> timerTiles = openPlan.timers.values.map(
+    final Iterable<Widget> timerTiles = openPlan.timers.values.map(
       (Timer timer) {
-        return new ListTile(
-          title: new Text(
-            timer.name,
-            style: _biggerFont,
-          ),
-          onTap: () {
-            // store.dispatch(NavGoToPlanPageAction(plan.id));
-          },
+        final timerController =
+            TextEditingController(text: timer.totalTime.toString());
+        final timerFocusNode = FocusNode();
+        timerFocusNode.addListener(() {
+          if (timerController.text != timer.totalTime.toString()) {
+            // store.dispatch(updatePlanName(nameController.text, openPlan));
+          }
+        });
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              timer.name,
+              style: _biggerFont,
+            ),
+            TextField(
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: 'Enter time here'),
+              controller: timerController,
+              onSubmitted: (String newDuration) {
+                // store.dispatch(updatePlanName(newName, openPlan));
+              },
+              focusNode: timerFocusNode,
+            ),
+          ],
         );
       },
     );
 
-    final ScrollController timerTilesScrollController = ScrollController();
-
-    final List<Widget> timerTileWidgets = ListTile.divideTiles(
-      context: context,
-      tiles: timerTiles,
-    ).toList()
+    final List<Widget> timerTileWidgets = timerTiles.toList()
       ..add(
         FlatButton(
           child: Text("Add Timer"),
@@ -50,6 +63,8 @@ class PlanPage extends StatelessWidget {
           },
         ),
       );
+
+    final ScrollController timerTilesScrollController = ScrollController();
 
     return GestureDetector(
         onTap: () {
@@ -80,8 +95,8 @@ class PlanPage extends StatelessWidget {
               },
             ),
             actions: <Widget>[
-              new IconButton(
-                  icon: const Icon(Icons.settings),
+              new FlatButton(
+                  child: const Text("Start Plan"),
                   onPressed: () => store.dispatch(NavGoToSettingsPageAction())),
             ],
           ),
