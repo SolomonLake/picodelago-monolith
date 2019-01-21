@@ -16,6 +16,24 @@ Plan defaultPlan() {
   );
 }
 
+Timer defaultTimer() {
+  String id = uuid.v1();
+  return new Timer(
+      id, "Untitled Timer", new Duration(seconds: 3), 0, TimerCategory.Work);
+}
+
 PlansAddPlanAction addPlan() {
   return PlansAddPlanAction(defaultPlan());
+}
+
+PlansUpdatePlanAction updatePlanName(String newName, Plan plan) {
+  final Plan newPlan = Plan(plan.state, plan.id, newName, plan.timers);
+  return PlansUpdatePlanAction(newPlan);
+}
+
+PlansUpdatePlanAction addTimer(Plan plan) {
+  final Timer newTimer = defaultTimer();
+  final Plan newPlan = Plan(plan.state, plan.id, plan.name,
+      plan.timers..addAll({newTimer.id: newTimer}));
+  return PlansUpdatePlanAction(newPlan);
 }

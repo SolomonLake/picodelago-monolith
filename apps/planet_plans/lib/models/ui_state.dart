@@ -10,6 +10,12 @@ class OverviewPageState implements UIState {
   OverviewPageState();
 }
 
+class SettingsPageState implements UIState {
+  final Page page = Page.settings;
+
+  SettingsPageState();
+}
+
 class PlanPageState implements UIState {
   final Page page = Page.plan;
   final String openPlanId;
@@ -17,4 +23,4 @@ class PlanPageState implements UIState {
   PlanPageState(this.openPlanId);
 }
 
-enum Page { plansOverview, plan }
+enum Page { plansOverview, plan, settings }

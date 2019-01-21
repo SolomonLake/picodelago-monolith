@@ -9,3 +9,7 @@ class NavGoToPlanPageAction {
 
   NavGoToPlanPageAction(this.planId);
 }
+
+class NavGoToSettingsPageAction {
+  NavGoToSettingsPageAction();
+}

@@ -6,6 +6,7 @@ import 'package:planet_plans/actions/actions.dart';
 final uiReducer = combineReducers<UIState>([
   TypedReducer<UIState, NavGoToPlansOverviewPageAction>(
       _navGoToPlansOverviewPageReducer),
+  TypedReducer<UIState, NavGoToSettingsPageAction>(_navGoToSettingsPageReducer),
   TypedReducer<UIState, PlansDeletePlanAction>(_plansDeletePlanReducer),
   TypedReducer<UIState, NavGoToPlanPageAction>(_navGoToPlanPageReducer),
   TypedReducer<UIState, PlansAddPlanAction>(_plansAddPlanReducer),
@@ -16,6 +17,11 @@ final uiReducer = combineReducers<UIState>([
 UIState _navGoToPlansOverviewPageReducer(
     UIState uiState, NavGoToPlansOverviewPageAction action) {
   return OverviewPageState();
+}
+
+UIState _navGoToSettingsPageReducer(
+    UIState uiState, NavGoToSettingsPageAction action) {
+  return SettingsPageState();
 }
 
 UIState _plansDeletePlanReducer(UIState uiState, PlansDeletePlanAction action) {

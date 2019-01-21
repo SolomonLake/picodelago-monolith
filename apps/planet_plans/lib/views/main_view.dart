@@ -15,11 +15,20 @@ class MainView extends StatelessWidget {
     return new StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (context, callback) {
-          switch (this.store.state.ui.page) {
+          final uiState = this.store.state.ui;
+          switch (uiState.page) {
             case Page.plansOverview:
               return PlansOverviewPage(this.store);
             case Page.plan:
-              return PlanPage(this.store);
+              if (uiState is PlanPageState) {
+                final Plan openPlan =
+                    this.store.state.plans[uiState.openPlanId];
+                return PlanPage(this.store, openPlan);
+              }
+              throw ("");
+
+            case Page.settings:
+              return PlansOverviewPage(this.store);
           }
         });
   }

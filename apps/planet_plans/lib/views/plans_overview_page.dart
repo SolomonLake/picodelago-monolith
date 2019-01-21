@@ -15,19 +15,22 @@ class PlansOverviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Iterable<ListTile> planTiles = store.state.plans.values.map(
       (Plan plan) {
-        print(plan.name);
         return new ListTile(
           title: new Text(
             plan.name,
             style: _biggerFont,
           ),
+          onTap: () {
+            store.dispatch(NavGoToPlanPageAction(plan.id));
+          },
         );
       },
     );
-    final List<Widget> divided = ListTile.divideTiles(
+    final List<Widget> planTileWidgets = ListTile.divideTiles(
       context: context,
       tiles: planTiles,
     ).toList();
+    print("rendering list again");
     return new Scaffold(
       appBar: new AppBar(
         title: const Text('Your Plans'),
@@ -35,12 +38,12 @@ class PlansOverviewPage extends StatelessWidget {
           new IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              return store.dispatch(NavGoToPlansOverviewPageAction());
+              store.dispatch(NavGoToSettingsPageAction());
             },
           )
         ],
       ),
-      body: ListView(children: divided),
+      body: ListView(children: planTileWidgets),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           store.dispatch(addPlan());
