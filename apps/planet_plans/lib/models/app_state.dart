@@ -28,6 +28,8 @@ class Timer {
   Timer(this.id, this.name, this.totalTime, this.currentTime, this.category);
 }
 
+enum DurationType { seconds, minutes, hours }
+
 enum TimerCategory { Work, Rest }
 
 enum PlanStatus { active, paused, overview }

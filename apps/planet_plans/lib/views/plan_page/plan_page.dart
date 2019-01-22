@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/views/plan_page/overview_timer.dart';
 import 'package:redux/redux.dart';
 
 class PlanPage extends StatelessWidget {
@@ -9,8 +10,6 @@ class PlanPage extends StatelessWidget {
   final Plan openPlan;
 
   PlanPage(this.store, this.openPlan);
-
-  final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
@@ -24,32 +23,10 @@ class PlanPage extends StatelessWidget {
 
     final Iterable<Widget> timerTiles = openPlan.timers.values.map(
       (Timer timer) {
-        final timerController =
-            TextEditingController(text: timer.totalTime.toString());
-        final timerFocusNode = FocusNode();
-        timerFocusNode.addListener(() {
-          if (timerController.text != timer.totalTime.toString()) {
-            // store.dispatch(updatePlanName(nameController.text, openPlan));
-          }
-        });
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              timer.name,
-              style: _biggerFont,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Enter time here'),
-              controller: timerController,
-              onSubmitted: (String newDuration) {
-                // store.dispatch(updatePlanName(newName, openPlan));
-              },
-              focusNode: timerFocusNode,
-            ),
-          ],
+        return OverviewTimer(
+          store,
+          openPlan,
+          timer,
         );
       },
     );
