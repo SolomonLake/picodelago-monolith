@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/utils/timer_ui_utils.dart';
 import 'package:redux/redux.dart';
 
 class OverviewTimer extends StatelessWidget {
@@ -15,20 +16,12 @@ class OverviewTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timerController =
-        TextEditingController(text: timer.totalTime.toString());
-    final timerFocusNode = FocusNode();
-    timerFocusNode.addListener(() {
-      if (timerController.text != timer.totalTime.toString()) {
-        // store.dispatch(updatePlanName(nameController.text, openPlan));
-      }
-    });
-    // final Widget seconds =
-    // final Widget minutes =
-    // final Widget hours =
-    // final Row times = Row(
-    //   children: <Widget>[],
-    // );
+    final Widget hours = TimerTime(store, plan, timer, TimeType.hours);
+    final Widget minutes = TimerTime(store, plan, timer, TimeType.minutes);
+    final TimerTime seconds = TimerTime(store, plan, timer, TimeType.seconds);
+    final Row times = Row(
+      children: <Widget>[hours, minutes, seconds],
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,15 +30,7 @@ class OverviewTimer extends StatelessWidget {
           timer.name,
           style: _biggerFont,
         ),
-        TextField(
-          decoration: InputDecoration(
-              border: InputBorder.none, hintText: 'Enter time here'),
-          controller: timerController,
-          onSubmitted: (String newDuration) {
-            // store.dispatch(updatePlanName(newName, openPlan));
-          },
-          focusNode: timerFocusNode,
-        ),
+        times,
       ],
     );
   }
@@ -53,31 +38,17 @@ class OverviewTimer extends StatelessWidget {
 
 class TimerTime extends StatelessWidget {
   final Store<AppState> store;
-  final Plan 
-  final Timer timer;  
-  final DurationType durationType;
+  final Plan plan;
+  final Timer timer;
+  final TimeType timeType;
 
-  TextField$P(this.initialText, this.submittedCallback);
+  TimerTime(this.store, this.plan, this.timer, this.timeType);
 
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController(text: initialText);
-    final textFocusNode = FocusNode();
-    textFocusNode.addListener(() {
-      if (textController.text != initialText) {
-        submittedCallback(textController.text);
-        // store.dispatch(updatePlanName(nameController.text, openPlan));
-      }
-    });
-
-    return TextField(
-      decoration: InputDecoration(
-          border: InputBorder.none, hintText: 'Enter time here'),
-      controller: textController,
-      onSubmitted: (String newDuration) {
-        submittedCallback(textController.text);
-      },
-      focusNode: textFocusNode,
+    // final String text =
+    return Row(
+      children: <Widget>[Text(timeTypeToString(timeType))],
     );
   }
 }

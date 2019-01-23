@@ -72,11 +72,11 @@ MapEntry<String, Plan> _processActivePlan(
   final newTimestamp = DateTime.now();
   final int currentTime = activeTimer.currentTime +
       (newTimestamp.difference(planState.timestamp).inMilliseconds);
-  final timeIsUp = currentTime >= activeTimer.totalTime.inMilliseconds;
-  final newCurrentTime =
-      timeIsUp ? activeTimer.totalTime.inMilliseconds : currentTime;
+  final int totalMilliseconds = activeTimer.times.toDuration().inMilliseconds;
+  final timeIsUp = currentTime >= totalMilliseconds;
+  final newCurrentTime = timeIsUp ? totalMilliseconds : currentTime;
   final newTimer = new Timer(activeTimer.id, activeTimer.name,
-      activeTimer.totalTime, newCurrentTime, activeTimer.category);
+      activeTimer.times, newCurrentTime, activeTimer.category);
 
   final newTimers = plan.timers
     ..update(newTimer.id, (timer) {

@@ -21,14 +21,36 @@ class AppState {
 class Timer {
   final String id;
   final String name;
-  final Duration totalTime;
+  final TimerTimes times;
   final int currentTime;
   final TimerCategory category;
 
-  Timer(this.id, this.name, this.totalTime, this.currentTime, this.category);
+  Timer(this.id, this.name, this.times, this.currentTime, this.category);
 }
 
-enum DurationType { seconds, minutes, hours }
+class TimerTimes {
+  final int hrs;
+  final int mins;
+  final int secs;
+  final int ms;
+
+  Duration toDuration() {
+    return Duration(
+        hours: this.hrs,
+        minutes: this.mins,
+        seconds: this.secs,
+        milliseconds: this.ms);
+  }
+
+  const TimerTimes({
+    this.hrs: 0,
+    this.mins: 0,
+    this.secs: 0,
+    this.ms: 0,
+  });
+}
+
+enum TimeType { seconds, minutes, hours }
 
 enum TimerCategory { Work, Rest }
 

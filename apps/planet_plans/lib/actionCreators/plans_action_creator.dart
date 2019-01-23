@@ -19,7 +19,7 @@ Plan defaultPlan() {
 Timer defaultTimer() {
   String id = uuid.v1();
   return new Timer(
-      id, "Untitled Timer", new Duration(seconds: 3), 0, TimerCategory.Work);
+      id, "Untitled Timer", TimerTimes(secs: 3), 0, TimerCategory.Work);
 }
 
 PlansAddPlanAction addPlan() {
