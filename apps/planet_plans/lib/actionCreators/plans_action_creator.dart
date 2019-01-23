@@ -22,6 +22,7 @@ Timer defaultTimer() {
       id, "Untitled Timer", TimerTimes(secs: 3), 0, TimerCategory.Work);
 }
 
+// kiss me pls
 PlansAddPlanAction addPlan() {
   return PlansAddPlanAction(defaultPlan());
 }

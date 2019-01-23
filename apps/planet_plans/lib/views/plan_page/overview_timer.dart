@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
+import 'package:planet_plans/actionCreators/timers_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
 import 'package:planet_plans/models/models.dart';
 import 'package:planet_plans/utils/timer_ui_utils.dart';
@@ -16,9 +17,14 @@ class OverviewTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget hours = TimerTime(store, plan, timer, TimeType.hours);
-    final Widget minutes = TimerTime(store, plan, timer, TimeType.minutes);
-    final TimerTime seconds = TimerTime(store, plan, timer, TimeType.seconds);
+    final Widget hours =
+        timerTime(TimeType.hours, timer.times.hrs, (String newHrsStr) {
+      final int newHrs = int.tryParse(newHrsStr);
+      final TimerTimes newTimerTimes = TimerTimes
+      store.dispatch(updateTimerTimes(plan, timer, ));
+    });
+    final Widget minutes = timerTime(TimeType.minutes);
+    final TimerTime seconds = timerTime(TimeType.seconds);
     final Row times = Row(
       children: <Widget>[hours, minutes, seconds],
     );
@@ -34,21 +40,16 @@ class OverviewTimer extends StatelessWidget {
       ],
     );
   }
-}
 
-class TimerTime extends StatelessWidget {
-  final Store<AppState> store;
-  final Plan plan;
-  final Timer timer;
-  final TimeType timeType;
-
-  TimerTime(this.store, this.plan, this.timer, this.timeType);
-
-  @override
-  Widget build(BuildContext context) {
-    // final String text =
+  Row timerTime(TimeType timeType, int initialTime,
+      void Function(String) submittedCallback) {
     return Row(
-      children: <Widget>[Text(timeTypeToString(timeType))],
+      children: <Widget>[
+        Text(
+          timeTypeToString(timeType),
+        ),
+        TextField$P(initialTime.toString(), submittedCallback)
+      ],
     );
   }
 }

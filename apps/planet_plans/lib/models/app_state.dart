@@ -48,6 +48,8 @@ class TimerTimes {
     this.secs: 0,
     this.ms: 0,
   });
+
+  external factory TimerTimes.from(TimerTimes elements, {bool growable: true});
 }
 
 enum TimeType { seconds, minutes, hours }
