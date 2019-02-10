@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import 'package:planet_plans/views/plan_page/plan_page.dart';
 import 'package:planet_plans/views/plans_overview_page.dart';
 import 'package:redux/redux.dart';

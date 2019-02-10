@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 
 List<Middleware<AppState>> appMiddleware() {
   // save state here

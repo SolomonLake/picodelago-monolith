@@ -2,7 +2,7 @@ import 'package:planet_plans/utils/map_utils.dart';
 import 'package:planet_plans/utils/timer_ui_utils.dart';
 import 'package:redux/redux.dart';
 
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import 'package:planet_plans/actions/actions.dart';
 
 final plansReducer = combineReducers<Map<String, Plan>>([

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import "package:planet_plans/actions/plans_actions.dart";
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = new Uuid();

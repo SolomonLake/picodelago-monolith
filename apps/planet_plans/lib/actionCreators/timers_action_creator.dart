@@ -1,4 +1,4 @@
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import "package:planet_plans/actions/plans_actions.dart";
 
 PlansUpdatePlanAction updateTimerTimes(

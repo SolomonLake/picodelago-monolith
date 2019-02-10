@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:planet_plans/views/main_view.dart';
 import 'package:redux/redux.dart';
 
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import 'package:planet_plans/reducers/app_state_reducer.dart';
 import 'package:planet_plans/middleware/middleware.dart';
 

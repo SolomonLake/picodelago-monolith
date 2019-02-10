@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/actionCreators/timers_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
+import 'package:planet_plans/state/stateUtils/timerTimesUtils.dart';
 import 'package:planet_plans/utils/timer_ui_utils.dart';
 import 'package:redux/redux.dart';
 
@@ -18,37 +19,54 @@ class OverviewTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget hours =
-        timerTime(TimeType.hours, timer.times.hrs, (String newHrsStr) {
+        timerTimeWidget(TimeType.hours, timer.times.hrs, (String newHrsStr) {
       final int newHrs = int.tryParse(newHrsStr);
-      final TimerTimes newTimerTimes = TimerTimes
-      store.dispatch(updateTimerTimes(plan, timer, ));
+      final TimerTimes newTimerTimes = updateHrs(newHrs, timer.times);
+      store.dispatch(updateTimerTimes(plan, timer, newTimerTimes));
     });
-    final Widget minutes = timerTime(TimeType.minutes);
-    final TimerTime seconds = timerTime(TimeType.seconds);
+    final Widget minutes = timerTimeWidget(TimeType.minutes, timer.times.mins,
+        (String newMinsStr) {
+      final int newMins = int.tryParse(newMinsStr);
+      final TimerTimes newTimerTimes = updateMins(newMins, timer.times);
+      store.dispatch(updateTimerTimes(plan, timer, newTimerTimes));
+    });
+    final Widget seconds = timerTimeWidget(TimeType.seconds, timer.times.secs,
+        (String newSecsStr) {
+      final int newSecs = int.tryParse(newSecsStr);
+      final TimerTimes newTimerTimes = updateHrs(newSecs, timer.times);
+      store.dispatch(updateTimerTimes(plan, timer, newTimerTimes));
+    });
     final Row times = Row(
       children: <Widget>[hours, minutes, seconds],
     );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           timer.name,
           style: _biggerFont,
         ),
-        times,
+        Flexible(fit: FlexFit.loose, child: times),
       ],
     );
   }
 
-  Row timerTime(TimeType timeType, int initialTime,
+  Widget timerTimeWidget(TimeType timeType, int initialTime,
       void Function(String) submittedCallback) {
     return Row(
       children: <Widget>[
-        Text(
-          timeTypeToString(timeType),
-        ),
-        TextField$P(initialTime.toString(), submittedCallback)
+        Container(
+            padding: EdgeInsets.only(left: 5),
+            child: Text(
+              timeTypeToString(timeType) + ":",
+            )),
+        Container(
+          width: 20,
+          padding: EdgeInsets.only(left: 2),
+          child: TextField$P(initialTime.toString(), submittedCallback),
+        )
       ],
     );
   }

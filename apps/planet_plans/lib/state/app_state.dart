@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
-import 'package:planet_plans/models/ui_state.dart';
+import 'package:planet_plans/state/ui_state.dart';
 
 // // I'M A SEXY LITTLE NOODLE
 

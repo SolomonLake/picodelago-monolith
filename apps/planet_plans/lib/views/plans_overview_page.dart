@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:planet_plans/actionCreators/plans_action_creator.dart';
 import 'package:planet_plans/actions/actions.dart';
-import 'package:planet_plans/models/models.dart';
+import 'package:planet_plans/state/state.dart';
 import 'package:redux/redux.dart';
 
 class PlansOverviewPage extends StatelessWidget {

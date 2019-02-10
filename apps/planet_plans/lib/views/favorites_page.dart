@@ -1,7 +1,7 @@
 // import 'package:english_words/english_words.dart';
 // import 'package:flutter/material.dart';
 // import 'package:planet_plans/actions/actions.dart';
-// import 'package:planet_plans/models/models.dart';
+// import 'package:planet_plans/state/state.dart';
 // import 'package:redux/redux.dart';
 
 // class FavoritesPage extends StatelessWidget {
